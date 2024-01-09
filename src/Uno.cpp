@@ -1,12 +1,13 @@
 #include <iostream>
+#include <fstream>
 #include "Player.h"
-#include "Uno.h"
 #include "GameState.h"
+#include "Deck.h"
 
 #define Log(x) std::cout << x << std::endl;
 
-int MIN_PLAYERS = 2;
-int MAX_PLAYERS = 10;
+int const MIN_PLAYERS = 2;
+int const MAX_PLAYERS = 10;
 
 bool ValidPlayersClamp(int value)
 {
@@ -26,44 +27,45 @@ void StartGame(/*std::vector<Players>&, Deck deck*/)
 	// TODO Implement
 }
 
-
-void InitializeAndValidateGameDeck()
-{
-	// TODO Implement
-	// This will grab info about the game data and create the deck based in the decks you create
-}
-
 std::vector<Player> InitilizePlayers(int numberOfPlayers)
 {
 	std::vector<Player> players;
 	for (int i = 0; i < numberOfPlayers; i++) {
-		Player player {i};
-		players.push_back(player);
-		Log(player._id);
+		players.emplace_back(i);
+		Log(players[i]._id);
 	}
-	return players;	
+	return players;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-	InitializeAndValidateGameDeck();
+	// Initialize Game Deck
+
+	const char* filename = (argc > 1) ? argv[1] : "StandardDeck.txt";
+	Deck deck { filename };
+	if (!deck._isValid) {
+		return EXIT_FAILURE;
+	}
+
+	deck.Shuffle();
 
 	// Get the number of Players, clamped by MIN and MAX players
 	bool validInput = false;
 	int numberOfPlayers;
 	while (!validInput) {
-		Log("How Many Players?\n");
+		Log("How Many Players? (2 - 10)\n");
 		std::cin >> numberOfPlayers;
 
 		if (ValidPlayersClamp(numberOfPlayers)) {
 			validInput = true;
 		}
 		else {
-			std::cin.clear();
+			std::cin.clear();			
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 
 	InitilizePlayers(numberOfPlayers);
 	//StartGame();
+	return EXIT_SUCCESS;
 }

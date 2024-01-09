@@ -36,6 +36,15 @@
     <ClCompile Include="src\GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CardValue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Deck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IPrintable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Card.h">
@@ -62,9 +71,21 @@
     <ClInclude Include="src\Deck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\IPrintable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\color.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\StandardDeck.txt">
+    <Text Include="GameData\StandardDeck.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="GameData\GameData.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="GameData\Only_Plus4.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
