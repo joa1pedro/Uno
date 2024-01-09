@@ -6,7 +6,9 @@ enum class CardType {
 	Blue,
 	Yellow,
 	Red,
-	Wild
+	Wild,
+	Undefined
 };
 
-std::string CardTypeEnumToString(CardType type);
+std::string ToString(CardType cardValue);
+CardType ParseCharToCardType(char& character);

@@ -10,9 +10,14 @@ enum class CardValue {
 	Five,
 	Six,
 	Seven,
+	Eight,
+	Nine,
 	Plus2,
 	Plus4,
 	Skip,
 	Reverse,
 	Undefined
 };
+
+std::string ToString(CardValue cardValue);
+CardValue ParseCharToCardValue(char& character);

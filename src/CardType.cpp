@@ -1,26 +1,37 @@
 #include "CardType.h"
+#include <string>
 
-std::string CardTypeEnumToString(CardType type)
-{
-	switch (type)
+std::string ToString(CardType cardType) {
+    switch (cardType) {
+    case CardType::Green: return "Green";
+    case CardType::Blue: return "Blue";
+    case CardType::Yellow: return "Yellow";
+    case CardType::Red: return "Red";
+    case CardType::Wild: return "Wild";
+    default:
+        return "Unknown";
+    }
+}
+
+CardType ParseCharToCardType(char& character) {
+	switch (character)
 	{
-	case CardType::Green:
-		return "Green";
-		break;
-	case CardType::Blue:
-		return "Blue";
-		break;
-	case CardType::Yellow:
-		return "Yellow";
-		break;
-	case CardType::Red:
-		return "Red";
-		break;
-	case CardType::Wild:
-		return "Wild";
-		break;
+	case ('y'): return CardType::Yellow;
+	case ('Y'): return CardType::Yellow;
+
+	case ('b'): return CardType::Blue;
+	case ('B'): return CardType::Blue;
+
+	case ('g'): return CardType::Green;
+	case ('G'): return CardType::Green;
+
+	case ('r'): return CardType::Red;
+	case ('R'): return CardType::Red;
+
+	case ('w'): return CardType::Wild;
+	case ('W'): return CardType::Wild;
 	default:
-		return "Undefined";
+		return CardType::Undefined;
 		break;
 	}
 }

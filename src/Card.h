@@ -4,17 +4,26 @@
 #include "CardType.h"
 #include "CardAction.h"
 #include "CardValue.h"
+#include "IPrintable.h"
 
-class Card {
+class Card : IPrintable {
 public:
-	Card(CardType type, CardValue value);
+	// Constructors
+	Card() {};
+	Card(std::string _id, CardType type, CardValue value);
+
+	// Functions
 	int GetPositionInHand();
+	std::string GetId();
+	CardType GetType();
+	CardValue GetValue();
+	void Print();
 
 private:
-	int _id;
-	CardType _type;
+	std::string _id = "";
+	CardType _type = CardType::Undefined;
 	CardValue _value = CardValue::Undefined;
-	std::vector<CardAction> _actions; 
+	std::vector<CardAction> _actions {};
 	bool _isPlayable = false;
-	int _positionInHand;
+	int _positionInHand = 0;
 };

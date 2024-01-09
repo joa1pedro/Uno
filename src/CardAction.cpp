@@ -1,6 +1,7 @@
 #include "CardAction.h"
+#include <string>
 
-std::string CardActionEnumToString(CardAction action)
+std::string ToString(CardAction action)
 {
 	switch (action)
 	{

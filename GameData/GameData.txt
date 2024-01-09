@@ -1,65 +1,86 @@
 # Uno Game Data
 
+# Pattern for creating Cards:
+# 7 char ID First letter must be the Color
+# Followed by a 3 digit id
+# Followed by :
+# Followed by the Value of the card
+
+#------------
+# Colors (Only 1 char allowed. Must match with Enum CardType.h)
+# R - Red 
+# G - Green 
+# B - Blue 
+# Y - Yellow 
+# W - Wild
+#------------
+# Values  (Only 1 char allowed. Must match with Enum CardValue.h)
+# S = Skip
+# R = Reverse
+# + = +2
+# W = +4
+#------------
+
 # Red Cards
-R-001: 0
-R-002: 1
-R-003: 2
-R-004: 3
-R-005: 4
-R-006: 5
-R-007: 6
-R-008: 7
-R-009: 8
-R-010: 9
-R-011: Skip
-R-012: Reverse
-R-013: +2
+R-001:0 
+R-002:1 
+R-003:2 
+R-004:3 
+R-005:4 
+R-006:5 
+R-007:6 
+R-008:7 
+R-009:8 
+R-010:9 
+R-011:S 
+R-012:R 
+R-013:+ 
 
 # Green Cards
-G-014: 0
-G-015: 1
-G-016: 2
-G-017: 3
-G-018: 4
-G-019: 5
-G-020: 6
-G-021: 7
-G-022: 8
-G-023: 9
-G-024: Skip
-G-025: Reverse
-G-026: +2
+G-014:0
+G-015:1
+G-016:2
+G-017:3
+G-018:4
+G-019:5
+G-020:6
+G-021:7
+G-022:8
+G-023:9
+G-024:S
+G-025:R
+G-026:+
 
 # Blue Cards
-B-027: 0
-B-028: 1
-B-029: 2
-B-030: 3
-B-031: 4
-B-032: 5
-B-033: 6
-B-034: 7
-B-035: 8
-B-036: 9
-B-037: Skip
-B-038: Reverse
-B-039: +2
+B-027:0
+B-028:1
+B-029:2
+B-030:3
+B-031:4
+B-032:5
+B-033:6
+B-034:7
+B-035:8
+B-036:9
+B-037:S
+B-038:R
+B-039:+
 
 # Yellow Cards
-Y-040: 0
-Y-041: 1
-Y-042: 2
-Y-043: 3
-Y-044: 4
-Y-045: 5
-Y-046: 6
-Y-047: 7
-Y-048: 8
-Y-049: 9
-Y-050: Skip
-Y-051: Reverse
-Y-052: +2
+Y-040:0
+Y-041:1
+Y-042:2
+Y-043:3
+Y-044:4
+Y-045:5
+Y-046:6
+Y-047:7
+Y-048:8
+Y-049:9
+Y-050:S
+Y-051:R
+Y-052:+
 
 # Wild Cards
-W-053: +4
-W-054: Change Color
+W-053:W
+W-054:R

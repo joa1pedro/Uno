@@ -127,15 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\IPrintable.cpp" />
     <ClCompile Include="src\Card.cpp" />
     <ClCompile Include="src\CardAction.cpp" />
     <ClCompile Include="src\CardType.cpp" />
+    <ClCompile Include="src\CardValue.cpp" />
+    <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Uno.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\color.hpp" />
+    <ClInclude Include="src\IPrintable.h" />
     <ClInclude Include="src\Card.h" />
     <ClInclude Include="src\CardAction.h" />
     <ClInclude Include="src\CardType.h" />
@@ -146,7 +151,9 @@
     <ClInclude Include="src\Uno.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\StandardDeck.txt" />
+    <Text Include="GameData\GameData.txt" />
+    <Text Include="GameData\Only_Plus4.txt" />
+    <Text Include="GameData\StandardDeck.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
