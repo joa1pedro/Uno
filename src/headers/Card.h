@@ -13,7 +13,6 @@ public:
 	Card(std::string _id, CardType type, CardValue value, std::vector<CardAction> actions);
 
 	// Functions
-	int GetPositionInHand();
 	std::string Id();
 	int PositionInHand();
 	void Print();

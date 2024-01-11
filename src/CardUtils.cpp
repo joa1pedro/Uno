@@ -1,7 +1,6 @@
 #include <unordered_map>
 #include "headers/CardUtils.h"
 
-// Initialize the static member variables outside the class definition
 const std::unordered_map<std::string, CardValue> CardUtils::cardValueStringToEnumMap = {
 	{"0", CardValue::Zero},
 	{"1", CardValue::One},
@@ -19,8 +18,6 @@ const std::unordered_map<std::string, CardValue> CardUtils::cardValueStringToEnu
 	{"+4", CardValue::Plus4}
 };
 
-
-// Initialize the static member variables outside the class definition
 const std::unordered_map<CardValue, std::string> CardUtils::cardValueEnumToStringMap = {
 	{CardValue::Zero, "0"},
 	{CardValue::One, "1"},
@@ -37,7 +34,6 @@ const std::unordered_map<CardValue, std::string> CardUtils::cardValueEnumToStrin
 	{CardValue::Reverse, "Reverse"},
 	{CardValue::Plus4, "+4"}
 };
-
 
 const std::unordered_map<std::string, CardType> CardUtils::cardTypeStringToEnumMap = {
 	{"Yellow", CardType::Yellow},
