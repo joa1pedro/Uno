@@ -1,8 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include "Player.h"
-#include "GameState.h"
-#include "Deck.h"
+#include "headers/Player.h"
+#include "headers/GameState.h"
+#include "headers/Deck.h"
+#include "headers/CardUtils.h"
 
 #define Log(x) std::cout << x << std::endl;
 
@@ -32,7 +33,7 @@ std::vector<Player> InitilizePlayers(int numberOfPlayers)
 	std::vector<Player> players;
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players.emplace_back(i);
-		Log(players[i]._id);
+		Log(players[i].Id);
 	}
 	return players;
 }
@@ -43,11 +44,14 @@ int main(int argc, char** argv)
 
 	const char* filename = (argc > 1) ? argv[1] : "StandardDeck.txt";
 	Deck deck { filename };
-	if (!deck._isValid) {
+	if (!deck.IsValid) {
 		return EXIT_FAILURE;
 	}
 
 	deck.Shuffle();
+	deck.DrawCard();
+	deck.Discard(deck.Get().back());
+	deck.ResetDeckFromDiscardPile();
 
 	// Get the number of Players, clamped by MIN and MAX players
 	bool validInput = false;

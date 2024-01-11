@@ -127,11 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CardUtils.cpp" />
     <ClCompile Include="src\IPrintable.cpp" />
     <ClCompile Include="src\Card.cpp" />
     <ClCompile Include="src\CardAction.cpp" />
-    <ClCompile Include="src\CardType.cpp" />
-    <ClCompile Include="src\CardValue.cpp" />
     <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\GameState.cpp" />
@@ -139,21 +138,22 @@
     <ClCompile Include="src\Uno.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\color.hpp" />
-    <ClInclude Include="src\IPrintable.h" />
-    <ClInclude Include="src\Card.h" />
-    <ClInclude Include="src\CardAction.h" />
-    <ClInclude Include="src\CardType.h" />
-    <ClInclude Include="src\CardValue.h" />
-    <ClInclude Include="src\Deck.h" />
-    <ClInclude Include="src\GameState.h" />
-    <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\Uno.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="GameData\GameData.txt" />
     <Text Include="GameData\Only_Plus4.txt" />
     <Text Include="GameData\StandardDeck.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\headers\Card.h" />
+    <ClInclude Include="src\headers\CardAction.h" />
+    <ClInclude Include="src\headers\CardType.h" />
+    <ClInclude Include="src\headers\CardUtils.h" />
+    <ClInclude Include="src\headers\CardValue.h" />
+    <ClInclude Include="src\headers\color.hpp" />
+    <ClInclude Include="src\headers\Deck.h" />
+    <ClInclude Include="src\headers\GameState.h" />
+    <ClInclude Include="src\headers\IPrintable.h" />
+    <ClInclude Include="src\headers\Player.h" />
+    <ClInclude Include="src\headers\Uno.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

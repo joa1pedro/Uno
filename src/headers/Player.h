@@ -6,15 +6,12 @@
 
 class Player {
 public:
-	int _id;	
-	bool _currentPlayer = false;
+	int Id;	
+	bool IsCurrentPlayer = false;
 
 	Player(int id);
 
-	std::vector<Card> GetHand();
+	std::vector<Card> Hand;
 	void Draw(Deck& deck, int numCards = 1);
 	void Play(int cardIndex, Card& topCard);
-
-private:
-	std::vector<Card> _hand;
 };
