@@ -1,11 +1,11 @@
 #include <iostream>
-#include "Card.h"
-#include "color.hpp" // https://github.com/aafulei/color-console
+#include "headers/Card.h"
+#include "headers/color.hpp" // https://github.com/aafulei/color-console
+#include "headers/CardUtils.h"
 
-Card::Card(std::string id, CardType type, CardValue value)
-: _id(id), _type(type), _value(value)
+Card::Card(std::string id, CardType type, CardValue value, std::vector<CardAction> actions)
+: _id(id), _type(type), _value(value), _actions(std::move(actions))
 {
-
 }
 
 // Pattern: [_id] CardType(Colored) CardValue
@@ -17,46 +17,36 @@ void Card::Print()
 	switch (_type)
 	{
 	case CardType::Green:
-		std::cout << dye::green(ToString(_type));
+		std::cout << dye::green(CardUtils::ParseCardTypeToStr(_type));
 		break;
 	case CardType::Blue:
-		std::cout << dye::blue(ToString(_type));
+		std::cout << dye::blue(CardUtils::ParseCardTypeToStr(_type));
 		break;
 	case CardType::Yellow:
-		std::cout << dye::yellow(ToString(_type));
+		std::cout << dye::yellow(CardUtils::ParseCardTypeToStr(_type));
 		break;
 	case CardType::Red:
-		std::cout << dye::red(ToString(_type));
+		std::cout << dye::red(CardUtils::ParseCardTypeToStr(_type));
 		break;
 	case CardType::Wild:
-		std::cout << dye::black_on_white(ToString(_type));
+		std::cout << dye::black_on_white(CardUtils::ParseCardTypeToStr(_type));
 		break;
 	case CardType::Undefined:
-		std::cout << dye::vanilla(ToString(_type));
+		std::cout << dye::vanilla(CardUtils::ParseCardTypeToStr(_type));
 		break;
 	default:
 		break;
 	}
 
-	std::cout << " " << ToString(_value) << std::endl;
+	std::cout << " " << CardUtils::ParseCardValueToStr(_value) << std::endl;
 }
 
-int Card::GetPositionInHand()
+int Card::PositionInHand()
 {
-    return Card::_positionInHand;
+    return _positionInHand;
 }
 
-std::string Card::GetId() 
+std::string Card::Id() 
 {
     return _id;
-}
-
-CardType Card::GetType()
-{
-	return _type;
-}
-
-CardValue Card::GetValue()
-{
-	return _value;
 }

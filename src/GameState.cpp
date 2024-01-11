@@ -1,6 +1,6 @@
-#include "GameState.h"
-#include "Player.h"
-#include "Card.h"
+#include "headers/GameState.h"
+#include "headers/Player.h"
+#include "headers/Card.h"
 
 void GameState::SetCurrentPlayer(Player player)
 {

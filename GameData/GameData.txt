@@ -1,86 +1,92 @@
 # Uno Game Data
 
 # Pattern for creating Cards:
-# 7 char ID First letter must be the Color
-# Followed by a 3 digit id
-# Followed by :
-# Followed by the Value of the card
+# ID:CardColor:CardValue:Behaviors
 
 #------------
-# Colors (Only 1 char allowed. Must match with Enum CardType.h)
-# R - Red 
-# G - Green 
-# B - Blue 
-# Y - Yellow 
-# W - Wild
+# Colors allowed (Must match with Enum CardType.h)
+# Red 
+# Green 
+# Blue 
+# Yellow 
+# Wild (Black)
 #------------
-# Values  (Only 1 char allowed. Must match with Enum CardValue.h)
-# S = Skip
-# R = Reverse
-# + = +2
-# W = +4
+# Values allowed (Must match with Enum CardValue.h)
+# 0 to 9
+# Skip 
+# Reverse 
+# +2
+# +4
+#------------
+# Actions allowed (Must match with Enum CardActions.h)
+# D - Default (Matching Color or Value)
+# S - Skip
+# R - Reverse
+# + - +2 
+# ++ - +4
+# Obs.: Missing Default Action implicitly says that you don't need to match color or value
 #------------
 
 # Red Cards
-R-001:0 
-R-002:1 
-R-003:2 
-R-004:3 
-R-005:4 
-R-006:5 
-R-007:6 
-R-008:7 
-R-009:8 
-R-010:9 
-R-011:S 
-R-012:R 
-R-013:+ 
+001:Red:0:D
+002:Red:1:D
+003:Red:2:D
+004:Red:3:D
+005:Red:4:D
+006:Red:5:D
+007:Red:6:D
+008:Red:7:D
+009:Red:8:D
+010:Red:9:D
+011:Red:Skip:DS
+012:Red:Reverse:DR
+013:Red:+2:D+ 
 
 # Green Cards
-G-014:0
-G-015:1
-G-016:2
-G-017:3
-G-018:4
-G-019:5
-G-020:6
-G-021:7
-G-022:8
-G-023:9
-G-024:S
-G-025:R
-G-026:+
+014:Green:0:D
+015:Green:1:D
+016:Green:2:D
+017:Green:3:D
+018:Green:4:D
+019:Green:5:D
+020:Green:6:D
+021:Green:7:D
+022:Green:8:D
+023:Green:9:D
+024:Green:Skip:DS
+025:Green:Reverse:DR
+026:Green:+2:D+
 
 # Blue Cards
-B-027:0
-B-028:1
-B-029:2
-B-030:3
-B-031:4
-B-032:5
-B-033:6
-B-034:7
-B-035:8
-B-036:9
-B-037:S
-B-038:R
-B-039:+
+027:Blue:0:D
+028:Blue:1:D
+029:Blue:2:D
+030:Blue:3:D
+031:Blue:4:D
+032:Blue:5:D
+033:Blue:6:D
+034:Blue:7:D
+035:Blue:8:D
+036:Blue:9:D
+037:Blue:Skip:DS
+038:Blue:Reverse:DR
+039:Blue:+2:D+
 
 # Yellow Cards
-Y-040:0
-Y-041:1
-Y-042:2
-Y-043:3
-Y-044:4
-Y-045:5
-Y-046:6
-Y-047:7
-Y-048:8
-Y-049:9
-Y-050:S
-Y-051:R
-Y-052:+
+040:Yellow:0:D
+041:Yellow:1:D
+042:Yellow:2:D
+043:Yellow:3:D
+044:Yellow:4:D
+045:Yellow:5:D
+046:Yellow:6:D
+047:Yellow:7:D
+048:Yellow:8:D
+049:Yellow:9:D
+050:Yellow:Skip:DS
+051:Yellow:Reverse:DR
+052:Yellow:+2:D+
 
 # Wild Cards
-W-053:W
-W-054:R
+053:Wild:+4:++
+054:Wild:Skip:D

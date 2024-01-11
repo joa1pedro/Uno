@@ -9,6 +9,3 @@ enum class CardType {
 	Wild,
 	Undefined
 };
-
-std::string ToString(CardType cardValue);
-CardType ParseCharToCardType(char& character);

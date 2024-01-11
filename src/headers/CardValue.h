@@ -18,6 +18,3 @@ enum class CardValue {
 	Reverse,
 	Undefined
 };
-
-std::string ToString(CardValue cardValue);
-CardValue ParseCharToCardValue(char& character);
