@@ -68,6 +68,16 @@ std::vector<Card> Deck::Get() {
 	return _cards;
 }
 
+bool IsValidActions(std::array<CardAction, MAX_ACTIONS_PER_CARD> actions)
+{
+	for (int i = 0; i < MAX_ACTIONS_PER_CARD; i++) {
+		if (actions[i] != CardAction::Undefined) {
+			return true;  // Found at least one valid action
+		}
+	}
+	return false;  // No valid action found
+}
+
 // Reads the GameData.txt file and creates a card for each defined, putting it on a map for latter adding it to a deck.
 bool Deck::Validate()
 {
@@ -100,20 +110,27 @@ bool Deck::Validate()
 			CardType parsedType = CardUtils::ParseStrToCardType(type);
 			CardValue parsedValue = CardUtils::ParseStrToCardValue(value);	
 
-			std::array<CardAction, MAX_ACTIONS_PER_CARD> actions;
-			for (int i = 0; i< MAX_ACTIONS_PER_CARD; i++)
-			{
-				actions[i] = CardAction::Undefined;
+			// Parsing the array of actions
+			std::array<CardAction, MAX_ACTIONS_PER_CARD> actions {};
+			int j = 0;
+			if (actionstr.empty()) {
+				std::cout << "Failed to validate line " << i << " " << line << " - No actions.\n";
+				return IsValid = false;
 			}
 
-			int i = 0;
 			for (char c : actionstr) {
 				if (c == ' ') continue;
-				actions[i] = CardUtils::ParseCharToCardAction(c);
+				if (j > MAX_ACTIONS_PER_CARD-1) {
+					std::cout << "Failed to validate line " << i << " " << line << " - Too many actions.\n";
+					return IsValid = false;
+				}
+				actions[j] = CardUtils::ParseCharToCardAction(c);
+				j++;
 			}
 
-			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined) {
-				std::cout << "Failed to validate line " << i << " " << line << "\n";
+			// Validating if theres a Card Type, A CardValue and at least 1 valid CardAction
+			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined || IsValidActions(actions)) {
+				std::cout << "Failed to validate line " << i << " " << line << " - Invalid data.\n";
 				return IsValid = false;
 			}
 

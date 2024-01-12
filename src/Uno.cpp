@@ -87,12 +87,11 @@ int main(int argc, char** argv)
 
 	deck.Shuffle();
 	deck.Print();
-	Log("CardDrawn -----");
-	deck.DrawCard().Print();
-	Log("-----");
 
-	Log("Discarded -----------");
+	deck.DrawCard().Print();
+
 	deck.Discard(deck.DrawCard());
+
 	deck.Print();
 
 

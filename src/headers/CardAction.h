@@ -10,5 +10,3 @@ enum class CardAction : int
 	Reverse, // Reverse the order Action
 	Undefined 
 };
-
-bool IsValidActions(std::array<CardAction, 3> actions);
