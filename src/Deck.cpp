@@ -5,6 +5,7 @@
 #include <sstream>
 #include <algorithm>
 #include <random>
+#include <array>
 #include "headers/Deck.h"
 #include "headers/Card.h"
 #include "headers/CardUtils.h"
@@ -26,7 +27,7 @@ void Deck::ResetDeckFromDiscardPile()
 	if (_discardPile.empty()) {
 		throw std::runtime_error("No cards in discard pile to reset deck");
 	}
-	_cards.insert(_cards.end(), std::make_move_iterator(_discardPile.begin()), std::make_move_iterator(_discardPile.end()));
+	_cards.insert(_cards.end(), _discardPile.begin(), _discardPile.end());
 
 	_discardPile.clear();
 	Shuffle();
@@ -39,14 +40,15 @@ Card Deck::DrawCard()
 		ResetDeckFromDiscardPile();
     } 
 
-	Card card = std::move(_cards.back());
+	Card card = _cards.back();
 	_cards.pop_back();
 	return card;
 }
 
-void Deck::Discard(Card card)
+// Adds a card to the discard pile
+void Deck::Discard(const Card& card)
 {
-	_discardPile.push_back(std::move(card));
+	_discardPile.push_back(card);
 }
 
 Card Deck::LastDiscard()
@@ -81,7 +83,6 @@ bool Deck::Validate()
 
 	std::string line;
 	int i = 0;
-	std::vector<CardAction> actions;
 		while (std::getline(inputFile, line)) {
 		i++;
 		//Ignoring empty lines and # commented lines
@@ -97,20 +98,27 @@ bool Deck::Validate()
 
 			// Try parse the values from GameData
 			CardType parsedType = CardUtils::ParseStrToCardType(type);
-			CardValue parsedValue = CardUtils::ParseStrToCardValue(value);
-			actions.clear();
-			for (char c : actionstr) {
-				if (c == ' ') continue;
-				actions.emplace_back(CardUtils::ParseCharToCardAction(c));
+			CardValue parsedValue = CardUtils::ParseStrToCardValue(value);	
+
+			std::array<CardAction, MAX_ACTIONS_PER_CARD> actions;
+			for (int i = 0; i< MAX_ACTIONS_PER_CARD; i++)
+			{
+				actions[i] = CardAction::Undefined;
 			}
 
-			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined || !IsValidActions(actions)) {
+			int i = 0;
+			for (char c : actionstr) {
+				if (c == ' ') continue;
+				actions[i] = CardUtils::ParseCharToCardAction(c);
+			}
+
+			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined) {
 				std::cout << "Failed to validate line " << i << " " << line << "\n";
 				return IsValid = false;
 			}
 
 			// Correctly parsed, adding it to a table for later use
-			Card card {id, parsedType, parsedValue, actions};
+			Card card {stoi(id), parsedType, parsedValue, actions};
 			_cardMap.emplace(card.Id(), card);
 		}
 	}
@@ -146,9 +154,9 @@ void Deck::Create(const char* fileName) {
 		//Ignoring empty lines and # commented lines
 		if (!line.empty() && line[0] != '#') {
 			bool validCard = false;
-			if (_cardMap.count(line)) {
+			if (_cardMap.count(stoi(line))) {
 				validCard = true;
-				_cards.emplace_back(_cardMap[line]);
+				_cards.emplace_back(_cardMap[stoi(line)]);
 			}
 			if (validCard = false) {
 				std::cout << "Invalid Card: " << line << i << "\n";

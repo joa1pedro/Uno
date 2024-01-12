@@ -27,14 +27,14 @@ public:
 	Card LastDiscard();
 	void ResetDeckFromDiscardPile();
 	void Shuffle();
-	void Discard(Card card);
+	void Discard(const Card& card);
     void Create(const char* fileName);
 	void Print();
 	std::vector<Card> Get();
 
 private:
 	bool Validate();
-    std::unordered_map<std::string, Card> _cardMap = {};
+    std::unordered_map<int, Card> _cardMap = {};
 	std::vector<Card> _cards = {};
 	std::vector<Card> _discardPile = {};
 };

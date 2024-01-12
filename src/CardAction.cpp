@@ -1,11 +1,12 @@
 #include <string>
-#include <vector>
+#include <array>
 #include "headers/CardAction.h"
+#include "headers/Card.h"
 
-bool IsValidActions(std::vector<CardAction>& actions)
+bool IsValidActions(std::array<CardAction, MAX_ACTIONS_PER_CARD> actions)
 {
-	for (CardAction cardAction : actions) {
-		if (cardAction == CardAction::Undefined) {
+	for (int i = 0; i < 3; i++) {
+		if (actions[i] == CardAction::Undefined) {
 			return false;
 		}
 	}

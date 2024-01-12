@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <vector>
+#include <array>
 
 enum class CardAction : int
 {
@@ -11,4 +11,4 @@ enum class CardAction : int
 	Undefined 
 };
 
-bool IsValidActions(std::vector<CardAction>& actions);
+bool IsValidActions(std::array<CardAction, 3> actions);

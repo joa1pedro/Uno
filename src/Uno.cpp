@@ -1,9 +1,14 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "headers/Player.h"
 #include "headers/GameState.h"
 #include "headers/Deck.h"
 #include "headers/CardUtils.h"
+#include "headers/GameManager.h"
+#include "headers/Command.h"
+#include "headers/PlayCommand.h"
+#include "headers/DrawCommand.h"
 
 #define Log(x) std::cout << x << std::endl;
 
@@ -23,7 +28,7 @@ bool ValidPlayersClamp(int value)
 	else return true;
 }
 
-void StartGame(/*std::vector<Players>&, Deck deck*/)
+void StartGame()
 {
 	// TODO Implement
 }
@@ -38,6 +43,38 @@ std::vector<Player> InitilizePlayers(int numberOfPlayers)
 	return players;
 }
 
+std::string toLowerCase(const std::string& input) {
+	std::string result = input;
+
+	// Convert each character in the string to lowercase
+	for (char& c : result) {
+		c = std::tolower(c);
+	}
+
+	return result;
+}
+
+std::unique_ptr<Command> parsePlayerInput(GameManager& gameManager, Player player, const std::string& input) {
+	std::istringstream iss(input);
+	std::string commandType;
+	iss >> commandType;
+
+	//if (toLowerCase(commandType) == "play") {
+	//	std::string card;
+	//	iss >> card;
+	//	return std::make_unique<PlayCommand>(gameManager, card, player);
+	//}
+	if (toLowerCase(commandType) == "draw") {
+		int numCards;
+		iss >> numCards;
+		return std::make_unique<DrawCommand>(numCards);
+	}
+	else {
+		std::cout << "Invalid command." << std::endl;
+		return nullptr;
+	}
+}
+
 int main(int argc, char** argv)
 {
 	// Initialize Game Deck
@@ -49,9 +86,15 @@ int main(int argc, char** argv)
 	}
 
 	deck.Shuffle();
-	deck.DrawCard();
-	deck.Discard(deck.Get().back());
-	deck.ResetDeckFromDiscardPile();
+	deck.Print();
+	Log("CardDrawn -----");
+	deck.DrawCard().Print();
+	Log("-----");
+
+	Log("Discarded -----------");
+	deck.Discard(deck.DrawCard());
+	deck.Print();
+
 
 	// Get the number of Players, clamped by MIN and MAX players
 	bool validInput = false;
@@ -69,7 +112,12 @@ int main(int argc, char** argv)
 		}
 	}
 
-	InitilizePlayers(numberOfPlayers);
-	//StartGame();
+	auto players = InitilizePlayers(numberOfPlayers);
+	GameManager gameManager{};
+	std::string input;
+
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::getline(std::cin, input);
+	parsePlayerInput(gameManager, players[0], input);
 	return EXIT_SUCCESS;
 }

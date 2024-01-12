@@ -3,8 +3,8 @@
 #include "headers/color.hpp" // https://github.com/aafulei/color-console
 #include "headers/CardUtils.h"
 
-Card::Card(std::string id, CardType type, CardValue value, std::vector<CardAction> actions)
-: _id(id), _type(type), _value(value), _actions(std::move(actions))
+Card::Card(int id, CardType type, CardValue value, std::array<CardAction, MAX_ACTIONS_PER_CARD> actions)
+: _id(id), _type(type), _value(value), _actions(actions)
 {
 }
 
@@ -46,7 +46,7 @@ int Card::PositionInHand()
     return _positionInHand;
 }
 
-std::string Card::Id() 
+int Card::Id() 
 {
     return _id;
 }
