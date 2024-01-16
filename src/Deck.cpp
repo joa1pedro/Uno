@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <random>
 #include <array>
+#include "headers/PlayableCard.h"
 #include "headers/Deck.h"
 #include "headers/Card.h"
 #include "headers/CardUtils.h"
@@ -34,37 +35,37 @@ void Deck::ResetDeckFromDiscardPile()
 }
 
 // Removes and returns the top card from the deck pile (last index of the vector).
-Card Deck::DrawCard()
+PlayableCard Deck::DrawCard()
 {
     if (_cards.empty()) {
 		ResetDeckFromDiscardPile();
     } 
 
-	Card card = _cards.back();
+	PlayableCard card = _cards.back();
 	_cards.pop_back();
 	return card;
 }
 
 // Adds a card to the discard pile
-void Deck::Discard(const Card& card)
+void Deck::Discard(const PlayableCard& card)
 {
 	_discardPile.push_back(card);
 }
 
-Card Deck::LastDiscard()
+PlayableCard Deck::LastDiscard()
 {
 	return _discardPile.back();
 }
 
 void Deck::Print()
 {
-	for (Card card : _cards)
+	for (PlayableCard card : _cards)
 	{
 		card.Print();
 	}
 }
 
-std::vector<Card> Deck::Get() {
+std::vector<PlayableCard> Deck::Get() {
 	return _cards;
 }
 
@@ -129,7 +130,7 @@ bool Deck::Validate()
 			}
 
 			// Validating if theres a Card Type, A CardValue and at least 1 valid CardAction
-			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined || IsValidActions(actions)) {
+			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined /*|| IsValidActions(actions))*/) {
 				std::cout << "Failed to validate line " << i << " " << line << " - Invalid data.\n";
 				return IsValid = false;
 			}

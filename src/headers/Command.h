@@ -2,7 +2,9 @@
 
 class Command {
 public:
-	virtual ~Command() {
-	}
+	Command() {}
+
+	virtual ~Command() {}
+
 	virtual void Execute() const = 0;
 };

@@ -48,6 +48,9 @@
     <ClCompile Include="src\PlayCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlayableCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="GameData\StandardDeck.txt">
@@ -100,10 +103,22 @@
     <ClInclude Include="src\headers\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\headers\PlayCommand.h">
+    <ClInclude Include="src\Commands\PlayCardCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\headers\DrawCommand.h">
+    <ClInclude Include="src\Commands\DrawCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\headers\PlayableCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\ReverseCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\SkipCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\Draw2Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

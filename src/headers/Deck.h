@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "IPrintable.h"
 #include "Card.h"
+#include "PlayableCard.h"
 
 class Deck : IPrintable {
 public:
@@ -23,18 +24,20 @@ public:
 	};
 
     // Functions
-	Card DrawCard();
-	Card LastDiscard();
+	PlayableCard DrawCard();
+	PlayableCard LastDiscard();
 	void ResetDeckFromDiscardPile();
 	void Shuffle();
-	void Discard(const Card& card);
+	void Discard(const PlayableCard& card);
     void Create(const char* fileName);
 	void Print();
-	std::vector<Card> Get();
-
+	std::vector<PlayableCard> Get();
+	std::unordered_map<int, Card> GetCardMap() {
+		return _cardMap;
+	}
 private:
 	bool Validate();
     std::unordered_map<int, Card> _cardMap = {};
-	std::vector<Card> _cards = {};
-	std::vector<Card> _discardPile = {};
+	std::vector<PlayableCard> _cards = {};
+	std::vector<PlayableCard> _discardPile = {};
 };

@@ -1,17 +1,16 @@
 #pragma once
 #include <vector>
-#include <memory>
-#include "Card.h"
-#include "Deck.h"
+#include "PlayableCard.h"
 
-class Player {
+class Player : IPrintable {
 public:
 	int Id;	
 	bool IsCurrentPlayer = false;
 
 	Player(int id);
 
-	std::vector<Card> Hand;
-	void Draw(Deck& deck, int numCards = 1);
-	void Play(int cardIndex, Card& topCard);
+	std::vector<PlayableCard> Hand;
+	void Discard(PlayableCard& card);
+	void Print();
+	void PrintHand();
 };

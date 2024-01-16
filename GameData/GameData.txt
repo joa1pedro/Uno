@@ -28,7 +28,7 @@
 #------------
 
 # Red Cards
-001:Red:0:
+001:Red:0:D
 002:Red:1:D
 003:Red:2:D
 004:Red:3:D
@@ -88,5 +88,5 @@
 052:Yellow:+2:D+
 
 # Wild Cards
-053:Wild:+4:++
-054:Wild:Skip:D
+053:Wild:+4:+
+054:Wild:Skip:S
