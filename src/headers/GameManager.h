@@ -30,12 +30,12 @@ public:
 	void InvertGameOrder();
 	void SkipNextPlayerTurn();
 	bool IsGameOrderInverted();
-	int GetNextTurnPlayerIndex();
+	int NextPlayer();
 private:
 	std::vector<std::shared_ptr<Command>> _beginTurnCommands;
 	std::vector<std::shared_ptr<Command>> _turnCommands;
 	std::shared_ptr<Deck> _deck;
 	bool _invertedGameOrder = false;
 	int _currentPlayer = 0;
-	int _numberOfPlayers = 2;
+	int _numberOfPlayers;
 };
