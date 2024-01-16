@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include "../headers/Command.h"
-#include "../headers/GameManager.h"
 
 class Draw2Command : public Command {
 private:

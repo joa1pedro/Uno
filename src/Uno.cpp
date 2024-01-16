@@ -166,7 +166,7 @@ int main(int argc, char** argv)
 		bool validTurn = GetPlayerInputCommand(gameManager, players[turnPlayer], input);
 		if (validTurn) {
 			gameManager->ExecuteTurn();
-			turnPlayer = gameManager->GetNextTurnPlayerIndex();
+			turnPlayer = gameManager->NextPlayer();
 		}
 
 		haveWinner = CheckVictoryCondition(players);

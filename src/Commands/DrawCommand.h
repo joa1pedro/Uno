@@ -1,6 +1,4 @@
-#pragma once
-#include <iostream>
-#include "../headers/Command.h"
+#pragma once>
 
 class DrawCommand : public Command {
 private:
@@ -13,7 +11,7 @@ public:
 	{}
 
 	void Execute() const override {
-		std::cout << "Draw 2 Game Order .\n";
+		std::cout << "Draw 2 Game Order .\n" << std::endl;;
 		this->_gameManager->DrawForPlayer(_player, 1);
 	}
 };

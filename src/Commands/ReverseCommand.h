@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-#include "../headers/GameManager.h"
 
 class ReverseCommand : public Command {
 private:

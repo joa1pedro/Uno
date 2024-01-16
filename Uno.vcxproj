@@ -127,16 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Command.cpp" />
     <ClCompile Include="src\CardUtils.cpp" />
-    <ClCompile Include="src\IPrintable.cpp" />
     <ClCompile Include="src\Card.cpp" />
-    <ClCompile Include="src\CardAction.cpp" />
     <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\PlayableCard.cpp" />
-    <ClCompile Include="src\PlayCommand.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Uno.cpp" />
   </ItemGroup>

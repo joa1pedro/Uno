@@ -1,8 +1,4 @@
 #pragma once
-#include <iostream>
-#include "../headers/GameManager.h"
-#include "../headers/Card.h"
-#include "../headers/Player.h"
 
 class PlayCardCommand : public Command {
 private:

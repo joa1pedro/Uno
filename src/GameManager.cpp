@@ -11,7 +11,7 @@
 #define InvertedGameOrder -1
 
 // 0 indexed turn players, first player is index 0 and last one is numberOfPlayers-1
-int GameManager::GetNextTurnPlayerIndex()
+int GameManager::NextPlayer()
 {
 	int lastPlayer = _numberOfPlayers - 1;
 	if (_invertedGameOrder) {
@@ -72,7 +72,7 @@ bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const
 }
 
 void GameManager::SkipNextPlayerTurn() {
-	GetNextTurnPlayerIndex();
+	NextPlayer();
 }
 
 void GameManager::ExecuteBeginTurn() 
@@ -105,7 +105,7 @@ void GameManager::DrawForPlayer(Player* player, int numberCards)
 {
 	for (int i = 0; i < numberCards; i++) {
 		player->Hand.push_back(_deck->DrawCard());
-		player->Hand.back().SetPositionInHand(player->Hand.size()-1);
+		player->Hand.back().SetPositionInHand(player->Hand.size() - 1);
 	}
 }
 
