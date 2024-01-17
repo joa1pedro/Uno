@@ -18,14 +18,14 @@ void Player::Discard(PlayableCard& card)
 	}
 }
 
-void Player::Print() 
+void Player::Print() const
 {
 	std::cout << "Player: " << Id << std::endl;
 }
 
-void Player::PrintHand()
+void Player::PrintHand() const
 {
-	for (PlayableCard& card : Hand)
+	for (const PlayableCard& card : Hand)
 	{
 		std::cout << "[" << card.PositionInHand() << "] ";
 		card.Print();

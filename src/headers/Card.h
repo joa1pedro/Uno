@@ -18,8 +18,8 @@ public:
 	CardValue _value = CardValue::Undefined;
 
 	// Functions
-	int Id();
-	std::array<CardAction, MAX_ACTIONS_PER_CARD> GetCardActions();
+	int Id() const;
+	std::array<CardAction, MAX_ACTIONS_PER_CARD> GetCardActions() const;
 private:
 	int _id = -1;
 	std::array<CardAction, MAX_ACTIONS_PER_CARD> _actions = {

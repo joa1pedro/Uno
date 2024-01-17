@@ -7,12 +7,12 @@ Card::Card(int id, CardType type, CardValue value, std::array<CardAction, MAX_AC
 {
 }
 
-std::array<CardAction, MAX_ACTIONS_PER_CARD> Card::GetCardActions()
+std::array<CardAction, MAX_ACTIONS_PER_CARD> Card::GetCardActions() const
 {
 	return _actions;
 }
 
-int Card::Id() 
+int Card::Id() const
 {
     return _id;
 }

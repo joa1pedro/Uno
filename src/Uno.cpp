@@ -38,11 +38,11 @@ bool ValidPlayersClamp(int value)
 	else return true;
 }
 
-std::vector<std::unique_ptr<Player>> InitilizePlayers(int numberOfPlayers)
+std::vector<std::shared_ptr<Player>> InitilizePlayers(int numberOfPlayers)
 {
-	std::vector<std::unique_ptr<Player>> players;
+	std::vector<std::shared_ptr<Player>> players;
 	for (int i = 0; i < numberOfPlayers; i++) {
-		players.emplace_back(std::move(std::make_unique<Player>(i)));
+		players.emplace_back(std::move(std::make_shared<Player>(i)));
 	}
 	return players;
 }
@@ -57,7 +57,10 @@ std::string toLowerCase(const std::string& input)
 	return result;
 }
 
-bool GetPlayerInputCommand(std::unique_ptr<GameManager>& gameManager, std::unique_ptr<Player>& player, const std::string& input)
+bool GetPlayerInputCommand(
+	std::unique_ptr<GameManager>& gameManager,
+	std::shared_ptr<Player>& player,
+	const std::string& input)
 {
 	std::istringstream iss(input);
 	std::string commandType;
@@ -115,8 +118,9 @@ int GetNumberOfPlayers()
 	return numberOfPlayers;
 }
 
-bool CheckVictoryCondition(std::vector<std::unique_ptr<Player>>& players) {
-	std::for_each(players.begin(), players.end(), [](const std::unique_ptr<Player>& ptr) {
+bool CheckVictoryCondition(std::vector<std::shared_ptr<Player>>& players) {
+	std::for_each(players.begin(), players.end(), [](const std::shared_ptr<Player>& ptr) 
+	{
 		if (ptr->Hand.size() == 0) {
 			std::cout << "Player " << ptr->Id << "Won!";
 			return true;
@@ -129,17 +133,17 @@ int main(int argc, char** argv)
 {
 	// Initialize Game Deck
 	const char* filename = (argc > 1) ? argv[1] : "StandardDeck.txt";
-	Deck deck { filename };
-	if (!deck.IsValid) {
+	std::shared_ptr<Deck> deckPtr = std::make_shared<Deck>( filename );
+	if (!deckPtr->IsValid) {
 		return EXIT_FAILURE;
 	}
 
 	// Initialize Players
-	int numberOfPlayers = GetNumberOfPlayers(); // <- Grabs input
-	std::vector<std::unique_ptr<Player>> players = std::vector< std::unique_ptr<Player>>(InitilizePlayers(numberOfPlayers));
+	int numberOfPlayers = GetNumberOfPlayers(); // <- Function Grabs input
+	std::vector<std::shared_ptr<Player>> players { InitilizePlayers(numberOfPlayers) };
 
 	// Initialize GameManager
-	std::unique_ptr<GameManager> gameManager = std::make_unique<GameManager>(std::make_shared<Deck>(deck), players.size());
+	std::unique_ptr<GameManager> gameManager = std::make_unique<GameManager>(deckPtr, players.size());
 
 	// Game prep initialization
 	gameManager->ShuffleDeck();

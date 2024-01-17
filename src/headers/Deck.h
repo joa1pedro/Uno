@@ -25,16 +25,14 @@ public:
 
     // Functions
 	PlayableCard DrawCard();
-	PlayableCard LastDiscard();
+	PlayableCard LastDiscard() const;
 	void ResetDeckFromDiscardPile();
 	void Shuffle();
 	void Discard(const PlayableCard& card);
     void Create(const char* fileName);
-	void Print();
-	std::vector<PlayableCard> Get();
-	std::unordered_map<int, Card> GetCardMap() {
-		return _cardMap;
-	}
+	void Print() const;
+	std::vector<PlayableCard> Get() const;
+	std::unordered_map<int, Card> GetCardMap() const;
 private:
 	bool Validate();
     std::unordered_map<int, Card> _cardMap = {};

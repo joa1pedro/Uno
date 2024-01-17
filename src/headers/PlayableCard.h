@@ -15,16 +15,16 @@ public:
 	CardType _typeOverride = CardType::Undefined; // Used for Wild Type purposes
 
 	// Functions
-	int Id();
-	int PositionInHand();
-	void Print();
+	int Id() const;
+	int PositionInHand() const;
+	void Print() const;
 	void SetPositionInHand(int position);
 	void SetTypeOverride(CardType typeOverride);
-	CardType GetType();
-	CardType GetTypeOverride();
-	CardValue GetValue();
+	CardType GetType() const;
+	CardType GetTypeOverride() const;
+	CardValue GetValue() const;
 private:
-	void PrintType(CardType type);
+	void PrintType(CardType type) const;
 
 	CardType _type = CardType::Undefined;
 	CardValue _value = CardValue::Undefined;

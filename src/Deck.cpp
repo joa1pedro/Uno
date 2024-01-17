@@ -52,21 +52,25 @@ void Deck::Discard(const PlayableCard& card)
 	_discardPile.push_back(card);
 }
 
-PlayableCard Deck::LastDiscard()
+PlayableCard Deck::LastDiscard() const 
 {
 	return _discardPile.back();
 }
 
-void Deck::Print()
+void Deck::Print() const
 {
-	for (PlayableCard card : _cards)
+	for (const PlayableCard& card : _cards)
 	{
 		card.Print();
 	}
 }
 
-std::vector<PlayableCard> Deck::Get() {
+std::vector<PlayableCard> Deck::Get() const {
 	return _cards;
+}
+
+std::unordered_map<int, Card> Deck::GetCardMap() const {
+	return _cardMap;
 }
 
 bool IsValidActions(std::array<CardAction, MAX_ACTIONS_PER_CARD> actions)

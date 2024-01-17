@@ -24,9 +24,9 @@ int GameManager::NextPlayer()
 	return _currentPlayer;
 }
 
-void GameManager::DistributeCards(std::vector<std::unique_ptr<Player>>& players) 
+void GameManager::DistributeCards(std::vector<std::shared_ptr<Player>>& players) 
 {
-	for (std::unique_ptr<Player>& player : players)
+	for (const std::shared_ptr<Player>& player : players)
 	{
 		for (int i = 0; i < INITIAL_HAND_SIZE; i++) {
 			player->Hand.push_back(_deck->DrawCard());
@@ -35,10 +35,10 @@ void GameManager::DistributeCards(std::vector<std::unique_ptr<Player>>& players)
 	}
 }
 
-bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const std::string& aditionalCommand) 
+bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const std::string& aditionalCommand)
 {
 	Card card = _deck->GetCardMap()[cardPtr->Id()];
-
+	
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
 		if (card.GetCardActions()[i] == CardAction::Default) {
 			if (!(card._type == _deck->LastDiscard().GetType()

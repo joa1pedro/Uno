@@ -14,7 +14,7 @@ PlayableCard::PlayableCard(Card card)
 }
 
 // Pattern: [_id] CardType(Colored) CardValue
-void PlayableCard::Print()
+void PlayableCard::Print() const
 {
 	//Set to Color Type
 	PrintType(_type);
@@ -29,7 +29,7 @@ void PlayableCard::Print()
 	}
 }
 
-void PlayableCard::PrintType(CardType type) {
+void PlayableCard::PrintType(CardType type) const {
 	switch (type)
 	{
 	case CardType::Green:
@@ -55,7 +55,7 @@ void PlayableCard::PrintType(CardType type) {
 	}
 }
 
-int PlayableCard::PositionInHand()
+int PlayableCard::PositionInHand() const
 {
 	return _positionInHand;
 }
@@ -65,22 +65,22 @@ void PlayableCard::SetPositionInHand(int position)
 	_positionInHand = position;
 }
 
-int PlayableCard::Id()
-{
+int PlayableCard::Id() const
+{ 
 	return _id;
 }
 
-CardType PlayableCard::GetType() 
+CardType PlayableCard::GetType() const
 {
 	return _type;
 }
 
-CardValue PlayableCard::GetValue()
+CardValue PlayableCard::GetValue() const
 {
 	return _value;
 }
 
-CardType PlayableCard::GetTypeOverride()
+CardType PlayableCard::GetTypeOverride() const
 {
 	return _typeOverride;
 }

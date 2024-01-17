@@ -14,7 +14,7 @@ public:
 		: _deck(deckPtr), _numberOfPlayers(numberOfPlayers)
 	{}
 
-	void DistributeCards(std::vector<std::unique_ptr<Player>>& players);
+	void DistributeCards(std::vector<std::shared_ptr<Player>>& players);
 
 	// Command Functions
 	bool FetchTurnCommands(Player* player, PlayableCard* card, const std::string& aditionalCommand);

@@ -11,6 +11,6 @@ public:
 
 	std::vector<PlayableCard> Hand;
 	void Discard(PlayableCard& card);
-	void Print();
-	void PrintHand();
+	void Print() const;
+	void PrintHand() const;
 };
