@@ -58,13 +58,15 @@ std::string toLowerCase(const std::string& input)
 }
 
 bool GetPlayerInputCommand(
-	std::unique_ptr<GameManager>& gameManager,
-	std::shared_ptr<Player>& player,
+	std::shared_ptr<GameManager> gameManagerPtr,
+	std::shared_ptr<Player> playerPtr,
 	const std::string& input)
 {
 	std::istringstream iss(input);
 	std::string commandType;
 	iss >> commandType;
+	
+	gameManagerPtr->DiscardFirst();
 
 	if (toLowerCase(commandType) == "play") {
 		int cardPositionInHand;
@@ -80,17 +82,17 @@ bool GetPlayerInputCommand(
 			// TODO treat uno word
 		}
 
-		if (cardPositionInHand >= player->Hand.size()) {
+		if (cardPositionInHand >= playerPtr->Hand.size()) {
 			Log("Invalid Card Selected.");
 			return false;
 		}
 
-		PlayableCard* cardPtr = &player->Hand[cardPositionInHand];
-		return gameManager->FetchTurnCommands(player.get(), cardPtr, additionalCommand);
+		PlayableCard* cardPtr = &playerPtr->Hand[cardPositionInHand];
+		return gameManagerPtr->FetchTurnCommands(playerPtr.get(), cardPtr, additionalCommand);
 	}
 	if (toLowerCase(commandType) == "draw") {
 		int numCards = 1;
-		std::make_unique<DrawCommand>(gameManager.get(), player.get())->Execute();
+		std::make_unique<DrawCommand>(gameManagerPtr.get(), playerPtr.get())->Execute();
 		return true;
 	}
 	else {
@@ -143,7 +145,7 @@ int main(int argc, char** argv)
 	std::vector<std::shared_ptr<Player>> players { InitilizePlayers(numberOfPlayers) };
 
 	// Initialize GameManager
-	std::unique_ptr<GameManager> gameManager = std::make_unique<GameManager>(deckPtr, players.size());
+	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deckPtr, players.size());
 
 	// Game prep initialization
 	gameManager->ShuffleDeck();
