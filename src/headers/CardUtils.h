@@ -28,6 +28,15 @@ public:
 		return ParseCharToEnum<CardAction>(c, cardActionCharToEnumMap);
 	}
 
+	// Card Comparison
+	static const bool IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) ;
+
+	// Compares the selected card Type or TypeOverride with the last discard.
+	static const bool HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard) ;
+
+	// Compares the selected card Value with the last discard
+	static const bool HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard) ;
+
 private:
 	// Helper templates to make conversions using a lookup tables
 	template <typename T>

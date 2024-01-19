@@ -49,15 +49,6 @@ public:
 
 	// Returns if the game order is currently inverted
 	bool IsGameOrderInverted();
-	
-	// Card Comparison
-	bool IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) const;
-
-	// Compares the selected card Type or TypeOverride with the last discard.
-	bool HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard) const;
-
-	// Compares the selected card Value with the last discard
-	bool HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard) const;
 
 	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the target card
 	bool CheckDiscardPile(Card& card);

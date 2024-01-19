@@ -57,3 +57,18 @@ const std::unordered_map<char, CardAction> CardUtils::cardActionCharToEnumMap = 
 	{'S', CardAction::Skip },
 	{'R', CardAction::Reverse }
 };
+
+bool const CardUtils::HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard)
+{
+	return selectedCard._type == lastDiscard.GetType() || selectedCard._type == lastDiscard.GetTypeOverride();
+}
+
+bool const  CardUtils::HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard)
+{
+	return selectedCard._value == lastDiscard.GetValue();
+}
+
+bool const  CardUtils::IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) 
+{
+	return HasMatchingType(selectedCard, lastDiscard) || HasMatchingValue(selectedCard, lastDiscard);
+}

@@ -35,26 +35,11 @@ void GameManager::DistributeCards()
 	}
 }
 
-bool GameManager::IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) const
-{
-	return HasMatchingType(selectedCard, lastDiscard) || HasMatchingValue(selectedCard, lastDiscard);
-}
-
-bool GameManager::HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard) const
-{
-	return selectedCard._type == lastDiscard.GetType() || selectedCard._type == lastDiscard.GetTypeOverride();
-}
-
-bool GameManager::HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard) const
-{
-	return selectedCard._value == lastDiscard.GetValue();
-}
-
 bool GameManager::CheckDiscardPile(Card& card)
 {
 	const PlayableCard& lastDiscard = _deck->LastDiscard();
 
-	if (!IsValidCard(card, lastDiscard))
+	if (!CardUtils::IsValidCard(card, lastDiscard))
 	{
 		std::cout << "Invalid Card Selected." << std::endl;
 		_turnCommands.clear();
