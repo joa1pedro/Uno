@@ -1,16 +1,33 @@
+#include <iostream>
+#include <vector>
 #include "headers/Player.h"
-#include "headers/Card.h"
+#include "headers/PlayableCard.h"
 
 Player::Player(int id)
  : Id(id)
 {}
 
-void Player::Draw(Deck& deck, int numCards /*= 1*/)
+// Only removes the desired card from the Player hand
+// Make sure to add that card to the Discard Pile
+void Player::Discard(PlayableCard card)
 {
-    // TODO Implement
+	Hand.erase(Hand.begin() + card.PositionInHand());
+	// Refresh position in hand for the cards
+	for (int i = 0; i < Hand.size(); i++) {
+		Hand[i].SetPositionInHand(i);
+	}
 }
 
-void Player::Play(int cardIndex, Card& topCard)
+void Player::Print() const
 {
-    // Todo Implement
+	std::cout << "Player: " << Id << std::endl;
+}
+
+void Player::PrintHand() const
+{
+	for (const PlayableCard& card : Hand)
+	{
+		std::cout << "[" << card.PositionInHand() << "] ";
+		card.Print();
+	}
 }

@@ -2,6 +2,6 @@
 
 class IPrintable
 {
-	virtual void Print() = 0;
+	virtual void Print() const = 0;
 };
 

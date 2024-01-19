@@ -128,12 +128,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\CardUtils.cpp" />
-    <ClCompile Include="src\IPrintable.cpp" />
     <ClCompile Include="src\Card.cpp" />
-    <ClCompile Include="src\CardAction.cpp" />
     <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
-    <ClCompile Include="src\GameState.cpp" />
+    <ClCompile Include="src\PlayableCard.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Uno.cpp" />
   </ItemGroup>
@@ -143,6 +141,7 @@
     <Text Include="GameData\StandardDeck.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\headers\Command.h" />
     <ClInclude Include="src\headers\Card.h" />
     <ClInclude Include="src\headers\CardAction.h" />
     <ClInclude Include="src\headers\CardType.h" />
@@ -150,9 +149,16 @@
     <ClInclude Include="src\headers\CardValue.h" />
     <ClInclude Include="src\headers\color.hpp" />
     <ClInclude Include="src\headers\Deck.h" />
-    <ClInclude Include="src\headers\GameState.h" />
+    <ClInclude Include="src\Commands\Draw2Command.h" />
+    <ClInclude Include="src\Commands\DrawCommand.h" />
+    <ClInclude Include="src\headers\GameManager.h" />
+    <ClInclude Include="src\Commands\ReverseCommand.h" />
     <ClInclude Include="src\headers\IPrintable.h" />
+    <ClInclude Include="src\headers\Mediator.h" />
+    <ClInclude Include="src\headers\PlayableCard.h" />
+    <ClInclude Include="src\Commands\PlayCardCommand.h" />
     <ClInclude Include="src\headers\Player.h" />
+    <ClInclude Include="src\Commands\SkipCommand.h" />
     <ClInclude Include="src\headers\Uno.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

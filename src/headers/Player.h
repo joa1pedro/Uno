@@ -1,17 +1,21 @@
 #pragma once
 #include <vector>
-#include <memory>
-#include "Card.h"
-#include "Deck.h"
+#include "PlayableCard.h"
 
-class Player {
+class Player : IPrintable {
 public:
 	int Id;	
-	bool IsCurrentPlayer = false;
 
 	Player(int id);
 
-	std::vector<Card> Hand;
-	void Draw(Deck& deck, int numCards = 1);
-	void Play(int cardIndex, Card& topCard);
+	std::vector<PlayableCard> Hand;
+
+	// Removes the selected card from this player hand
+	void Discard(PlayableCard card);
+
+	// Prints the Id of this player. Format: Player [id]
+	void Print() const;
+
+	// Prints the current card in hand for this player
+	void PrintHand() const;
 };

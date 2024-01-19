@@ -1,27 +1,30 @@
 #pragma once
-#include <string>
-#include <vector>
+#include <array>
 #include "CardType.h"
 #include "CardAction.h"
 #include "CardValue.h"
-#include "IPrintable.h"
+#include "Mediator.h"
 
-class Card : IPrintable {
+int const MAX_ACTIONS_PER_CARD = 3;
+
+class Card {
 public:
-	// Constructors
-	Card() {};
-	Card(std::string _id, CardType type, CardValue value, std::vector<CardAction> actions);
+	Card() = default;
+	Card(int _id, CardType type, CardValue value, std::array<CardAction, MAX_ACTIONS_PER_CARD> actions);
 
-	// Functions
-	std::string Id();
-	int PositionInHand();
-	void Print();
-
-private:
 	CardType _type = CardType::Undefined;
 	CardValue _value = CardValue::Undefined;
-	std::string _id = "";
-	std::vector<CardAction> _actions {};
-	bool _isPlayable = false;
-	int _positionInHand = 0;
+
+	//Returns the ID of this card
+	int Id() const;
+
+	// Returns an array of CardActions for this Card
+	std::array<CardAction, MAX_ACTIONS_PER_CARD> GetCardActions() const;
+private:
+	int _id = -1;
+	std::array<CardAction, MAX_ACTIONS_PER_CARD> _actions = {
+		CardAction::Undefined,
+		CardAction::Undefined,
+		CardAction::Undefined 
+	};
 };

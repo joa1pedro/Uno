@@ -1,9 +1,10 @@
 #pragma once
-#include <string>
 #include <unordered_map>
 #include "CardValue.h"
 #include "CardType.h"
 #include "CardAction.h"
+#include "PlayableCard.h"
+#include "Card.h"
 
 class CardUtils {
 public:
@@ -26,6 +27,15 @@ public:
 	static CardAction ParseCharToCardAction(char& c) {
 		return ParseCharToEnum<CardAction>(c, cardActionCharToEnumMap);
 	}
+
+	// Card Comparison. Matches the Card with PlayableCard if it has same CardValue, CardType or TypeOverride
+	static const bool IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) ;
+
+	// Compares the selected card Type or TypeOverride with the last discard.
+	static const bool HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard) ;
+
+	// Compares the selected card Value with the last discard
+	static const bool HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard) ;
 
 private:
 	// Helper templates to make conversions using a lookup tables
