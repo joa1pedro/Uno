@@ -64,7 +64,7 @@ bool GameManager::CheckDiscardPile(Card& card)
 	return true;
 }
 
-bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const std::string& aditionalCommand)
+bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard* cardPtr, const std::string& aditionalCommand)
 {
 	Card card = _deck->GetCardMap()[cardPtr->Id()];
 	
@@ -114,7 +114,7 @@ void GameManager::ExecuteTurn()
 	_turnCommands.clear();
 }
 
-void GameManager::PlayCard(Player* player, PlayableCard* card) 
+void GameManager::PlayCard(std::shared_ptr<Player> player, PlayableCard* card)
 {
 	std::cout << "Discarding card: ";
 	card->Print();

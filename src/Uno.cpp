@@ -86,7 +86,7 @@ bool GetPlayerInputCommand(
 		}
 
 		PlayableCard* cardPtr = &playerPtr->Hand[cardPositionInHand];
-		return gameManagerPtr->FetchTurnCommands(playerPtr.get(), cardPtr, additionalCommand);
+		return gameManagerPtr->FetchTurnCommands(playerPtr, cardPtr, additionalCommand);
 	}
 	if (toLowerCase(commandType) == "draw") {
 		int numCards = 1;

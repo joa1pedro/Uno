@@ -4,10 +4,10 @@ class PlayCardCommand : public Command {
 private:
 	PlayableCard* _card;
 	GameManager* _gameManager;
-	Player* _player;
+	std::shared_ptr<Player> _player;
 
 public:
-	PlayCardCommand(GameManager* gameManager, Player* player, PlayableCard* card, CardType typeOverride = CardType::Undefined) :
+	PlayCardCommand(GameManager* gameManager, std::shared_ptr<Player> player, PlayableCard* card, CardType typeOverride = CardType::Undefined) :
 		Command(), _card(card), _gameManager(gameManager), _player(player)
 	{ }
 
