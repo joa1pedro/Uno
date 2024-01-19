@@ -10,12 +10,12 @@ static int INITIAL_HAND_SIZE = 7;
 
 class GameManager {
 public:
-	GameManager(std::shared_ptr<Deck> deckPtr, int numberOfPlayers)
-		: _deck(deckPtr), _numberOfPlayers(numberOfPlayers)
+	GameManager(std::shared_ptr<Deck> deckPtr, std::vector<std::shared_ptr<Player>> players)
+		: _deck(deckPtr), _players((players)), _numberOfPlayers(_players.size())
 	{}
 
 	// Distribute all cards from the current deck for all players
-	void DistributeCards(std::vector<std::shared_ptr<Player>>& players);
+	void DistributeCards();
 
 	// Fetch all commands for that turn
 	bool FetchTurnCommands(Player* player, PlayableCard* card, const std::string& aditionalCommand);
@@ -44,7 +44,7 @@ public:
 	// Inverts the game order for the next turn
 	void InvertGameOrder();
 	
-	// Pass the turn for the next player.
+	// Pass the turn for the next player. Returns the index of the next player 
 	int PassTurn();
 
 	// Returns if the game order is currently inverted
@@ -59,11 +59,12 @@ public:
 	// Compares the selected card Value with the last discard
 	bool HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard) const;
 
-	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the targed card
+	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the target card
 	bool CheckDiscardPile(Card& card);
 private:
 	std::vector<std::shared_ptr<Command>> _beginTurnCommands;
 	std::vector<std::shared_ptr<Command>> _turnCommands;
+	std::vector<std::shared_ptr<Player>> _players;
 	std::shared_ptr<Deck> _deck;
 	bool _invertedGameOrder = false;
 	int _currentPlayer = 0;

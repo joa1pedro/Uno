@@ -2,11 +2,11 @@
 
 class DrawCommand : public Command {
 private:
-	GameManager* _gameManager;
-	Player* _player;
+	std::shared_ptr<GameManager> _gameManager;
+	std::shared_ptr<Player> _player;
 
 public:
-	DrawCommand(GameManager* gameManager, Player* player) :
+	DrawCommand(std::shared_ptr<GameManager> gameManager, std::shared_ptr<Player> player) :
 		Command(), _gameManager(gameManager), _player(player)
 	{}
 

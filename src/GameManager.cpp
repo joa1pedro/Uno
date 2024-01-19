@@ -24,9 +24,9 @@ int GameManager::PassTurn()
 	return _currentPlayer;
 }
 
-void GameManager::DistributeCards(std::vector<std::shared_ptr<Player>>& players) 
+void GameManager::DistributeCards() 
 {
-	for (const std::shared_ptr<Player>& player : players)
+	for (const std::shared_ptr<Player>& player : _players)
 	{
 		for (int i = 0; i < INITIAL_HAND_SIZE; i++) {
 			player->Hand.push_back(_deck->DrawCard());

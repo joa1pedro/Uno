@@ -90,8 +90,8 @@ bool GetPlayerInputCommand(
 	}
 	if (toLowerCase(commandType) == "draw") {
 		int numCards = 1;
-		auto drawCommand = std::make_unique<DrawCommand>(gameManagerPtr.get(), playerPtr.get());
-		drawCommand->Execute();
+		DrawCommand drawCommand { gameManagerPtr, playerPtr };
+		drawCommand.Execute();
 		return true;
 	}
 	else {
@@ -147,11 +147,11 @@ int main(int argc, char** argv)
 	std::vector<std::shared_ptr<Player>> players { InitilizePlayers(numberOfPlayers) };
 
 	// Initialize GameManager
-	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deckPtr, players.size());
+	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deckPtr, players);
 
 	// Game prep initialization
 	gameManager->ShuffleDeck();
-	gameManager->DistributeCards(players);
+	gameManager->DistributeCards();
 	gameManager->DiscardFirst(); 
 	
 	ClearBuffer();
