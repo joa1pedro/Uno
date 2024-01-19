@@ -70,12 +70,12 @@ bool GetPlayerInputCommand(
 		int cardPositionInHand;
 		iss >> cardPositionInHand;
 
-		std::string unoWordCheck;
 		std::string additionalCommand;
-
 		iss >> additionalCommand;
 
+		std::string unoWordCheck;
 		iss >> unoWordCheck;
+		
 		if (toLowerCase(unoWordCheck) == "uno") {
 			// TODO treat uno word
 		}
@@ -90,7 +90,8 @@ bool GetPlayerInputCommand(
 	}
 	if (toLowerCase(commandType) == "draw") {
 		int numCards = 1;
-		std::make_unique<DrawCommand>(gameManagerPtr.get(), playerPtr.get())->Execute();
+		auto drawCommand = std::make_unique<DrawCommand>(gameManagerPtr.get(), playerPtr.get());
+		drawCommand->Execute();
 		return true;
 	}
 	else {
@@ -99,22 +100,25 @@ bool GetPlayerInputCommand(
 	}
 }
 
-int GetNumberOfPlayers()
-{
-	// Get the number of Players, clamped by MIN and MAX players
-	bool validInput = false;
+// Grabs input for the number of players, clamped by MIN_PLAYERS - MAX_PLAYERS 
+int GetNumberOfPlayers() {
 	int numberOfPlayers;
+	bool validInput = false;
+
 	while (!validInput) {
-		Log("How Many Players? (2 - 10)\n");
+		std::cout << "How Many Players? (2 - 10)\n";
 		std::cin >> numberOfPlayers;
 
-		if (ValidPlayersClamp(numberOfPlayers)) {
-			validInput = true;
+		if (std::cin.fail() || !ValidPlayersClamp(numberOfPlayers)) {
+			std::cin.clear(); // Clear error flag
+			ClearBuffer(); // Discard invalid input
+			std::cout << "Invalid input. Please enter a valid number between 2 and 10.\n";
 		}
 		else {
-			ClearBuffer();
+			validInput = true;
 		}
 	}
+
 	return numberOfPlayers;
 }
 
@@ -139,7 +143,7 @@ int main(int argc, char** argv)
 	}
 
 	// Initialize Players
-	int numberOfPlayers = GetNumberOfPlayers(); // <- Function Grabs input
+	int numberOfPlayers = GetNumberOfPlayers(); 
 	std::vector<std::shared_ptr<Player>> players { InitilizePlayers(numberOfPlayers) };
 
 	// Initialize GameManager
