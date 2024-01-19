@@ -15,7 +15,11 @@ std::string const GAMEDATA_PATH = "./GameData/GameData.txt";
 std::string const GAMEDATA_FILE_PATH = "./GameData/";
 int const MAX_CARDS_IN_DECK = 200;
 
-// Shuffles the deck 
+bool Deck::IsValid()
+{
+	return _isValid;
+}
+
 void Deck::Shuffle()
 {   
 	std::random_device rd;  // Use a random device to obtain a random seed
@@ -34,7 +38,6 @@ void Deck::ResetDeckFromDiscardPile()
 	Shuffle();
 }
 
-// Removes and returns the top card from the deck pile (last index of the vector).
 PlayableCard Deck::DrawCard()
 {
     if (_cards.empty()) {
@@ -46,7 +49,6 @@ PlayableCard Deck::DrawCard()
 	return card;
 }
 
-// Adds a card to the discard pile
 void Deck::Discard(const PlayableCard& card)
 {
 	_discardPile.push_back(card);
@@ -83,17 +85,16 @@ bool IsValidActions(std::array<CardAction, MAX_ACTIONS_PER_CARD> actions)
 	return false;  // No valid action found
 }
 
-// Reads the GameData.txt file and creates a card for each defined, putting it on a map for latter adding it to a deck.
 bool Deck::Validate()
 {
 	// Early exit if deck was validated previously
-	if (IsValid) return true;
+	if (_isValid) return true;
 
 	std::ifstream inputFile(GAMEDATA_PATH);
 
 	if (!inputFile.is_open()) {
 		std::cerr << "Error opening file: " << GAMEDATA_PATH << std::endl;
-		return IsValid = false;
+		return _isValid = false;
 	}
 
 	std::string line;
@@ -120,23 +121,23 @@ bool Deck::Validate()
 			int j = 0;
 			if (actionstr.empty()) {
 				std::cout << "Failed to validate line " << i << " " << line << " - No actions.\n";
-				return IsValid = false;
+				return _isValid = false;
 			}
 
 			for (char c : actionstr) {
 				if (c == ' ') continue;
 				if (j > MAX_ACTIONS_PER_CARD-1) {
 					std::cout << "Failed to validate line " << i << " " << line << " - Too many actions.\n";
-					return IsValid = false;
+					return _isValid = false;
 				}
 				actions[j] = CardUtils::ParseCharToCardAction(c);
 				j++;
 			}
 
 			// Validating if theres a Card Type, A CardValue and at least 1 valid CardAction
-			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined /*|| IsValidActions(actions))*/) {
+			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined /*|| _isValidActions(actions))*/) {
 				std::cout << "Failed to validate line " << i << " " << line << " - Invalid data.\n";
-				return IsValid = false;
+				return _isValid = false;
 			}
 
 			// Correctly parsed, adding it to a table for later use
@@ -146,10 +147,9 @@ bool Deck::Validate()
 	}
 
 	std::cout << "Game Data Validated Successfully\n";
-	return IsValid = true;
+	return _isValid = true;
 }
 
-// Created a deck based on structured .txt data like StandardDeck.txt, based on previously validated Game Data
 void Deck::Create(const char* fileName) {
 	_cards.clear();
 	_cards.reserve(MAX_CARDS_IN_DECK);

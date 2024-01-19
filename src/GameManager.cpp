@@ -11,7 +11,7 @@
 #define InvertedGameOrder -1
 
 // 0 indexed turn players, first player is index 0 and last one is numberOfPlayers-1
-int GameManager::SkipNextPlayerTurn()
+int GameManager::PassTurn()
 {
 	int lastPlayer = _numberOfPlayers - 1;
 	if (_invertedGameOrder) {
@@ -50,7 +50,7 @@ bool GameManager::HasMatchingValue(const Card& selectedCard, const PlayableCard&
 	return selectedCard._value == lastDiscard.GetValue();
 }
 
-bool GameManager::CheckDicardPile(Card& card)
+bool GameManager::CheckDiscardPile(Card& card)
 {
 	const PlayableCard& lastDiscard = _deck->LastDiscard();
 
@@ -70,7 +70,7 @@ bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const
 	
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
 		if (card.GetCardActions()[i] == CardAction::Default) {
-			return CheckDicardPile(card);
+			return CheckDiscardPile(card);
 		}
 		if (card.GetCardActions()[i] == CardAction::Reverse) {
 			_turnCommands.emplace_back(std::make_shared<ReverseCommand>(this));
@@ -95,9 +95,11 @@ bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const
 
 void GameManager::ExecuteBeginTurn() 
 {
-	for (const std::shared_ptr<Command>& commandPtr : _beginTurnCommands) {
-		commandPtr->Execute();
+	for (auto itr = _beginTurnCommands.size(); itr-- > 0;)
+	{
+		_beginTurnCommands[itr]->Execute();
 	}
+	_beginTurnCommands.clear();
 }
 
 void GameManager::ExecuteTurn() 
@@ -114,7 +116,10 @@ void GameManager::PlayCard(Player* player, PlayableCard* card)
 {
 	std::cout << "Discarding card: ";
 	card->Print();
+
+	//Reseting the type override for the last card before the new one gets discarded
 	_deck->LastDiscard().SetTypeOverride(CardType::Undefined);
+
 	_deck->Discard(*card);
 	player->Discard(*card);
 }

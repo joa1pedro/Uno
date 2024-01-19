@@ -13,7 +13,6 @@ PlayableCard::PlayableCard(Card card)
 {
 }
 
-// Pattern: [_id] CardType(Colored) CardValue
 void PlayableCard::Print() const
 {
 	//Set to Color Type
