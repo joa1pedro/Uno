@@ -3,6 +3,8 @@
 #include "CardValue.h"
 #include "CardType.h"
 #include "CardAction.h"
+#include "PlayableCard.h"
+#include "Card.h"
 
 class CardUtils {
 public:

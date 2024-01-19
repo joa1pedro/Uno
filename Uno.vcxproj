@@ -131,7 +131,6 @@
     <ClCompile Include="src\Card.cpp" />
     <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
-    <ClCompile Include="src\GameState.cpp" />
     <ClCompile Include="src\PlayableCard.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Uno.cpp" />
@@ -153,7 +152,6 @@
     <ClInclude Include="src\Commands\Draw2Command.h" />
     <ClInclude Include="src\Commands\DrawCommand.h" />
     <ClInclude Include="src\headers\GameManager.h" />
-    <ClInclude Include="src\headers\GameState.h" />
     <ClInclude Include="src\Commands\ReverseCommand.h" />
     <ClInclude Include="src\headers\IPrintable.h" />
     <ClInclude Include="src\headers\Mediator.h" />

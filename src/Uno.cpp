@@ -5,7 +5,6 @@
 #include <algorithm>
 
 #include "headers/Player.h"
-#include "headers/GameState.h"
 #include "headers/Deck.h"
 #include "headers/CardUtils.h"
 #include "headers/GameManager.h"

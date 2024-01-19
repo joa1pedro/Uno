@@ -5,6 +5,8 @@
 #include "CardValue.h"
 #include "IPrintable.h"
 
+// Class to be implemented with no complex Class members, only primitive types as a struct would be
+// This allow us to save time without moving things, copies can be made easily.
 class PlayableCard : IPrintable {
 public:
 	PlayableCard() = default;
