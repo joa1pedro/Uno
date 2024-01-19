@@ -156,6 +156,7 @@
     <ClInclude Include="src\headers\GameState.h" />
     <ClInclude Include="src\Commands\ReverseCommand.h" />
     <ClInclude Include="src\headers\IPrintable.h" />
+    <ClInclude Include="src\headers\Mediator.h" />
     <ClInclude Include="src\headers\PlayableCard.h" />
     <ClInclude Include="src\Commands\PlayCardCommand.h" />
     <ClInclude Include="src\headers\Player.h" />

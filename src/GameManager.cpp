@@ -35,20 +35,42 @@ void GameManager::DistributeCards(std::vector<std::shared_ptr<Player>>& players)
 	}
 }
 
+bool GameManager::IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard)
+{
+	return HasMatchingType(selectedCard, lastDiscard) || HasMatchingValue(selectedCard, lastDiscard);
+}
+
+bool GameManager::HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard)
+{
+	return selectedCard._type == lastDiscard.GetType() || selectedCard._type == lastDiscard.GetTypeOverride();
+}
+
+bool GameManager::HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard)
+{
+	return selectedCard._value == lastDiscard.GetValue();
+}
+
+bool GameManager::CheckDicardPile(Card& card)
+{
+	const PlayableCard& lastDiscard = _deck->LastDiscard();
+
+	if (!IsValidCard(card, lastDiscard))
+	{
+		std::cout << "Invalid Card Selected." << std::endl;
+		_turnCommands.clear();
+		return false;
+	}
+
+	return true;
+}
+
 bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const std::string& aditionalCommand)
 {
 	Card card = _deck->GetCardMap()[cardPtr->Id()];
 	
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
 		if (card.GetCardActions()[i] == CardAction::Default) {
-			if (!(card._type == _deck->LastDiscard().GetType()
-				|| card._type == _deck->LastDiscard().GetTypeOverride()
-				|| card._value == _deck->LastDiscard().GetValue()))
-			{
-				std::cout << "Invalid Card Selected." << std::endl;
-				_turnCommands.clear();
-				return false;
-			}
+			return CheckDicardPile(card);
 		}
 		if (card.GetCardActions()[i] == CardAction::Reverse) {
 			_turnCommands.emplace_back(std::make_shared<ReverseCommand>(this));
@@ -61,7 +83,7 @@ bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const
 		}
 	}
 
-	
+	// Set Type override if theres additional commands for it
 	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
 	if (cardPtr->GetType() == CardType::Wild && CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
 		cardPtr->SetTypeOverride(typeOverride);

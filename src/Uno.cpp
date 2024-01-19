@@ -65,8 +65,6 @@ bool GetPlayerInputCommand(
 	std::istringstream iss(input);
 	std::string commandType;
 	iss >> commandType;
-	
-	gameManagerPtr->DiscardFirst();
 
 	if (toLowerCase(commandType) == "play") {
 		int cardPositionInHand;
