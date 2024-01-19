@@ -70,7 +70,9 @@ bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const
 	
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
 		if (card.GetCardActions()[i] == CardAction::Default) {
-			return CheckDiscardPile(card);
+			if (!CheckDiscardPile(card)) {
+				return false;
+			}
 		}
 		if (card.GetCardActions()[i] == CardAction::Reverse) {
 			_turnCommands.emplace_back(std::make_shared<ReverseCommand>(this));

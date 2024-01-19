@@ -119,13 +119,13 @@ int GetNumberOfPlayers()
 }
 
 bool CheckVictoryCondition(std::vector<std::shared_ptr<Player>>& players) {
-	std::for_each(players.begin(), players.end(), [](const std::shared_ptr<Player>& ptr) 
+	for (const std::shared_ptr<Player>& playerPtr : players)
 	{
-		if (ptr->Hand.size() == 0) {
-			std::cout << "Player " << ptr->Id << "Won!";
+		if (playerPtr->Hand.size() == 0) {
+			std::cout << "Player " << playerPtr->Id << " Won!";
 			return true;
 		}
-	});
+	};
 	return false;
 }
 
