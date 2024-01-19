@@ -49,10 +49,13 @@ bool GameManager::CheckDiscardPile(Card& card)
 	return true;
 }
 
-bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard cardPtr, const std::string& aditionalCommand)
+bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard playedCard, const std::string& aditionalCommand)
 {
-	Card card = _deck->GetCardMap()[cardPtr.Id()];
+	Card card = _deck->GetCardMap()[playedCard.Id()];
 	
+	// Early type override parse
+	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
+
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
 		if (card.GetCardActions()[i] == CardAction::Default) {
 			if (!CheckDiscardPile(card)) {
@@ -68,15 +71,22 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 		if (card.GetCardActions()[i] == CardAction::Skip) {
 			_turnCommands.emplace_back(std::make_shared<SkipCommand>(this));
 		}
+		if (card.GetCardActions()[i] == CardAction::Wild) {
+			if (typeOverride == CardType::Undefined)
+			{
+				// Wild Cards must have a TypeOverride
+				return false;
+			}
+		}
 	}
 
 	// Set Type override if theres additional commands for it
-	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
-	if (cardPtr.GetType() == CardType::Wild && CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
-		cardPtr.SetTypeOverride(typeOverride);
+	if (playedCard.GetType() == CardType::Wild 
+		&& CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
+		playedCard.SetTypeOverride(typeOverride);
 	}
 
-	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, cardPtr));
+	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, playedCard));
 	return true;
 }
 
@@ -99,7 +109,7 @@ void GameManager::ExecuteTurn()
 	_turnCommands.clear();
 }
 
-void GameManager::PlayCard(std::shared_ptr<Player> player, PlayableCard card)
+void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 {
 	std::cout << "Discarding card: ";
 	card.Print();
@@ -108,14 +118,14 @@ void GameManager::PlayCard(std::shared_ptr<Player> player, PlayableCard card)
 	_deck->LastDiscard().SetTypeOverride(CardType::Undefined);
 
 	_deck->Discard(card);
-	player->Discard(card);
+	playerPtr->Discard(card);
 }
 
-void GameManager::DrawForPlayer(std::shared_ptr<Player> player, int numberCards)
+void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr, int numberCards)
 {
 	for (int i = 0; i < numberCards; i++) {
-		player->Hand.push_back(_deck->DrawCard());
-		player->Hand.back().SetPositionInHand(player->Hand.size() - 1);
+		playerPtr->Hand.push_back(_deck->DrawCard());
+		playerPtr->Hand.back().SetPositionInHand(playerPtr->Hand.size() - 1);
 	}
 }
 

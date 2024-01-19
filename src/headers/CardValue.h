@@ -16,5 +16,6 @@ enum class CardValue {
 	Plus4,
 	Skip,
 	Reverse,
+	Wild,
 	Undefined
 };

@@ -89,4 +89,4 @@
 
 # Wild Cards
 053:Wild:+4:+
-054:Wild:Skip:S
+054:Wild:Wild:W
