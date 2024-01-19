@@ -30,7 +30,7 @@ public:
 	void PlayCard(Player* player, PlayableCard* card);
 
 	// Draws a card for the player
-	void DrawForPlayer(Player* player, int numberCards);
+	void DrawForPlayer(std::shared_ptr<Player> player, int numberCards);
 
 	// Tells the deck to be Shuffled
 	void ShuffleDeck();

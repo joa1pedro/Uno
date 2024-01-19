@@ -3,10 +3,10 @@
 class Draw2Command : public Command {
 private:
 	GameManager* _gameManager;
-	Player* _player;
+	std::shared_ptr<Player> _player;
 
 public:
-	Draw2Command(GameManager* gameManager, Player* player) :
+	Draw2Command(GameManager* gameManager, std::shared_ptr<Player> player) :
 		Command(), _gameManager(gameManager), _player(player)
 	{}
 

@@ -126,7 +126,7 @@ void GameManager::PlayCard(Player* player, PlayableCard* card)
 	player->Discard(*card);
 }
 
-void GameManager::DrawForPlayer(Player* player, int numberCards) 
+void GameManager::DrawForPlayer(std::shared_ptr<Player> player, int numberCards)
 {
 	for (int i = 0; i < numberCards; i++) {
 		player->Hand.push_back(_deck->DrawCard());
