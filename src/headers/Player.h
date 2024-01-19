@@ -5,12 +5,17 @@
 class Player : IPrintable {
 public:
 	int Id;	
-	bool IsCurrentPlayer = false;
 
 	Player(int id);
 
 	std::vector<PlayableCard> Hand;
-	void Discard(PlayableCard& card);
+
+	// Removes the selected card from this player hand
+	void Discard(PlayableCard card);
+
+	// Prints the Id of this player. Format: Player [id]
 	void Print() const;
+
+	// Prints the current card in hand for this player
 	void PrintHand() const;
 };

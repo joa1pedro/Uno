@@ -28,7 +28,7 @@ public:
 		return ParseCharToEnum<CardAction>(c, cardActionCharToEnumMap);
 	}
 
-	// Card Comparison
+	// Card Comparison. Matches the Card with PlayableCard if it has same CardValue, CardType or TypeOverride
 	static const bool IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) ;
 
 	// Compares the selected card Type or TypeOverride with the last discard.

@@ -5,13 +5,11 @@
 
 PlayableCard::PlayableCard(int id, CardType type, CardValue value)
 	: _id(id), _type(type), _value(value)
-{
-}
+{}
 
 PlayableCard::PlayableCard(Card card)
 	: _id(card.Id()), _type(card._type), _value(card._value)
-{
-}
+{}
 
 void PlayableCard::Print() const
 {

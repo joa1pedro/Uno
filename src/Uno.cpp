@@ -82,8 +82,8 @@ bool GetPlayerInputCommand(
 			return false;
 		}
 
-		PlayableCard* cardPtr = &playerPtr->Hand[cardPositionInHand];
-		return gameManagerPtr->FetchTurnCommands(playerPtr, cardPtr, additionalCommand);
+		return gameManagerPtr->FetchTurnCommands(
+			playerPtr, playerPtr->Hand[cardPositionInHand], additionalCommand);
 	}
 	if (toLowerCase(commandType) == "draw") {
 		DrawCommand drawCommand { gameManagerPtr, playerPtr };

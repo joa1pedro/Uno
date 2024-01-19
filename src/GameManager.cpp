@@ -49,9 +49,9 @@ bool GameManager::CheckDiscardPile(Card& card)
 	return true;
 }
 
-bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard* cardPtr, const std::string& aditionalCommand)
+bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard cardPtr, const std::string& aditionalCommand)
 {
-	Card card = _deck->GetCardMap()[cardPtr->Id()];
+	Card card = _deck->GetCardMap()[cardPtr.Id()];
 	
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
 		if (card.GetCardActions()[i] == CardAction::Default) {
@@ -72,8 +72,8 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 
 	// Set Type override if theres additional commands for it
 	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
-	if (cardPtr->GetType() == CardType::Wild && CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
-		cardPtr->SetTypeOverride(typeOverride);
+	if (cardPtr.GetType() == CardType::Wild && CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
+		cardPtr.SetTypeOverride(typeOverride);
 	}
 
 	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, cardPtr));
@@ -99,16 +99,16 @@ void GameManager::ExecuteTurn()
 	_turnCommands.clear();
 }
 
-void GameManager::PlayCard(std::shared_ptr<Player> player, PlayableCard* card)
+void GameManager::PlayCard(std::shared_ptr<Player> player, PlayableCard card)
 {
 	std::cout << "Discarding card: ";
-	card->Print();
+	card.Print();
 
 	//Reseting the type override for the last card before the new one gets discarded
 	_deck->LastDiscard().SetTypeOverride(CardType::Undefined);
 
-	_deck->Discard(*card);
-	player->Discard(*card);
+	_deck->Discard(card);
+	player->Discard(card);
 }
 
 void GameManager::DrawForPlayer(std::shared_ptr<Player> player, int numberCards)

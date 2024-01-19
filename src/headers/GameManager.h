@@ -18,7 +18,7 @@ public:
 	void DistributeCards();
 
 	// Fetch all commands for that turn
-	bool FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard* card, const std::string& aditionalCommand);
+	bool FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard card, const std::string& aditionalCommand);
 	
 	// Executed in the beginning of the turn, if theres any actions pending
 	void ExecuteBeginTurn();
@@ -27,7 +27,7 @@ public:
 	void ExecuteTurn();
 
 	// Game Functions
-	void PlayCard(std::shared_ptr<Player> player, PlayableCard* card);
+	void PlayCard(std::shared_ptr<Player> player, PlayableCard card);
 
 	// Draws a card for the player
 	void DrawForPlayer(std::shared_ptr<Player> player, int numberCards);

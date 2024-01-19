@@ -49,7 +49,7 @@ PlayableCard Deck::DrawCard()
 	return card;
 }
 
-void Deck::Discard(const PlayableCard& card)
+void Deck::Discard(const PlayableCard card)
 {
 	_discardPile.push_back(card);
 }

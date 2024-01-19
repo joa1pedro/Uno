@@ -33,7 +33,7 @@ public:
 	void Shuffle();
 
 	// Adds a card to the discard pile
-	void Discard(const PlayableCard& card);
+	void Discard(const PlayableCard card);
     
 	// Creates a deck using a file inside GameData folder.
 	void Create(const char* fileName);
