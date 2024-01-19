@@ -134,7 +134,7 @@ int main(int argc, char** argv)
 	// Initialize Game Deck
 	const char* filename = (argc > 1) ? argv[1] : "StandardDeck.txt";
 	std::shared_ptr<Deck> deckPtr = std::make_shared<Deck>( filename );
-	if (!deckPtr->IsValid) {
+	if (!deckPtr->IsValid()) {
 		return EXIT_FAILURE;
 	}
 

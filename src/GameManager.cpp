@@ -137,7 +137,6 @@ void GameManager::ShuffleDeck()
 	_deck->Shuffle();
 }
 
-// Discard first card from the deck in case theres no card in the discard pile
 void GameManager::DiscardFirst()
 {
 	_deck->Discard(_deck->DrawCard());

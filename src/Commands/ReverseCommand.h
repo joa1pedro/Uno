@@ -10,7 +10,7 @@ public:
 	{}
 
 	void Execute() const override {
-		std::cout << "Inverting Game Order .\n";
+		std::cout << "Inverting Game Order Command.\n";
 		this->_gameManager->InvertGameOrder();
 	}
 };

@@ -11,7 +11,7 @@ public:
 	{}
 
 	void Execute() const override {
-		std::cout << "Draw 2 Game Order .\n";
+		std::cout << "Draw 2 Command .\n";
 		this->_gameManager->DrawForPlayer(_player, 2);
 	}
 };
