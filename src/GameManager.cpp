@@ -11,7 +11,7 @@
 #define InvertedGameOrder -1
 
 // 0 indexed turn players, first player is index 0 and last one is numberOfPlayers-1
-int GameManager::NextPlayer()
+int GameManager::SkipNextPlayerTurn()
 {
 	int lastPlayer = _numberOfPlayers - 1;
 	if (_invertedGameOrder) {
@@ -35,17 +35,17 @@ void GameManager::DistributeCards(std::vector<std::shared_ptr<Player>>& players)
 	}
 }
 
-bool GameManager::IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard)
+bool GameManager::IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) const
 {
 	return HasMatchingType(selectedCard, lastDiscard) || HasMatchingValue(selectedCard, lastDiscard);
 }
 
-bool GameManager::HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard)
+bool GameManager::HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard) const
 {
 	return selectedCard._type == lastDiscard.GetType() || selectedCard._type == lastDiscard.GetTypeOverride();
 }
 
-bool GameManager::HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard)
+bool GameManager::HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard) const
 {
 	return selectedCard._value == lastDiscard.GetValue();
 }
@@ -91,10 +91,6 @@ bool GameManager::FetchTurnCommands(Player* player, PlayableCard* cardPtr, const
 
 	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, cardPtr));
 	return true;
-}
-
-void GameManager::SkipNextPlayerTurn() {
-	NextPlayer();
 }
 
 void GameManager::ExecuteBeginTurn() 

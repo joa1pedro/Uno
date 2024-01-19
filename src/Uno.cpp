@@ -170,7 +170,7 @@ int main(int argc, char** argv)
 		bool validTurn = GetPlayerInputCommand(gameManager, players[turnPlayer], input);
 		if (validTurn) {
 			gameManager->ExecuteTurn();
-			turnPlayer = gameManager->NextPlayer();
+			turnPlayer = gameManager->PassTurn();
 		}
 
 		haveWinner = CheckVictoryCondition(players);

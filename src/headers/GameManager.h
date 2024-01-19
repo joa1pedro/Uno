@@ -28,14 +28,13 @@ public:
 	void DiscardFirst();
 	void PrintLastDiscard();
 	void InvertGameOrder();
-	void SkipNextPlayerTurn();
+	int PassTurn();
 	bool IsGameOrderInverted();
-	int NextPlayer();
 	
 	// Card Comparison
-	bool IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard);
-	bool HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard);
-	bool HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard);
+	bool IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) const;
+	bool HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard) const;
+	bool HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard) const;
 	bool CheckDicardPile(Card& card);
 private:
 	std::vector<std::shared_ptr<Command>> _beginTurnCommands;
