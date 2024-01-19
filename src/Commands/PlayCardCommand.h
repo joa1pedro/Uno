@@ -12,7 +12,7 @@ public:
 	{ }
 
 	void Execute() const override {
-		std::cout << "Attempting to Play Card Command.\n";
+		std::cout << "[Command] Playing Card.\n";
 		this->_gameManager->PlayCard(_player, _card);
 	}
 };

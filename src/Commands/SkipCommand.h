@@ -10,7 +10,7 @@ public:
 	{}
 
 	void Execute() const override {
-		std::cout << "Skipping Next Player Turn Command.\n";
+		std::cout << "[Command] Skipping Next Player Turn.\n";
 		this->_gameManager->PassTurn();
 	}
 };

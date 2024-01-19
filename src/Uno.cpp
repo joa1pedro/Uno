@@ -89,7 +89,6 @@ bool GetPlayerInputCommand(
 		return gameManagerPtr->FetchTurnCommands(playerPtr, cardPtr, additionalCommand);
 	}
 	if (toLowerCase(commandType) == "draw") {
-		int numCards = 1;
 		DrawCommand drawCommand { gameManagerPtr, playerPtr };
 		drawCommand.Execute();
 		return true;
