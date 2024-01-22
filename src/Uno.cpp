@@ -148,7 +148,7 @@ int main(int argc, char** argv)
 	// Game prep initialization
 	gameManager->ShuffleDeck();
 	gameManager->DistributeCards();
-	gameManager->DiscardFirst(); 
+	gameManager->DiscardFirstForStart();
 	
 	ClearBuffer();
 

@@ -42,7 +42,6 @@ bool GameManager::CheckDiscardPile(Card& card)
 	if (!CardUtils::IsValidCard(card, lastDiscard))
 	{
 		std::cout << "Invalid Card Selected." << std::endl;
-		_turnCommands.clear();
 		return false;
 	}
 
@@ -57,11 +56,22 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
 
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
-		if (card.GetCardActions()[i] == CardAction::Default) {
-			if (!CheckDiscardPile(card)) {
+		if (card.GetCardActions()[i] == CardAction::Wild) {
+			if (typeOverride == CardType::Undefined)
+			{
+				// Wild Cards must have a TypeOverride
+				_turnCommands.clear();
 				return false;
 			}
 		}
+
+		if (card.GetCardActions()[i] == CardAction::Default) {
+			if (!CheckDiscardPile(card)) {
+				_turnCommands.clear();
+				return false;
+			}
+		}
+
 		if (card.GetCardActions()[i] == CardAction::Reverse) {
 			_turnCommands.emplace_back(std::make_shared<ReverseCommand>(this));
 		}
@@ -70,13 +80,6 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 		}
 		if (card.GetCardActions()[i] == CardAction::Skip) {
 			_turnCommands.emplace_back(std::make_shared<SkipCommand>(this));
-		}
-		if (card.GetCardActions()[i] == CardAction::Wild) {
-			if (typeOverride == CardType::Undefined)
-			{
-				// Wild Cards must have a TypeOverride
-				return false;
-			}
 		}
 	}
 
@@ -137,6 +140,15 @@ void GameManager::ShuffleDeck()
 void GameManager::DiscardFirst()
 {
 	_deck->Discard(_deck->DrawCard());
+}
+
+void GameManager::DiscardFirstForStart()
+{
+	DiscardFirst();
+	if (_deck->LastDiscard().GetType() == CardType::Wild) {
+		_deck->ResetDeckFromDiscardPile();
+		DiscardFirstForStart();
+	}
 }
 
 void GameManager::PrintLastDiscard()
