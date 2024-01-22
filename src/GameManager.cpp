@@ -131,6 +131,7 @@ void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
 	if (_nextDraw == 0) {
+		std::cout << "You are forced to draw" << std::endl;
 		_nextDraw = 1;
 	}
 	for (int i = 0; i < _nextDraw; i++) {
@@ -172,7 +173,7 @@ void GameManager::DiscardFirstValid()
 
 void GameManager::PrintLastDiscard()
 {
-	_deck->LastDiscard().Print();
+	_deck->LastDiscard().PrintFromFile();
 }
 
 void GameManager::InvertGameOrder() 

@@ -8,14 +8,13 @@
 #include "headers/Deck.h"
 #include "headers/CardUtils.h"
 #include "headers/GameManager.h"
-#include "headers/Command.h"
-#include "Commands/DrawCommand.h"
 
 #define Log(x) std::cout << x << std::endl
 #define ClearBuffer() std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n')
 
 int const MIN_PLAYERS = 2;
 int const MAX_PLAYERS = 10;
+const char* STANDARD_DECK = "StandardDeck.txt";
 
 void ClearScreen() {
 	// CSI[2J clears screen, CSI[H moves the cursor to top-left corner
@@ -86,14 +85,30 @@ bool GetPlayerInputCommand(
 			playerPtr, playerPtr->Hand[cardPositionInHand], additionalCommand);
 	}
 	if (toLowerCase(commandType) == "draw") {
-		DrawCommand drawCommand { gameManagerPtr, playerPtr };
-		drawCommand.Execute();
+		gameManagerPtr->DrawForPlayer(playerPtr);
 		return true;
 	}
 	else {
 		Log("Invalid command.");
 		return false;
 	}
+}
+
+static void PrintTxt(const std::string& filename) {
+	std::ifstream file(filename);
+
+	if (!file.is_open()) {
+		std::cerr << "Error opening file: " << filename << std::endl;
+		return;
+	}
+
+	std::string line;
+
+	while (std::getline(file, line)) {
+		std::cout << line << std::endl;
+	}
+
+	file.close();
 }
 
 // Grabs input for the number of players, clamped by MIN_PLAYERS - MAX_PLAYERS 
@@ -132,7 +147,7 @@ bool CheckVictoryCondition(std::vector<std::shared_ptr<Player>>& players) {
 int main(int argc, char** argv)
 {
 	// Initialize Game Deck
-	const char* filename = (argc > 1) ? argv[1] : "StandardDeck.txt";
+	const char* filename = (argc > 1) ? argv[1] : STANDARD_DECK;
 	std::shared_ptr<Deck> deckPtr = std::make_shared<Deck>( filename );
 	if (!deckPtr->IsValid()) {
 		return EXIT_FAILURE;
@@ -157,7 +172,7 @@ int main(int argc, char** argv)
 		std::string input;
 
 		ClearScreen();
-		std::cout << "Last Discard:";
+		std::cout << "Last Discard:" << std::endl;
 		gameManager->PrintLastDiscard();
 		Log("----------");
 		Log("Player [" << players[turnPlayer]->Id << "] Turn:");

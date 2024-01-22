@@ -140,6 +140,20 @@
     <Text Include="GameData\GameData.txt" />
     <Text Include="GameData\Only_Plus4.txt" />
     <Text Include="GameData\StandardDeck.txt" />
+    <Text Include="ascii\+2.txt" />
+    <Text Include="ascii\+4.txt" />
+    <Text Include="ascii\eight.txt" />
+    <Text Include="ascii\five.txt" />
+    <Text Include="ascii\four.txt" />
+    <Text Include="ascii\nine.txt" />
+    <Text Include="ascii\one.txt" />
+    <Text Include="ascii\reverse.txt" />
+    <Text Include="ascii\seven.txt" />
+    <Text Include="ascii\six.txt" />
+    <Text Include="ascii\skip.txt" />
+    <Text Include="ascii\tree.txt" />
+    <Text Include="ascii\two.txt" />
+    <Text Include="ascii\zero.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\Command.h" />
