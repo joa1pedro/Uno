@@ -1,6 +1,7 @@
 #include "headers/GameManager.h"
 
 #include "Commands/Draw2Command.h"
+#include "Commands/Draw4Command.h"
 #include "Commands/DrawCommand.h"
 #include "Commands/SkipCommand.h"
 #include "Commands/ReverseCommand.h"
@@ -42,28 +43,53 @@ bool GameManager::CheckDiscardPile(Card& card)
 	if (!CardUtils::IsValidCard(card, lastDiscard))
 	{
 		std::cout << "Invalid Card Selected." << std::endl;
-		_turnCommands.clear();
 		return false;
 	}
 
 	return true;
 }
 
-bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard cardPtr, const std::string& aditionalCommand)
+void GameManager::ForceDrawNextPhase(int sumForNextDraw = 0)
 {
-	Card card = _deck->GetCardMap()[cardPtr.Id()];
+	_forcedDraw = true;
+	_nextDraw += sumForNextDraw;
+}
+
+bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard playedCard, const std::string& aditionalCommand)
+{
+	if (_forcedDraw) {
+		return false;
+	}
+	Card card = _deck->GetCardMap()[playedCard.Id()];
 	
+	// Early type override parse
+	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
+
 	for (int i = 0; i < card.GetCardActions().size(); i++) {
-		if (card.GetCardActions()[i] == CardAction::Default) {
-			if (!CheckDiscardPile(card)) {
+		if (card.GetCardActions()[i] == CardAction::Wild) {
+			if (typeOverride == CardType::Undefined)
+			{
+				// Wild Cards must have a TypeOverride
+				_turnCommands.clear();
 				return false;
 			}
 		}
+
+		if (card.GetCardActions()[i] == CardAction::Default) {
+			if (!CheckDiscardPile(card)) {
+				_turnCommands.clear();
+				return false;
+			}
+		}
+
 		if (card.GetCardActions()[i] == CardAction::Reverse) {
 			_turnCommands.emplace_back(std::make_shared<ReverseCommand>(this));
 		}
 		if (card.GetCardActions()[i] == CardAction::Plus2) {
-			_beginTurnCommands.emplace_back(std::make_shared<Draw2Command>(this, player));
+			_turnCommands.emplace_back(std::make_shared<Draw2Command>(this, player));
+		}
+		if (card.GetCardActions()[i] == CardAction::Plus4) {
+			_turnCommands.emplace_back(std::make_shared<Draw4Command>(this, player));
 		}
 		if (card.GetCardActions()[i] == CardAction::Skip) {
 			_turnCommands.emplace_back(std::make_shared<SkipCommand>(this));
@@ -71,22 +97,13 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 	}
 
 	// Set Type override if theres additional commands for it
-	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
-	if (cardPtr.GetType() == CardType::Wild && CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
-		cardPtr.SetTypeOverride(typeOverride);
+	if (playedCard.GetType() == CardType::Wild 
+		&& CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
+		playedCard.SetTypeOverride(typeOverride);
 	}
 
-	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, cardPtr));
+	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, playedCard));
 	return true;
-}
-
-void GameManager::ExecuteBeginTurn() 
-{
-	for (auto itr = _beginTurnCommands.size(); itr-- > 0;)
-	{
-		_beginTurnCommands[itr]->Execute();
-	}
-	_beginTurnCommands.clear();
 }
 
 void GameManager::ExecuteTurn() 
@@ -99,7 +116,7 @@ void GameManager::ExecuteTurn()
 	_turnCommands.clear();
 }
 
-void GameManager::PlayCard(std::shared_ptr<Player> player, PlayableCard card)
+void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 {
 	std::cout << "Discarding card: ";
 	card.Print();
@@ -108,15 +125,30 @@ void GameManager::PlayCard(std::shared_ptr<Player> player, PlayableCard card)
 	_deck->LastDiscard().SetTypeOverride(CardType::Undefined);
 
 	_deck->Discard(card);
-	player->Discard(card);
+	playerPtr->Discard(card);
 }
 
-void GameManager::DrawForPlayer(std::shared_ptr<Player> player, int numberCards)
+void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
-	for (int i = 0; i < numberCards; i++) {
-		player->Hand.push_back(_deck->DrawCard());
-		player->Hand.back().SetPositionInHand(player->Hand.size() - 1);
+	if (_nextDraw == 0) {
+		_nextDraw = 1;
 	}
+	for (int i = 0; i < _nextDraw; i++) {
+		playerPtr->Hand.push_back(_deck->DrawCard());
+		playerPtr->Hand.back().SetPositionInHand(playerPtr->Hand.size() - 1);
+	}
+	_nextDraw = 0;
+	if (_forcedDraw) {
+		_forcedDraw = false;
+	}
+}
+
+void GameManager::StartGame()
+{
+	// Game prep initialization
+	ShuffleDeck();
+	DistributeCards();
+	DiscardFirstValid();
 }
 
 void GameManager::ShuffleDeck()
@@ -127,6 +159,15 @@ void GameManager::ShuffleDeck()
 void GameManager::DiscardFirst()
 {
 	_deck->Discard(_deck->DrawCard());
+}
+
+void GameManager::DiscardFirstValid()
+{
+	DiscardFirst();
+	if (_deck->LastDiscard().GetType() == CardType::Wild) {
+		_deck->ResetDeckFromDiscardPile();
+		DiscardFirstValid();
+	}
 }
 
 void GameManager::PrintLastDiscard()

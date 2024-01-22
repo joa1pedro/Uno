@@ -146,10 +146,8 @@ int main(int argc, char** argv)
 	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deckPtr, players);
 
 	// Game prep initialization
-	gameManager->ShuffleDeck();
-	gameManager->DistributeCards();
-	gameManager->DiscardFirst(); 
-	
+	gameManager->StartGame();
+
 	ClearBuffer();
 
 	// Game Loop

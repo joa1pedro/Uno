@@ -88,5 +88,5 @@
 052:Yellow:+2:D+
 
 # Wild Cards
-053:Wild:+4:+
-054:Wild:Skip:S
+053:Wild:+4:4
+054:Wild:Wild:W

@@ -15,7 +15,8 @@ const std::unordered_map<std::string, CardValue> CardUtils::cardValueStringToEnu
 	{"+2", CardValue::Plus2},
 	{"Skip", CardValue::Skip},
 	{"Reverse", CardValue::Reverse},
-	{"+4", CardValue::Plus4}
+	{"+4", CardValue::Plus4},
+	{"Wild", CardValue::Wild}
 };
 
 const std::unordered_map<CardValue, std::string> CardUtils::cardValueEnumToStringMap = {
@@ -32,7 +33,8 @@ const std::unordered_map<CardValue, std::string> CardUtils::cardValueEnumToStrin
 	{CardValue::Plus2, "+2"},
 	{CardValue::Skip, "Skip"},
 	{CardValue::Reverse, "Reverse"},
-	{CardValue::Plus4, "+4"}
+	{CardValue::Plus4, "+4"},
+	{CardValue::Wild, "Wild"}
 };
 
 const std::unordered_map<std::string, CardType> CardUtils::cardTypeStringToEnumMap = {
@@ -54,8 +56,10 @@ const std::unordered_map<CardType, std::string> CardUtils::cardTypeEnumToStringM
 const std::unordered_map<char, CardAction> CardUtils::cardActionCharToEnumMap = {
 	{'D', CardAction::Default},
 	{'+', CardAction::Plus2 },
+	{'4', CardAction::Plus4 },
 	{'S', CardAction::Skip },
-	{'R', CardAction::Reverse }
+	{'R', CardAction::Reverse},
+	{'W', CardAction::Wild }
 };
 
 bool const CardUtils::HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard)

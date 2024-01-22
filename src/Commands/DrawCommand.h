@@ -12,6 +12,6 @@ public:
 
 	void Execute() const override {
 		std::cout << "[Command] Draw 1 Card.\n" << std::endl;;
-		this->_gameManager->DrawForPlayer(_player, 1);
+		this->_gameManager->DrawForPlayer(_player);
 	}
 };
