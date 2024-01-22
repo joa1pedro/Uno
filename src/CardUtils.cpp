@@ -56,6 +56,7 @@ const std::unordered_map<CardType, std::string> CardUtils::cardTypeEnumToStringM
 const std::unordered_map<char, CardAction> CardUtils::cardActionCharToEnumMap = {
 	{'D', CardAction::Default},
 	{'+', CardAction::Plus2 },
+	{'4', CardAction::Plus4 },
 	{'S', CardAction::Skip },
 	{'R', CardAction::Reverse},
 	{'W', CardAction::Wild }

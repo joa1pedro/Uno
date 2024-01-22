@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="src\CardUtils.cpp" />
     <ClCompile Include="src\Card.cpp" />
+    <ClCompile Include="src\Commands\Draw4Command.h" />
     <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\PlayableCard.cpp" />

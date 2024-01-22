@@ -1,6 +1,7 @@
 #include "headers/GameManager.h"
 
 #include "Commands/Draw2Command.h"
+#include "Commands/Draw4Command.h"
 #include "Commands/DrawCommand.h"
 #include "Commands/SkipCommand.h"
 #include "Commands/ReverseCommand.h"
@@ -48,8 +49,17 @@ bool GameManager::CheckDiscardPile(Card& card)
 	return true;
 }
 
+void GameManager::ForceDrawNextPhase(int sumForNextDraw = 0)
+{
+	_forcedDraw = true;
+	_nextDraw += sumForNextDraw;
+}
+
 bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard playedCard, const std::string& aditionalCommand)
 {
+	if (_forcedDraw) {
+		return false;
+	}
 	Card card = _deck->GetCardMap()[playedCard.Id()];
 	
 	// Early type override parse
@@ -76,7 +86,10 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 			_turnCommands.emplace_back(std::make_shared<ReverseCommand>(this));
 		}
 		if (card.GetCardActions()[i] == CardAction::Plus2) {
-			_beginTurnCommands.emplace_back(std::make_shared<Draw2Command>(this, player));
+			_turnCommands.emplace_back(std::make_shared<Draw2Command>(this, player));
+		}
+		if (card.GetCardActions()[i] == CardAction::Plus4) {
+			_turnCommands.emplace_back(std::make_shared<Draw4Command>(this, player));
 		}
 		if (card.GetCardActions()[i] == CardAction::Skip) {
 			_turnCommands.emplace_back(std::make_shared<SkipCommand>(this));
@@ -91,15 +104,6 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 
 	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, playedCard));
 	return true;
-}
-
-void GameManager::ExecuteBeginTurn() 
-{
-	for (auto itr = _beginTurnCommands.size(); itr-- > 0;)
-	{
-		_beginTurnCommands[itr]->Execute();
-	}
-	_beginTurnCommands.clear();
 }
 
 void GameManager::ExecuteTurn() 
@@ -124,11 +128,18 @@ void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 	playerPtr->Discard(card);
 }
 
-void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr, int numberCards)
+void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
-	for (int i = 0; i < numberCards; i++) {
+	if (_nextDraw == 0) {
+		_nextDraw = 1;
+	}
+	for (int i = 0; i < _nextDraw; i++) {
 		playerPtr->Hand.push_back(_deck->DrawCard());
 		playerPtr->Hand.back().SetPositionInHand(playerPtr->Hand.size() - 1);
+	}
+	_nextDraw = 0;
+	if (_forcedDraw) {
+		_forcedDraw = false;
 	}
 }
 
