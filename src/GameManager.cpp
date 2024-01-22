@@ -132,6 +132,14 @@ void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr, int numberCar
 	}
 }
 
+void GameManager::StartGame()
+{
+	// Game prep initialization
+	ShuffleDeck();
+	DistributeCards();
+	DiscardFirstValid();
+}
+
 void GameManager::ShuffleDeck()
 {
 	_deck->Shuffle();
@@ -142,12 +150,12 @@ void GameManager::DiscardFirst()
 	_deck->Discard(_deck->DrawCard());
 }
 
-void GameManager::DiscardFirstForStart()
+void GameManager::DiscardFirstValid()
 {
 	DiscardFirst();
 	if (_deck->LastDiscard().GetType() == CardType::Wild) {
 		_deck->ResetDeckFromDiscardPile();
-		DiscardFirstForStart();
+		DiscardFirstValid();
 	}
 }
 

@@ -38,9 +38,12 @@ public:
 	// Discard the first card from the Deck
 	void DiscardFirst();
 
+	// Shuffles the deck, distribute cards and discards the first valid card
+	void StartGame();
+
 	// First action to be taken by the deck after distributing cards.
 	// Discard first and check if its not a WILD card. If it is, return it, shuffle and discard a new one.
-	void DiscardFirstForStart();
+	void DiscardFirstValid();
 
 	// Prints the top card of the Discard Pile
 	void PrintLastDiscard();
