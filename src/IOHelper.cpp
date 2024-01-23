@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <iostream>
 
-// Definition of the warningBuffer
 std::stringstream IOHelper::_warningBuffer;
 
 void IOHelper::AddWarning(const std::string& message)

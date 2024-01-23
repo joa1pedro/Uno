@@ -23,7 +23,7 @@
 # S - Skip
 # R - Reverse
 # + - +2 
-# ++ - +4
+# 4 - +4
 # Obs.: Missing Default Action implicitly says that you don't need to match color or value
 #------------
 

@@ -6,18 +6,18 @@
 #include "Player.h"
 #include "Command.h"
 
-static int INITIAL_HAND_SIZE = 3;
+static int INITIAL_HAND_SIZE = 7;
 
-class GameManager {
+class GameManager : public std::enable_shared_from_this<GameManager> {
 public:
 	GameManager(std::shared_ptr<Deck> deckPtr, std::vector<std::shared_ptr<Player>> players)
-		: _deck(deckPtr), _players((players)), _numberOfPlayers(_players.size())
+		: _deck(deckPtr), _players((players)), _numberOfPlayers(static_cast<int>(_players.size()))
 	{}
 
 	// Distribute all cards from the current deck for all players
 	void DistributeCards();
 
-	// Fetch all commands for that turn
+	// Fetch all commands for that turn. Returns a boolean if the turn fetched is valid or not.
 	bool FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard card, const std::string& aditionalCommand, const std::string& unoWordCheck);
 
 	// Execute the turn with all the actions pending for that turn
@@ -55,13 +55,17 @@ public:
 	bool IsGameOrderInverted();
 
 	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the target card
-	bool CheckDiscardPile(Card& card);
+	bool ValidDiscardPile(const Card& card);
 
 	// Forces the draw for the next player.
 	void ForceDrawNextPhase(int sumForNextDraw);
 
 	// Sets the player that has missed uno spell check
 	void SetMissedUno(int playerId);
+
+	// Returns a pointer to this Game Manager
+	std::shared_ptr<GameManager> GetPointer();
+
 private:
 	std::vector<std::shared_ptr<Command>> _turnCommands;
 	std::vector<std::shared_ptr<Player>> _players;

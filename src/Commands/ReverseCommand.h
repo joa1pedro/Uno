@@ -2,15 +2,15 @@
 
 class ReverseCommand : public Command {
 private:
-	GameManager* _gameManager;
+	std::shared_ptr<GameManager> _gameManager;
 
 public:
-	ReverseCommand(GameManager* gameManager) :
+	ReverseCommand(std::shared_ptr<GameManager> gameManager) :
 		Command(), _gameManager(gameManager)
 	{}
 
 	void Execute() const override {
-		std::cout << "[Command] Inverting Game Order.\n";
+		std::cout << "[Command] Inverting Game Order" << std::endl;
 		this->_gameManager->InvertGameOrder();
 	}
 };
