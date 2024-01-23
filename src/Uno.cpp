@@ -65,7 +65,7 @@ bool ParsePlayerInput(
 
 		return gameManagerPtr->FetchTurnCommands(
 			playerPtr, playerPtr->Hand[cardPositionInHand], 
-			additionalCommand, IOHelper::ToLowerCase(unoWordCheck));
+			IOHelper::ToLowerCase(additionalCommand), IOHelper::ToLowerCase(unoWordCheck));
 	}
 	if (IOHelper::ToLowerCase(commandType) == "draw") {
 		gameManagerPtr->DrawForPlayer(playerPtr);
@@ -88,7 +88,7 @@ int GetNumberOfPlayers() {
 
 		if (std::cin.fail() || !ValidPlayersClamp(numberOfPlayers)) {
 			std::cin.clear(); // Clear error flag
-			ClearBuffer(); // Discard invalid input
+			ClearBuffer(); 
 			std::cout << "Invalid input. Please enter a valid number between 2 and 10.\n";
 		}
 		else {

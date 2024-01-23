@@ -10,6 +10,7 @@
 #include "headers/Deck.h"
 #include "headers/Card.h"
 #include "headers/CardUtils.h"
+#include "headers/IOHelper.h"
 
 std::string const GAMEDATA_PATH = "./GameData/GameData.txt";
 std::string const GAMEDATA_FILE_PATH = "./GameData/";
@@ -113,7 +114,7 @@ bool Deck::Validate()
 			std::getline(iss, actionstr, ':'); 
 
 			// Try parse the values from GameData
-			CardType parsedType = CardUtils::ParseStrToCardType(type);
+			CardType parsedType = CardUtils::ParseStrToCardType(IOHelper::ToLowerCase(type));
 			CardValue parsedValue = CardUtils::ParseStrToCardValue(value);	
 
 			// Parsing the array of actions

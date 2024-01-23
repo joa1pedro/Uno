@@ -38,19 +38,19 @@ const std::unordered_map<CardValue, std::string> CardUtils::cardValueEnumToStrin
 };
 
 const std::unordered_map<std::string, CardType> CardUtils::cardTypeStringToEnumMap = {
-	{"Yellow", CardType::Yellow},
-	{"Blue", CardType::Blue},
-	{"Green", CardType::Green},
-	{"Red", CardType::Red},
-	{"Wild", CardType::Wild}
+	{"yellow", CardType::Yellow},
+	{"blue", CardType::Blue},
+	{"green", CardType::Green},
+	{"red", CardType::Red},
+	{"wild", CardType::Wild}
 };
 
 const std::unordered_map<CardType, std::string> CardUtils::cardTypeEnumToStringMap = {
-	{CardType::Yellow, "Yellow"},
-	{CardType::Blue, "Blue"},
-	{CardType::Green, "Green"},
-	{CardType::Red, "Red"},
-	{CardType::Wild, "Wild"}
+	{CardType::Yellow, "yellow"},
+	{CardType::Blue, "blue"},
+	{CardType::Green, "green"},
+	{CardType::Red, "red"},
+	{CardType::Wild, "wild"}
 };
 
 const std::unordered_map<char, CardAction> CardUtils::cardActionCharToEnumMap = {
