@@ -12,5 +12,33 @@ Not specifying is going to use the StandardDeck.txt file as default.
 Decks must be inside GameData Folder.
 
 ```bash
-./Uno.exe StandardDeck.txt
+./Uno.exe MyCustomDeck.txt
+```
+
+## Possible Commands for playing
+```bash
+play [cardIndex] optionalTypeOverride optionalUnoYell
+draw
+```
+
+## Playing the Game
+For playing a card in your hand you can just type play 
+Ex.:
+```bash
+play [1]
+```
+If your card is a Wild Card. You are going to need tell the next color also. just specify the color after the card
+Ex.:
+```bash
+play [2] yellow
+```
+If you have just 2 card in your hand, playing the next card will make you stay with just 1 card in hand.
+In that case, if you don't want to be forced to draw 2 cards next turn, you need to say UNO! in the console too
+Ex.:
+```bash
+play [3] uno
+```
+or
+```bash
+play [4] red uno
 ```
