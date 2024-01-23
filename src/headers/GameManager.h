@@ -18,7 +18,7 @@ public:
 	void DistributeCards();
 
 	// Fetch all commands for that turn
-	bool FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard card, const std::string& aditionalCommand);
+	bool FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard card, const std::string& aditionalCommand, const std::string& unoWordCheck);
 
 	// Execute the turn with all the actions pending for that turn
 	void ExecuteTurn();
@@ -59,6 +59,9 @@ public:
 
 	// Forces the draw for the next player.
 	void ForceDrawNextPhase(int sumForNextDraw);
+
+	// Sets the player that has missed uno spell check
+	void SetMissedUno(int playerId);
 private:
 	std::vector<std::shared_ptr<Command>> _turnCommands;
 	std::vector<std::shared_ptr<Player>> _players;
@@ -67,5 +70,6 @@ private:
 	int _currentPlayer = 0;
 	int _numberOfPlayers;
 	bool _forcedDraw = false;
+	int _missedUno = -1;
 	int _nextDraw = 0;
 };
