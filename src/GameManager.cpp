@@ -63,7 +63,7 @@ bool GameManager::FetchTurnCommands(
 {
 
 	if (_missedUno == player->Id) {
-		std::cout << "You missed UNO! You are forced to draw" << std::endl;
+		IOHelper::AddWarning("You missed UNO! You are forced to draw");
 		return false;
 	}
 	if (_forcedDraw) {
@@ -155,6 +155,7 @@ void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
 	if (_missedUno == playerPtr->Id) {
 		_nextDraw += 2;
+		_missedUno = -1;
 	}
 	if (_nextDraw == 0) {
 		_nextDraw = 1;
@@ -166,8 +167,6 @@ void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 	}
 
 	_nextDraw = 0;
-	_missedUno = -1;
-
 	if (_forcedDraw) {
 		_forcedDraw = false;
 	}

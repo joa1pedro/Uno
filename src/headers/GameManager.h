@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "Command.h"
 
-static int INITIAL_HAND_SIZE = 7;
+static int INITIAL_HAND_SIZE = 3;
 
 class GameManager {
 public:
