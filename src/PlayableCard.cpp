@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "headers/PlayableCard.h"
 #include "headers/color.hpp" // https://github.com/aafulei/color-console
 #include "headers/CardUtils.h"
@@ -50,6 +52,34 @@ void PlayableCard::PrintType(CardType type) const {
 	default:
 		break;
 	}
+}
+
+void PlayableCard::PrintFromFile() const {
+	std::string filename = "./ascii/";
+
+	std::string type = CardUtils::ParseCardTypeToStr(this->GetType());
+	std::string value = CardUtils::ParseCardValueToStr(this->GetValue());
+
+	std::ifstream file(filename.append(value).append(".txt"));
+
+	if (!file.is_open()) {
+		std::cerr << "Error opening file: " << filename << std::endl;
+		return;
+	}
+
+	std::string line;
+
+	std::string result = type;
+	for (char& c : result) {
+		c = std::tolower(c);
+	}
+
+	while (std::getline(file, line)) {
+		std::string result = type;
+		std::cout << dye::colorize(line, result) << std::endl;
+	}
+
+	file.close();
 }
 
 int PlayableCard::PositionInHand() const

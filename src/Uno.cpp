@@ -6,21 +6,16 @@
 
 #include "headers/Player.h"
 #include "headers/Deck.h"
-#include "headers/CardUtils.h"
 #include "headers/GameManager.h"
-#include "headers/Command.h"
-#include "Commands/DrawCommand.h"
+#include "headers/CardUtils.h"
+#include "headers/IOHelper.h"
 
 #define Log(x) std::cout << x << std::endl
 #define ClearBuffer() std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n')
 
 int const MIN_PLAYERS = 2;
 int const MAX_PLAYERS = 10;
-
-void ClearScreen() {
-	// CSI[2J clears screen, CSI[H moves the cursor to top-left corner
-	std::cout << "\x1B[2J\x1B[H";
-}
+const char* STANDARD_DECK = "StandardDeck.txt";
 
 bool ValidPlayersClamp(int value)
 {
@@ -44,17 +39,7 @@ std::vector<std::shared_ptr<Player>> InitilizePlayers(int numberOfPlayers)
 	return players;
 }
 
-// Convert each character in the string to lowercase
-std::string toLowerCase(const std::string& input) 
-{
-	std::string result = input;
-	for (char& c : result) {
-		c = std::tolower(c);
-	}
-	return result;
-}
-
-bool GetPlayerInputCommand(
+bool ParsePlayerInput(
 	std::shared_ptr<GameManager> gameManagerPtr,
 	std::shared_ptr<Player> playerPtr,
 	const std::string& input)
@@ -63,7 +48,7 @@ bool GetPlayerInputCommand(
 	std::string commandType;
 	iss >> commandType;
 
-	if (toLowerCase(commandType) == "play") {
+	if (IOHelper::ToLowerCase(commandType) == "play") {
 		int cardPositionInHand;
 		iss >> cardPositionInHand;
 
@@ -74,7 +59,7 @@ bool GetPlayerInputCommand(
 		iss >> unoWordCheck;
 
 		if (cardPositionInHand >= playerPtr->Hand.size()) {
-			Log("Invalid Card Selected.");
+			IOHelper::AddWarning("Invalid Card Selected.");
 			return false;
 		}
 
@@ -82,13 +67,12 @@ bool GetPlayerInputCommand(
 			playerPtr, playerPtr->Hand[cardPositionInHand], 
 			additionalCommand, toLowerCase(unoWordCheck));
 	}
-	if (toLowerCase(commandType) == "draw") {
-		DrawCommand drawCommand { gameManagerPtr, playerPtr };
-		drawCommand.Execute();
+	if (IOHelper::ToLowerCase(commandType) == "draw") {
+		gameManagerPtr->DrawForPlayer(playerPtr);
 		return true;
 	}
 	else {
-		Log("Invalid command.");
+		IOHelper::AddWarning("Invalid Command. Use Play [cardIndex] or Draw");
 		return false;
 	}
 }
@@ -129,7 +113,7 @@ bool CheckVictoryCondition(std::vector<std::shared_ptr<Player>>& players) {
 int main(int argc, char** argv)
 {
 	// Initialize Game Deck
-	const char* filename = (argc > 1) ? argv[1] : "StandardDeck.txt";
+	const char* filename = (argc > 1) ? argv[1] : STANDARD_DECK;
 	std::shared_ptr<Deck> deckPtr = std::make_shared<Deck>( filename );
 	if (!deckPtr->IsValid()) {
 		return EXIT_FAILURE;
@@ -151,18 +135,22 @@ int main(int argc, char** argv)
 	bool haveWinner = false;
 	int turnPlayer = 0;
 	while (!haveWinner) {
-		std::string input;
+		IOHelper::Clear();
+		IOHelper::ShowWarnings();
 
-		ClearScreen();
-		std::cout << "Last Discard:";
 		gameManager->PrintLastDiscard();
-		Log("----------");
+
+		IOHelper::SeparationLine();
+
 		Log("Player [" << players[turnPlayer]->Id << "] Turn:");
 		players[turnPlayer]->PrintHand();
-		Log("----------");
-		std::getline(std::cin, input);
 
-		bool validTurn = GetPlayerInputCommand(gameManager, players[turnPlayer], input);
+		IOHelper::SeparationLine();
+
+		std::string input;
+		IOHelper::GetLine(input);
+
+		bool validTurn = ParsePlayerInput(gameManager, players[turnPlayer], input);
 		if (validTurn) {
 			gameManager->ExecuteTurn();
 			turnPlayer = gameManager->PassTurn();

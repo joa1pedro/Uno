@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ASCII">
+      <UniqueIdentifier>{c32f1718-74ee-4808-8583-7c7b92598087}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Uno.cpp">
@@ -37,7 +40,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Commands\Draw4Command.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +52,48 @@
     </Text>
     <Text Include="GameData\Only_Plus4.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="ascii\+2.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\+4.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\eight.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\five.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\four.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\nine.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\one.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\reverse.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\seven.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\six.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\skip.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\tree.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\two.txt">
+      <Filter>ASCII</Filter>
+    </Text>
+    <Text Include="ascii\zero.txt">
+      <Filter>ASCII</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

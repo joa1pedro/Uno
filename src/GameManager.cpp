@@ -7,6 +7,7 @@
 #include "Commands/ReverseCommand.h"
 #include "Commands/PlayCardCommand.h"
 #include "headers/CardUtils.h"
+#include "headers/IOHelper.h"
 
 #define NormalGameOrder +1
 #define InvertedGameOrder -1
@@ -42,7 +43,7 @@ bool GameManager::CheckDiscardPile(Card& card)
 
 	if (!CardUtils::IsValidCard(card, lastDiscard))
 	{
-		std::cout << "Invalid Card Selected." << std::endl;
+		IOHelper::AddWarning("Invalid Card Selected.");
 		return false;
 	}
 
@@ -66,7 +67,7 @@ bool GameManager::FetchTurnCommands(
 		return false;
 	}
 	if (_forcedDraw) {
-		std::cout << "You are forced to draw this turn!" << std::endl;
+		IOHelper::AddWarning("You are forced to draw!");
 		return false;
 	}
 
@@ -79,6 +80,7 @@ bool GameManager::FetchTurnCommands(
 		if (card.GetCardActions()[i] == CardAction::Wild) {
 			if (typeOverride == CardType::Undefined)
 			{
+				IOHelper::AddWarning("You are missing to call a new Color!");
 				// Wild Cards must have a TypeOverride
 				_turnCommands.clear();
 				return false;
@@ -87,6 +89,7 @@ bool GameManager::FetchTurnCommands(
 
 		if (card.GetCardActions()[i] == CardAction::Default) {
 			if (!CheckDiscardPile(card)) {
+				IOHelper::AddWarning("That card doesn't match");
 				_turnCommands.clear();
 				return false;
 			}
@@ -141,9 +144,6 @@ void GameManager::ExecuteTurn()
 
 void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 {
-	std::cout << "Discarding card: ";
-	card.Print();
-
 	//Reseting the type override for the last card before the new one gets discarded
 	_deck->LastDiscard().SetTypeOverride(CardType::Undefined);
 
@@ -196,7 +196,8 @@ void GameManager::DiscardFirstValid()
 
 void GameManager::PrintLastDiscard()
 {
-	_deck->LastDiscard().Print();
+	std::cout << "Last Discard : " << std::endl;
+	_deck->LastDiscard().PrintFromFile();
 }
 
 void GameManager::InvertGameOrder() 

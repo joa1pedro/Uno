@@ -36,6 +36,9 @@ public:
 
 	//Returns this card value
 	CardValue GetValue() const;
+
+	//Prints this card using the ASCII file
+	void PrintFromFile() const;
 private:
 	// Prints this card Type using colors
 	void PrintType(CardType type) const;

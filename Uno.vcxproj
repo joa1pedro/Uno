@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,7 @@
     <ClCompile Include="src\Commands\Draw4Command.h" />
     <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
+    <ClCompile Include="src\IOHelper.cpp" />
     <ClCompile Include="src\PlayableCard.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Uno.cpp" />
@@ -140,6 +142,20 @@
     <Text Include="GameData\GameData.txt" />
     <Text Include="GameData\Only_Plus4.txt" />
     <Text Include="GameData\StandardDeck.txt" />
+    <Text Include="ascii\+2.txt" />
+    <Text Include="ascii\+4.txt" />
+    <Text Include="ascii\eight.txt" />
+    <Text Include="ascii\five.txt" />
+    <Text Include="ascii\four.txt" />
+    <Text Include="ascii\nine.txt" />
+    <Text Include="ascii\one.txt" />
+    <Text Include="ascii\reverse.txt" />
+    <Text Include="ascii\seven.txt" />
+    <Text Include="ascii\six.txt" />
+    <Text Include="ascii\skip.txt" />
+    <Text Include="ascii\tree.txt" />
+    <Text Include="ascii\two.txt" />
+    <Text Include="ascii\zero.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\Command.h" />
@@ -154,6 +170,7 @@
     <ClInclude Include="src\Commands\DrawCommand.h" />
     <ClInclude Include="src\headers\GameManager.h" />
     <ClInclude Include="src\Commands\ReverseCommand.h" />
+    <ClInclude Include="src\headers\IOHelper.h" />
     <ClInclude Include="src\headers\IPrintable.h" />
     <ClInclude Include="src\headers\Mediator.h" />
     <ClInclude Include="src\headers\PlayableCard.h" />
