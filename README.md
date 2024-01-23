@@ -22,7 +22,7 @@ draw
 ```
 
 ## Playing the Game
-![Alt text](https://github.com/joa1pedro/Uno/tree/main/images/example.png?raw=true "Example")
+![Example](https://raw.githubusercontent.com/joa1pedro/Uno/main/images/example.png)
 
 For playing a card in your hand you can just type play 
 Ex.:
