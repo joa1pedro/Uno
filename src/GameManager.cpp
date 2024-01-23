@@ -118,7 +118,7 @@ bool GameManager::FetchTurnCommands(
 	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, playedCard));
 
 	if (player->Hand.size() == 2){
-		if (unoWordCheck != "uno")
+		if ((unoWordCheck != "uno") && (aditionalCommand != "uno"))
 		{
 			SetMissedUno(player->Id);
 		}
@@ -153,15 +153,21 @@ void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 
 void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
+	if (_missedUno == playerPtr->Id) {
+		_nextDraw += 2;
+	}
 	if (_nextDraw == 0) {
 		_nextDraw = 1;
 	}
+
 	for (int i = 0; i < _nextDraw; i++) {
 		playerPtr->Hand.push_back(_deck->DrawCard());
 		playerPtr->Hand.back().SetPositionInHand(playerPtr->Hand.size() - 1);
 	}
+
 	_nextDraw = 0;
 	_missedUno = -1;
+
 	if (_forcedDraw) {
 		_forcedDraw = false;
 	}
