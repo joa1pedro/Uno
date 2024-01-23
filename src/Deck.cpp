@@ -120,14 +120,14 @@ bool Deck::Validate()
 			std::array<CardAction, MAX_ACTIONS_PER_CARD> actions {};
 			int j = 0;
 			if (actionstr.empty()) {
-				std::cout << "Failed to validate line " << i << " " << line << " - No actions.\n";
+				std::cerr << "Failed to validate line " << i << " " << line << " - No actions.\n";
 				return _isValid = false;
 			}
 
 			for (char c : actionstr) {
 				if (c == ' ') continue;
 				if (j > MAX_ACTIONS_PER_CARD-1) {
-					std::cout << "Failed to validate line " << i << " " << line << " - Too many actions.\n";
+					std::cerr << "Failed to validate line " << i << " " << line << " - Too many actions.\n";
 					return _isValid = false;
 				}
 				actions[j] = CardUtils::ParseCharToCardAction(c);
@@ -136,7 +136,7 @@ bool Deck::Validate()
 
 			// Validating if theres a Card Type, A CardValue and at least 1 valid CardAction
 			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined /*|| _isValidActions(actions))*/) {
-				std::cout << "Failed to validate line " << i << " " << line << " - Invalid data.\n";
+				std::cerr << "Failed to validate line " << i << " " << line << " - Invalid data.\n";
 				return _isValid = false;
 			}
 

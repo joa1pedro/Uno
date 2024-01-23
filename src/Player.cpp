@@ -7,8 +7,6 @@ Player::Player(int id)
  : Id(id)
 {}
 
-// Only removes the desired card from the Player hand
-// Make sure to add that card to the Discard Pile
 void Player::Discard(PlayableCard card)
 {
 	Hand.erase(Hand.begin() + card.PositionInHand());

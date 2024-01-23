@@ -7,6 +7,7 @@
 #include "Commands/ReverseCommand.h"
 #include "Commands/PlayCardCommand.h"
 #include "headers/CardUtils.h"
+#include "headers/IOHelper.h"
 
 #define NormalGameOrder +1
 #define InvertedGameOrder -1
@@ -42,7 +43,7 @@ bool GameManager::CheckDiscardPile(Card& card)
 
 	if (!CardUtils::IsValidCard(card, lastDiscard))
 	{
-		std::cout << "Invalid Card Selected." << std::endl;
+		IOHelper::AddWarning("Invalid Card Selected.");
 		return false;
 	}
 
@@ -58,6 +59,7 @@ void GameManager::ForceDrawNextPhase(int sumForNextDraw = 0)
 bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard playedCard, const std::string& aditionalCommand)
 {
 	if (_forcedDraw) {
+		IOHelper::AddWarning("You are forced to draw!");
 		return false;
 	}
 	Card card = _deck->GetCardMap()[playedCard.Id()];
@@ -69,6 +71,7 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 		if (card.GetCardActions()[i] == CardAction::Wild) {
 			if (typeOverride == CardType::Undefined)
 			{
+				IOHelper::AddWarning("You are missing to call a new Color!");
 				// Wild Cards must have a TypeOverride
 				_turnCommands.clear();
 				return false;
@@ -77,6 +80,7 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 
 		if (card.GetCardActions()[i] == CardAction::Default) {
 			if (!CheckDiscardPile(card)) {
+				IOHelper::AddWarning("That card doesn't match");
 				_turnCommands.clear();
 				return false;
 			}
@@ -118,9 +122,6 @@ void GameManager::ExecuteTurn()
 
 void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 {
-	std::cout << "Discarding card: ";
-	card.Print();
-
 	//Reseting the type override for the last card before the new one gets discarded
 	_deck->LastDiscard().SetTypeOverride(CardType::Undefined);
 
@@ -131,7 +132,6 @@ void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
 	if (_nextDraw == 0) {
-		std::cout << "You are forced to draw" << std::endl;
 		_nextDraw = 1;
 	}
 	for (int i = 0; i < _nextDraw; i++) {
@@ -173,6 +173,7 @@ void GameManager::DiscardFirstValid()
 
 void GameManager::PrintLastDiscard()
 {
+	std::cout << "Last Discard : " << std::endl;
 	_deck->LastDiscard().PrintFromFile();
 }
 
