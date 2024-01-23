@@ -72,10 +72,6 @@ bool GetPlayerInputCommand(
 
 		std::string unoWordCheck;
 		iss >> unoWordCheck;
-		
-		if (toLowerCase(unoWordCheck) == "uno") {
-			// TODO treat uno word
-		}
 
 		if (cardPositionInHand >= playerPtr->Hand.size()) {
 			Log("Invalid Card Selected.");
@@ -83,7 +79,8 @@ bool GetPlayerInputCommand(
 		}
 
 		return gameManagerPtr->FetchTurnCommands(
-			playerPtr, playerPtr->Hand[cardPositionInHand], additionalCommand);
+			playerPtr, playerPtr->Hand[cardPositionInHand], 
+			additionalCommand, toLowerCase(unoWordCheck));
 	}
 	if (toLowerCase(commandType) == "draw") {
 		DrawCommand drawCommand { gameManagerPtr, playerPtr };
