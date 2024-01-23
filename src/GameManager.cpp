@@ -56,12 +56,21 @@ void GameManager::ForceDrawNextPhase(int sumForNextDraw = 0)
 	_nextDraw += sumForNextDraw;
 }
 
-bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard playedCard, const std::string& aditionalCommand)
+bool GameManager::FetchTurnCommands(
+	std::shared_ptr<Player> player, PlayableCard playedCard, 
+	const std::string& aditionalCommand,
+	const std::string& unoWordCheck)
 {
+
+	if (_missedUno == player->Id) {
+		std::cout << "You missed UNO! You are forced to draw" << std::endl;
+		return false;
+	}
 	if (_forcedDraw) {
 		IOHelper::AddWarning("You are forced to draw!");
 		return false;
 	}
+
 	Card card = _deck->GetCardMap()[playedCard.Id()];
 	
 	// Early type override parse
@@ -107,7 +116,20 @@ bool GameManager::FetchTurnCommands(std::shared_ptr<Player> player, PlayableCard
 	}
 
 	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(this, player, playedCard));
+
+	if (player->Hand.size() == 2){
+		if (unoWordCheck != "uno")
+		{
+			SetMissedUno(player->Id);
+		}
+	}
+
 	return true;
+}
+
+void GameManager::SetMissedUno(int playerId)
+{
+	_missedUno = playerId;
 }
 
 void GameManager::ExecuteTurn() 
@@ -139,6 +161,7 @@ void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 		playerPtr->Hand.back().SetPositionInHand(playerPtr->Hand.size() - 1);
 	}
 	_nextDraw = 0;
+	_missedUno = -1;
 	if (_forcedDraw) {
 		_forcedDraw = false;
 	}

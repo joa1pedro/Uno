@@ -64,7 +64,8 @@ bool ParsePlayerInput(
 		}
 
 		return gameManagerPtr->FetchTurnCommands(
-			playerPtr, playerPtr->Hand[cardPositionInHand], additionalCommand);
+			playerPtr, playerPtr->Hand[cardPositionInHand], 
+			additionalCommand, toLowerCase(unoWordCheck));
 	}
 	if (IOHelper::ToLowerCase(commandType) == "draw") {
 		gameManagerPtr->DrawForPlayer(playerPtr);
