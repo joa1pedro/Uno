@@ -10,7 +10,7 @@
 class PlayableCard : IPrintable {
 public:
 	PlayableCard() = default;
-	PlayableCard(int _id, CardColor color, CardValue value);
+	PlayableCard(int id, CardColor color, CardValue value);
 	PlayableCard(Card card);
 
 	//Returns this card ID
@@ -19,7 +19,7 @@ public:
 	//Returns this card position in the hand
 	int PositionInHand() const;
 
-	// Pattern: [_id] CardType(Colored) CardValue
+	// Pattern: [_id] CardColor(Colored) CardValue
 	void Print() const;
 
 	//Sets where this card is in the hand of the player
