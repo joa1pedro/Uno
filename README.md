@@ -22,11 +22,11 @@ The deck file must be inside the GameData folder together with the others. Use [
 ## Playing the Game
 ![Example](https://raw.githubusercontent.com/joa1pedro/Uno/main/images/example.png)
 
-# Possible Commands for playing
-For Playing a card `play [cardIndex] optional[Color] optional[uno]`
-For Drawing a new card `draw`
+# Commands for playing
+- For Playing a card `play [cardIndex] optional[Color] optional[uno]`.
+- For Drawing a new card `draw`.
 
-For playing a card in your hand you can just type play 
+- For playing a card in your hand you can just type play 
 Ex.:
 ```bash
 play [1]
