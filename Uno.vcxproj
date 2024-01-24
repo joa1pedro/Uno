@@ -177,7 +177,6 @@
     <ClInclude Include="src\Commands\PlayCardCommand.h" />
     <ClInclude Include="src\headers\Player.h" />
     <ClInclude Include="src\Commands\SkipCommand.h" />
-    <ClInclude Include="src\headers\Uno.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
