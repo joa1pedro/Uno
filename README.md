@@ -1,13 +1,13 @@
-# Uno
-Uno Game By João Pedro Campso. Software Engineer at Kokku Games
+## Uno
+Uno Game By João Pedro Campos. Software Engineer at Kokku Games
 
-Uno Design Brief Documentation https://docs.google.com/document/d/1DE0XVD5ow9MUvyQOELAya3qO22uv0ZlD6QLS5TnFI0U/edit
+![Uno!](https://raw.githubusercontent.com/joa1pedro/Uno/main/images/unoBackground.png?raw=true)
 
-## Installation
+# Installation
 Download the repository.
 
-## Running the Game
-Run the .exe Uno. You can specify which deck you want to use passing it as arguments.
+# Running the Game
+Run Uno.exe in the Solution build folder. You can specify which deck you want to use passing it as arguments.
 Not specifying is going to use the StandardDeck.txt file as default.
 Deck files must be inside GameData Folder.
 
@@ -15,14 +15,12 @@ Deck files must be inside GameData Folder.
 ./Uno.exe MyCustomDeck.txt
 ```
 
-## Possible Commands for playing
-```bash
-play [cardIndex] optionalTypeOverride optionalUnoYell
-draw
-```
-
 ## Playing the Game
 ![Example](https://raw.githubusercontent.com/joa1pedro/Uno/main/images/example.png)
+
+# Possible Commands for playing
+For Playing a card `play [cardIndex] optional[Color] optional[uno]`
+For Drawing a new card `draw`
 
 For playing a card in your hand you can just type play 
 Ex.:
@@ -45,3 +43,5 @@ or
 play [4] red uno
 ```
 
+---|---
+---|---

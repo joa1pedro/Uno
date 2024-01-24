@@ -3,7 +3,6 @@
 #include "CardType.h"
 #include "CardAction.h"
 #include "CardValue.h"
-#include "Mediator.h"
 
 int const MAX_ACTIONS_PER_CARD = 3;
 
