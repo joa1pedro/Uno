@@ -101,7 +101,7 @@ bool CheckVictoryCondition(std::vector<std::shared_ptr<Player>>& players) {
 	for (const std::shared_ptr<Player>& playerPtr : players)
 	{
 		if (playerPtr->Hand.size() == 0) {
-			std::cout << "Player " << playerPtr->Id << " Won!";
+			Log("Player " << playerPtr->Id << " Won!\n");
 			return true;
 		}
 	};
@@ -156,6 +156,8 @@ int main(int argc, char** argv)
 		turnPlayer = gameManager->GetCurrentPlayer();
 		haveWinner = CheckVictoryCondition(players);
 	}
-	
+	std::cout << "Press Enter to exit...";
+	std::cin.get();
+
 	return EXIT_SUCCESS;
 }
