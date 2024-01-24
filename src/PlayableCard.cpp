@@ -6,6 +6,8 @@
 #include "headers/CardUtils.h"
 #include "headers/IOHelper.h"
 
+const std::string ASCII_ART_PATH = "./ascii/";
+
 PlayableCard::PlayableCard(int id, CardColor type, CardValue value)
 	: _id(id), _color(type), _value(value)
 {}
@@ -56,8 +58,6 @@ void PlayableCard::PrintType(CardColor type) const {
 }
 
 void PlayableCard::PrintFromFile() const {
-	std::string filename = "./ascii/";
-
 	std::string type;
 	if (this->GetColor() == CardColor::Wild){
 		type = CardUtils::ParseCardTypeToStr(this->GetTypeOverride());
@@ -68,10 +68,11 @@ void PlayableCard::PrintFromFile() const {
 
 	std::string value = CardUtils::ParseCardValueToStr(this->GetValue());
 
-	std::ifstream file(filename.append(value).append(".txt"));
+	std::string asciiPath = ASCII_ART_PATH;
+	std::ifstream file(asciiPath.append(value).append(".txt"));
 
 	if (!file.is_open()) {
-		std::cerr << "Error opening file: " << filename << std::endl;
+		std::cerr << "Error opening file: " << asciiPath << std::endl;
 		return;
 	}
 
