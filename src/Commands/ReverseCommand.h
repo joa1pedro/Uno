@@ -1,16 +1,19 @@
 #pragma once
+#include <iostream>
+#include "../headers/Command.h"
+class GameManager;
+class IExecutor;
+class Player;
 
 class ReverseCommand : public Command {
-private:
-	std::shared_ptr<GameManager> _gameManager;
-
 public:
-	ReverseCommand(std::shared_ptr<GameManager> gameManager) :
-		Command(), _gameManager(gameManager)
+	ReverseCommand() = default;
+	ReverseCommand(std::shared_ptr<IExecutor> gameManager) :
+		Command(gameManager)
 	{}
 
 	void Execute() const override {
 		std::cout << "[Command] Inverting Game Order" << std::endl;
-		this->_gameManager->InvertGameOrder();
+		this->_executor->InvertGameOrder();
 	}
 };

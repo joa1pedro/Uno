@@ -1,10 +1,14 @@
 #pragma once
 #include <array>
+#include <memory>
+#include <unordered_map>
 #include "CardType.h"
 #include "CardAction.h"
 #include "CardValue.h"
 
 int const MAX_ACTIONS_PER_CARD = 3;
+
+class Command;
 
 class Card {
 public:

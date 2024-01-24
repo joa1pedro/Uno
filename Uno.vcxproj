@@ -133,6 +133,7 @@
     <ClCompile Include="src\Commands\Draw4Command.h" />
     <ClCompile Include="src\Deck.cpp" />
     <ClCompile Include="src\GameManager.cpp" />
+    <ClCompile Include="src\headers\IExecutor.h" />
     <ClCompile Include="src\IOHelper.cpp" />
     <ClCompile Include="src\PlayableCard.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -172,7 +173,6 @@
     <ClInclude Include="src\Commands\ReverseCommand.h" />
     <ClInclude Include="src\headers\IOHelper.h" />
     <ClInclude Include="src\headers\IPrintable.h" />
-    <ClInclude Include="src\headers\Mediator.h" />
     <ClInclude Include="src\headers\PlayableCard.h" />
     <ClInclude Include="src\Commands\PlayCardCommand.h" />
     <ClInclude Include="src\headers\Player.h" />

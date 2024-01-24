@@ -58,17 +58,11 @@ bool ParsePlayerInput(
 		std::string unoWordCheck;
 		iss >> unoWordCheck;
 
-		if (cardPositionInHand >= playerPtr->Hand.size()) {
-			IOHelper::AddWarning("Invalid Card Selected.");
-			return false;
-		}
-
-		return gameManagerPtr->FetchTurnCommands(
-			playerPtr, playerPtr->Hand[cardPositionInHand], 
+		return gameManagerPtr->FetchTurnCommands(playerPtr, cardPositionInHand,
 			IOHelper::ToLowerCase(additionalCommand), IOHelper::ToLowerCase(unoWordCheck));
 	}
 	if (IOHelper::ToLowerCase(commandType) == "draw") {
-		gameManagerPtr->DrawForPlayer(playerPtr);
+		gameManagerPtr->DrawRequest(playerPtr);
 		return true;
 	}
 	else {

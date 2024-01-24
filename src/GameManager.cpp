@@ -12,6 +12,13 @@
 #define NormalGameOrder +1
 #define InvertedGameOrder -1
 
+const std::unordered_map<CardAction, std::shared_ptr<Command>> GameManager::_cardCommandMap = {
+	{CardAction::Reverse, std::make_shared<ReverseCommand>()},
+	{CardAction::Plus2, std::make_shared<Draw2Command>()},
+	{CardAction::Plus4, std::make_shared<Draw4Command>()},
+	{CardAction::Skip, std::make_shared<SkipCommand>()}
+};
+
 std::shared_ptr<GameManager> GameManager::GetPointer()
 {
 	return shared_from_this();
@@ -56,10 +63,16 @@ bool GameManager::ValidDiscardPile(const Card& card)
 }
 
 bool GameManager::FetchTurnCommands(
-	std::shared_ptr<Player> player, PlayableCard playedCard, 
+	std::shared_ptr<Player> player, const int cardPositionInHand, 
 	const std::string& aditionalCommand,
 	const std::string& unoWordCheck)
 {
+	// Early exit if playing a card that you don't have in your hand.
+	if (cardPositionInHand >= player->Hand.size() || cardPositionInHand < 0) {
+		IOHelper::AddWarning("Invalid Card Selected.");
+		return false;
+	}
+
 	// Early exit if plays missed UNO! shout out
 	if (_missedUno == player->Id) {
 		IOHelper::AddWarning("You missed UNO! You are forced to draw");
@@ -72,31 +85,26 @@ bool GameManager::FetchTurnCommands(
 		return false;
 	}
 
+	PlayableCard playedCard = player->Hand[cardPositionInHand];
 	Card card = _deck->GetCardMap()[playedCard.Id()];
 	// Early type override parse
 	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
 
 	bool validTurn = true;
-	for (int i = 0; i < card.GetCardActions().size(); i++) {
-		if (card.GetCardActions()[i] == CardAction::Wild && typeOverride == CardType::Undefined) {
+	for (const auto& action : card.GetCardActions()) {
+		if (action == CardAction::Wild && typeOverride == CardType::Undefined) {
 			IOHelper::AddWarning("You are missing to call a new Color!");
 			validTurn = false;
 		}
-		if (card.GetCardActions()[i] == CardAction::Default && !ValidDiscardPile(card)) {
+		if (action == CardAction::Default && !ValidDiscardPile(card)) {
 			IOHelper::AddWarning("That card doesn't match");
 			validTurn = false;
 		}
-		if (card.GetCardActions()[i] == CardAction::Reverse) {
-			_turnCommands.emplace_back(std::make_shared<ReverseCommand>(GetPointer()));
-		}
-		if (card.GetCardActions()[i] == CardAction::Plus2) {
-			_turnCommands.emplace_back(std::make_shared<Draw2Command>(GetPointer(), player));
-		}
-		if (card.GetCardActions()[i] == CardAction::Plus4) {
-			_turnCommands.emplace_back(std::make_shared<Draw4Command>(GetPointer(), player));
-		}
-		if (card.GetCardActions()[i] == CardAction::Skip) {
-			_turnCommands.emplace_back(std::make_shared<SkipCommand>(GetPointer()));
+
+		auto it = _cardCommandMap.find(action);
+		if (it != _cardCommandMap.end()) {
+			it->second->SetExecutor(GetPointer());
+			_turnCommands.emplace_back(it->second);
 		}
 	}
 
@@ -111,7 +119,7 @@ bool GameManager::FetchTurnCommands(
 		playedCard.SetTypeOverride(typeOverride);
 	}
 
-	// Add the turn commands for normal playing cards
+	// Add the turn commands for Playing the card Normally
 	_turnCommands.emplace_back(std::make_shared<PlayCardCommand>(GetPointer(), player, playedCard));
 
 	// Uno Word Check. Setting the flag if a plays has missed the UNO! shout out
@@ -145,26 +153,32 @@ void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 	playerPtr->Discard(card);
 }
 
+
+void GameManager::DrawRequest(std::shared_ptr<Player> playerPtr)
+{
+	_turnCommands.emplace_back(std::make_shared<DrawCommand>(GetPointer(), playerPtr));
+}
+
 void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
 	if (_missedUno == playerPtr->Id) {
-		_nextDraw += 2;
+		_cardsToDrawNext += 2;
 		_missedUno = -1;
 	}
 
 	// Next draw as 0 is the normal flow of drawing.
 	// Any other value greater than 0 is going to sum up for Draw Stacking (+2, +4 or missed UNO! Shout outs)
-	if (_nextDraw == 0) {
-		_nextDraw = 1;
+	if (_cardsToDrawNext == 0) {
+		_cardsToDrawNext = 1;
 	}
 
-	for (int i = 0; i < _nextDraw; i++) {
+	for (int i = 0; i < _cardsToDrawNext; i++) {
 		playerPtr->Hand.push_back(_deck->DrawCard());
 		playerPtr->Hand.back().SetPositionInHand(static_cast<int>(playerPtr->Hand.size()) - 1);
 	}
 
 	// Reseting flags
-	_nextDraw = 0;
+	_cardsToDrawNext = 0;
 	if (_forcedDraw) {
 		_forcedDraw = false;
 	}
@@ -215,5 +229,5 @@ bool GameManager::IsGameOrderInverted()
 void GameManager::ForceDrawNextPhase(int sumForNextDraw = 0)
 {
 	_forcedDraw = true;
-	_nextDraw += sumForNextDraw;
+	_cardsToDrawNext += sumForNextDraw;
 }
