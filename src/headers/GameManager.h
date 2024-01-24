@@ -7,31 +7,35 @@
 #include "Command.h"
 #include "IExecutor.h"
 
-static const int INITIAL_HAND_SIZE = 7;
+static const int INITIAL_HAND_SIZE = 3;
 
 class GameManager : public IExecutor, public std::enable_shared_from_this<GameManager> {
 public:
 	GameManager(std::shared_ptr<Deck> deckPtr, std::vector<std::shared_ptr<Player>> players)
 		: _deck(deckPtr), _players((players)), _numberOfPlayers(static_cast<int>(_players.size()))
-	{}
-
-	// Fetch all commands for that turn. Returns a boolean if the turn fetched is valid or not.
-	bool FetchTurnCommands(std::shared_ptr<Player> player, const int cardPositionInHand, const std::string& aditionalCommand, const std::string& unoWordCheck);
-
-	// Prints the top card of the Discard Pile
-	void PrintLastDiscard();
-
-	// Execute the turn with all the actions pending for that turn. And then passes the turn
-	void ExecuteTurn();
+	{
+		for (const std::shared_ptr<Player>& player : _players) {
+			_missedUnoMap.emplace( player->Id, false );
+		}
+	}
 
 	// Shuffles the deck, distribute cards and discards the first valid card
 	void StartGame();
 
-	// Makes a draw request for the manager. Player is going to draw the number of cards currently set for that turn to draw
-	void DrawRequest(std::shared_ptr<Player> playerPtr);
+	// Fetch all commands for that turn. Returns a boolean if the turn fetched is valid or not.
+	bool FetchTurnCommands(std::shared_ptr<Player> player, const int cardPositionInHand, const std::string& aditionalCommand, const std::string& unoWordCheck);
+
+	// Execute the turn with all the actions pending for that turn. And then passes the turn
+	void ExecuteTurn();
 
 	// Return the current player index for that turn
 	int GetCurrentPlayer();
+
+	// Prints the top card of the Discard Pile
+	void PrintLastDiscard();
+
+	// Makes a draw request for the manager. Player is going to draw the number of cards currently set for that turn to draw
+	void DrawRequest(std::shared_ptr<Player> playerPtr);
 
 	// ################################# Overrides for IExecutor #################################
 
@@ -83,9 +87,6 @@ private:
 	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the target card
 	bool ValidDiscardPile(const Card& card);
 
-	// Sets the player that has missed uno spell check
-	void SetMissedUno(int playerId);
-
 	// Returns a pointer to this Game Manager
 	std::shared_ptr<GameManager> GetPointer();
 
@@ -94,4 +95,7 @@ private:
 
 	static std::shared_ptr<Command> ParseCardActionToCommand(CardAction action);
 	static const std::unordered_map<CardAction, std::shared_ptr<Command>> _cardCommandMap;
+	
+	// Mapping of all the players who has missed UNO! yelling
+	std::unordered_map<int, bool> _missedUnoMap;
 };

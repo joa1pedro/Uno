@@ -19,6 +19,8 @@ const std::unordered_map<CardAction, std::shared_ptr<Command>> GameManager::_car
 	{CardAction::Skip, std::make_shared<SkipCommand>()}
 };
 
+static std::unordered_map<int, bool> _missedUnoMap = {};
+
 std::shared_ptr<Command> GameManager::ParseCardActionToCommand(CardAction action) {
 	auto it = _cardCommandMap.find(action);
 	if (it != _cardCommandMap.end()) {
@@ -82,7 +84,7 @@ bool GameManager::FetchTurnCommands(
 	}
 
 	// Early exit if plays missed UNO! shout out
-	if (_missedUno == player->Id) {
+	if (_missedUnoMap[player->Id]) {
 		IOHelper::AddWarning("You missed UNO! You are forced to draw");
 		return false;
 	}
@@ -132,14 +134,9 @@ bool GameManager::FetchTurnCommands(
 
 	// Uno Word Check. Setting the flag if a plays has missed the UNO! shout out
 	if (player->Hand.size() == 2 && ((unoWordCheck != "uno") && (aditionalCommand != "uno")))
-		SetMissedUno(player->Id);
+		_missedUnoMap[player->Id] = true;
 		
 	return true;
-}
-
-void GameManager::SetMissedUno(int playerId)
-{
-	_missedUno = playerId;
 }
 
 void GameManager::ExecuteTurn() 
@@ -175,9 +172,9 @@ int GameManager::GetCurrentPlayer()
 
 void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 {
-	if (_missedUno == playerPtr->Id) {
+	if (_missedUnoMap[playerPtr->Id]) {
 		_cardsToDrawNext += 2;
-		_missedUno = -1;
+		_missedUnoMap[playerPtr->Id] = false;
 	}
 
 	// Next draw as 0 is the normal flow of drawing.
