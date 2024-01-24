@@ -7,7 +7,7 @@
 #include "Command.h"
 #include "IExecutor.h"
 
-static const int INITIAL_HAND_SIZE = 3;
+static const int INITIAL_HAND_SIZE = 7;
 
 class GameManager : public IExecutor, public std::enable_shared_from_this<GameManager> {
 public:
