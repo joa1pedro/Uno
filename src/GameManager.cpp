@@ -98,11 +98,11 @@ bool GameManager::FetchTurnCommands(
 	PlayableCard playedCard = player->Hand[cardPositionInHand];
 	Card card = _deck->GetCardMap()[playedCard.Id()];
 	// Early type override parse
-	CardType typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
+	CardColor typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
 
 	bool validTurn = true;
 	for (const auto& action : card.GetCardActions()) {
-		if (action == CardAction::Wild && typeOverride == CardType::Undefined) {
+		if (action == CardAction::Wild && typeOverride == CardColor::Undefined) {
 			IOHelper::AddWarning("You are missing to call a new Color!");
 			validTurn = false;
 		}
@@ -124,8 +124,8 @@ bool GameManager::FetchTurnCommands(
 	}
 
 	// Set Type override if theres additional commands for it
-	if (playedCard.GetType() == CardType::Wild 
-		&& CardUtils::ParseStrToCardType(aditionalCommand) != CardType::Undefined) {
+	if (playedCard.GetColor() == CardColor::Wild 
+		&& CardUtils::ParseStrToCardType(aditionalCommand) != CardColor::Undefined) {
 		playedCard.SetTypeOverride(typeOverride);
 	}
 
@@ -153,7 +153,7 @@ void GameManager::ExecuteTurn()
 void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 {
 	//Reseting the type override for the last card before the new one gets discarded
-	_deck->LastDiscard().SetTypeOverride(CardType::Undefined);
+	_deck->LastDiscard().SetTypeOverride(CardColor::Undefined);
 
 	_deck->Discard(card);
 	playerPtr->Discard(card);
@@ -215,7 +215,7 @@ void GameManager::DiscardFirst()
 void GameManager::DiscardFirstValid()
 {
 	DiscardFirst();
-	if (_deck->LastDiscard().GetType() == CardType::Wild) {
+	if (_deck->LastDiscard().GetColor() == CardColor::Wild) {
 		_deck->ResetDeckFromDiscardPile();
 		DiscardFirstValid();
 	}

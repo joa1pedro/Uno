@@ -13,9 +13,9 @@ class Command;
 class Card {
 public:
 	Card() = default;
-	Card(int _id, CardType type, CardValue value, std::array<CardAction, MAX_ACTIONS_PER_CARD> actions);
+	Card(int _id, CardColor color, CardValue value, std::array<CardAction, MAX_ACTIONS_PER_CARD> actions);
 
-	CardType _type = CardType::Undefined;
+	CardColor _color = CardColor::Undefined;
 	CardValue _value = CardValue::Undefined;
 
 	//Returns the ID of this card

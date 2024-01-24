@@ -10,7 +10,7 @@
 class PlayableCard : IPrintable {
 public:
 	PlayableCard() = default;
-	PlayableCard(int _id, CardType type, CardValue value);
+	PlayableCard(int _id, CardColor color, CardValue value);
 	PlayableCard(Card card);
 
 	//Returns this card ID
@@ -26,13 +26,13 @@ public:
 	void SetPositionInHand(int position);
 
 	//Sets the type override for this card. Used for Wild Cards
-	void SetTypeOverride(CardType typeOverride);
+	void SetTypeOverride(CardColor typeOverride);
 
 	//Returns this card type
-	CardType GetType() const;
+	CardColor GetColor() const;
 
 	//Returns this card type override. Undefined if theres no override
-	CardType GetTypeOverride() const;
+	CardColor GetTypeOverride() const;
 
 	//Returns this card value
 	CardValue GetValue() const;
@@ -41,11 +41,11 @@ public:
 	void PrintFromFile() const;
 private:
 	// Prints this card Type using colors
-	void PrintType(CardType type) const;
+	void PrintType(CardColor type) const;
 
-	CardType _type = CardType::Undefined;
+	CardColor _color = CardColor::Undefined;
 	CardValue _value = CardValue::Undefined;
-	CardType _typeOverride = CardType::Undefined;
+	CardColor _colorOverride = CardColor::Undefined;
 
 	int _positionInHand = 0;
 	int _id = -1;

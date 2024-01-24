@@ -6,22 +6,22 @@
 #include "headers/CardUtils.h"
 #include "headers/IOHelper.h"
 
-PlayableCard::PlayableCard(int id, CardType type, CardValue value)
-	: _id(id), _type(type), _value(value)
+PlayableCard::PlayableCard(int id, CardColor type, CardValue value)
+	: _id(id), _color(type), _value(value)
 {}
 
 PlayableCard::PlayableCard(Card card)
-	: _id(card.Id()), _type(card._type), _value(card._value)
+	: _id(card.Id()), _color(card._color), _value(card._value)
 {}
 
 void PlayableCard::Print() const
 {
 	//Set to Color Type
-	PrintType(_type);
+	PrintType(_color);
 
-	if (_typeOverride != CardType::Undefined) {
+	if (_colorOverride != CardColor::Undefined) {
 		std::cout << " " << CardUtils::ParseCardValueToStr(_value) << " [";
-		PrintType(_typeOverride);
+		PrintType(_colorOverride);
 		std::cout << "]" << std::endl;
 	}
 	else {
@@ -29,25 +29,25 @@ void PlayableCard::Print() const
 	}
 }
 
-void PlayableCard::PrintType(CardType type) const {
+void PlayableCard::PrintType(CardColor type) const {
 	switch (type)
 	{
-	case CardType::Green:
+	case CardColor::Green:
 		std::cout << dye::green(CardUtils::ParseCardTypeToStr(type));
 		break;
-	case CardType::Blue:
+	case CardColor::Blue:
 		std::cout << dye::blue(CardUtils::ParseCardTypeToStr(type));
 		break;
-	case CardType::Yellow:
+	case CardColor::Yellow:
 		std::cout << dye::yellow(CardUtils::ParseCardTypeToStr(type));
 		break;
-	case CardType::Red:
+	case CardColor::Red:
 		std::cout << dye::red(CardUtils::ParseCardTypeToStr(type));
 		break;
-	case CardType::Wild:
+	case CardColor::Wild:
 		std::cout << dye::black_on_white(CardUtils::ParseCardTypeToStr(type));
 		break;
-	case CardType::Undefined:
+	case CardColor::Undefined:
 		std::cout << dye::vanilla(CardUtils::ParseCardTypeToStr(type));
 		break;
 	default:
@@ -59,11 +59,11 @@ void PlayableCard::PrintFromFile() const {
 	std::string filename = "./ascii/";
 
 	std::string type;
-	if (this->GetType() == CardType::Wild){
+	if (this->GetColor() == CardColor::Wild){
 		type = CardUtils::ParseCardTypeToStr(this->GetTypeOverride());
 	}
 	else {
-		type = CardUtils::ParseCardTypeToStr(this->GetType());
+		type = CardUtils::ParseCardTypeToStr(this->GetColor());
 	}
 
 	std::string value = CardUtils::ParseCardValueToStr(this->GetValue());
@@ -98,9 +98,9 @@ int PlayableCard::Id() const
 	return _id;
 }
 
-CardType PlayableCard::GetType() const
+CardColor PlayableCard::GetColor() const
 {
-	return _type;
+	return _color;
 }
 
 CardValue PlayableCard::GetValue() const
@@ -108,12 +108,12 @@ CardValue PlayableCard::GetValue() const
 	return _value;
 }
 
-CardType PlayableCard::GetTypeOverride() const
+CardColor PlayableCard::GetTypeOverride() const
 {
-	return _typeOverride;
+	return _colorOverride;
 }
 
-void PlayableCard::SetTypeOverride(CardType typeOverride)
+void PlayableCard::SetTypeOverride(CardColor typeOverride)
 {
-	_typeOverride = typeOverride;
+	_colorOverride = typeOverride;
 }

@@ -14,12 +14,12 @@ public:
 		return ParseEnumToString<CardValue>(value, cardValueEnumToStringMap);
 	}
 
-	static CardType ParseStrToCardType(const std::string& str) {
-		return ParseStringToEnum<CardType>(str, cardTypeStringToEnumMap);
+	static CardColor ParseStrToCardType(const std::string& str) {
+		return ParseStringToEnum<CardColor>(str, cardTypeStringToEnumMap);
 	}
 
-	static std::string ParseCardTypeToStr(CardType type) {
-		return ParseEnumToString<CardType>(type, cardTypeEnumToStringMap);
+	static std::string ParseCardTypeToStr(CardColor type) {
+		return ParseEnumToString<CardColor>(type, cardTypeEnumToStringMap);
 	}
 
 	static CardAction ParseCharToCardAction(char& c) {
@@ -69,8 +69,8 @@ private:
 
 	// Static member variables containing the mappings
 	static const std::unordered_map<std::string, CardValue> cardValueStringToEnumMap;
-	static const std::unordered_map<std::string, CardType> cardTypeStringToEnumMap;
+	static const std::unordered_map<std::string, CardColor> cardTypeStringToEnumMap;
 	static const std::unordered_map<CardValue, std::string> cardValueEnumToStringMap;
-	static const std::unordered_map<CardType, std::string> cardTypeEnumToStringMap;
+	static const std::unordered_map<CardColor, std::string> cardTypeEnumToStringMap;
 	static const std::unordered_map<char, CardAction> cardActionCharToEnumMap;
 };

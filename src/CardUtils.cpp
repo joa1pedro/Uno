@@ -37,20 +37,20 @@ const std::unordered_map<CardValue, std::string> CardUtils::cardValueEnumToStrin
 	{CardValue::Wild, "Wild"}
 };
 
-const std::unordered_map<std::string, CardType> CardUtils::cardTypeStringToEnumMap = {
-	{"yellow", CardType::Yellow},
-	{"blue", CardType::Blue},
-	{"green", CardType::Green},
-	{"red", CardType::Red},
-	{"wild", CardType::Wild}
+const std::unordered_map<std::string, CardColor> CardUtils::cardTypeStringToEnumMap = {
+	{"yellow", CardColor::Yellow},
+	{"blue", CardColor::Blue},
+	{"green", CardColor::Green},
+	{"red", CardColor::Red},
+	{"wild", CardColor::Wild}
 };
 
-const std::unordered_map<CardType, std::string> CardUtils::cardTypeEnumToStringMap = {
-	{CardType::Yellow, "yellow"},
-	{CardType::Blue, "blue"},
-	{CardType::Green, "green"},
-	{CardType::Red, "red"},
-	{CardType::Wild, "wild"}
+const std::unordered_map<CardColor, std::string> CardUtils::cardTypeEnumToStringMap = {
+	{CardColor::Yellow, "yellow"},
+	{CardColor::Blue, "blue"},
+	{CardColor::Green, "green"},
+	{CardColor::Red, "red"},
+	{CardColor::Wild, "wild"}
 };
 
 const std::unordered_map<char, CardAction> CardUtils::cardActionCharToEnumMap = {
@@ -64,7 +64,7 @@ const std::unordered_map<char, CardAction> CardUtils::cardActionCharToEnumMap = 
 
 bool const CardUtils::HasMatchingType(const Card& selectedCard, const PlayableCard& lastDiscard)
 {
-	return selectedCard._type == lastDiscard.GetType() || selectedCard._type == lastDiscard.GetTypeOverride();
+	return selectedCard._color == lastDiscard.GetColor() || selectedCard._color == lastDiscard.GetTypeOverride();
 }
 
 bool const  CardUtils::HasMatchingValue(const Card& selectedCard, const PlayableCard& lastDiscard)

@@ -1,6 +1,6 @@
 #pragma once
 
-enum class CardType {
+enum class CardColor {
 	Green,
 	Blue,
 	Yellow,

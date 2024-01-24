@@ -114,7 +114,7 @@ bool Deck::Validate()
 			std::getline(iss, actionstr, ':'); 
 
 			// Try parse the values from GameData
-			CardType parsedType = CardUtils::ParseStrToCardType(IOHelper::ToLowerCase(type));
+			CardColor parsedType = CardUtils::ParseStrToCardType(IOHelper::ToLowerCase(type));
 			CardValue parsedValue = CardUtils::ParseStrToCardValue(value);	
 
 			// Parsing the array of actions
@@ -136,7 +136,7 @@ bool Deck::Validate()
 			}
 
 			// Validating if theres a Card Type, A CardValue and at least 1 valid CardAction
-			if (parsedType == CardType::Undefined || parsedValue == CardValue::Undefined /*|| _isValidActions(actions))*/) {
+			if (parsedType == CardColor::Undefined || parsedValue == CardValue::Undefined /*|| _isValidActions(actions))*/) {
 				std::cerr << "Failed to validate line " << i << " " << line << " - Invalid data.\n";
 				return _isValid = false;
 			}

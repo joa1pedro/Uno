@@ -12,7 +12,7 @@ private:
 	std::shared_ptr<Player> _player;
 
 public:
-	PlayCardCommand(std::shared_ptr<IExecutor> gameManager, std::shared_ptr<Player> player, PlayableCard card, CardType typeOverride = CardType::Undefined) :
+	PlayCardCommand(std::shared_ptr<IExecutor> gameManager, std::shared_ptr<Player> player, PlayableCard card, CardColor typeOverride = CardColor::Undefined) :
 		Command(gameManager), _card(card), _player(player)
 	{}
 
