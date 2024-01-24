@@ -16,9 +16,9 @@ Deck files must be inside GameData Folder.
 ```
 
 # Creating a Custom Deck
-You can create a fully custom deck with cards. Check [Game Data](https://raw.githubusercontent.com/joa1pedro/Uno/main/GameData/GameData.txt)
+You can create a fully custom deck with cards. Check [Game Data](https://github.com/joa1pedro/Uno/blob/main/GameData/GameData.txt)
 and create a full deck with the corresponding card IDs listed there. You can also modify that file to make cards works differently.
-The deck file must be inside the GameData folder together with the others. Use [Standard Deck](https://githubusercontent.com/joa1pedro/Uno/main/GameData/StandardDeck.txt) as example.
+The deck file must be inside the GameData folder together with the others. Use [Standard Deck](https://github.com/joa1pedro/Uno/blob/main/GameData/StandardDeck.txt) as example.
 ## Playing the Game
 ![Example](https://raw.githubusercontent.com/joa1pedro/Uno/main/images/example.png)
 
