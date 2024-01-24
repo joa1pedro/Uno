@@ -42,6 +42,12 @@
     <ClCompile Include="src\Commands\Draw4Command.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\IOHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\headers\IExecutor.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="GameData\StandardDeck.txt">
@@ -92,9 +98,7 @@
     <Text Include="ascii\two.txt">
       <Filter>ASCII</Filter>
     </Text>
-    <Text Include="ascii\zero.txt">
-      <Filter>ASCII</Filter>
-    </Text>
+    <Text Include="ascii\wild.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\Card.h">
@@ -151,7 +155,7 @@
     <ClInclude Include="src\Commands\Draw2Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\headers\Mediator.h">
+    <ClInclude Include="src\headers\IOHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

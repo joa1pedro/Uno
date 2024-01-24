@@ -58,17 +58,15 @@ bool ParsePlayerInput(
 		std::string unoWordCheck;
 		iss >> unoWordCheck;
 
-		if (cardPositionInHand >= playerPtr->Hand.size()) {
-			IOHelper::AddWarning("Invalid Card Selected.");
-			return false;
-		}
-
-		return gameManagerPtr->FetchTurnCommands(
-			playerPtr, playerPtr->Hand[cardPositionInHand], 
+		return gameManagerPtr->FetchTurnCommands(playerPtr, cardPositionInHand,
 			IOHelper::ToLowerCase(additionalCommand), IOHelper::ToLowerCase(unoWordCheck));
 	}
 	if (IOHelper::ToLowerCase(commandType) == "draw") {
-		gameManagerPtr->DrawForPlayer(playerPtr);
+		gameManagerPtr->DrawRequest(playerPtr);
+		return true;
+	}
+	if (IOHelper::ToLowerCase(commandType) == "challenge") {
+		//gameManagerPtr->ChallengeRequest(playerPtr);
 		return true;
 	}
 	else {
@@ -153,9 +151,9 @@ int main(int argc, char** argv)
 		bool validTurn = ParsePlayerInput(gameManager, players[turnPlayer], input);
 		if (validTurn) {
 			gameManager->ExecuteTurn();
-			turnPlayer = gameManager->PassTurn();
 		}
 
+		turnPlayer = gameManager->GetCurrentPlayer();
 		haveWinner = CheckVictoryCondition(players);
 	}
 	
