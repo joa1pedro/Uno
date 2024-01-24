@@ -19,6 +19,14 @@ const std::unordered_map<CardAction, std::shared_ptr<Command>> GameManager::_car
 	{CardAction::Skip, std::make_shared<SkipCommand>()}
 };
 
+std::shared_ptr<Command> GameManager::ParseCardActionToCommand(CardAction action) {
+	auto it = _cardCommandMap.find(action);
+	if (it != _cardCommandMap.end()) {
+		return it->second;
+	}
+	return nullptr;
+}
+
 std::shared_ptr<GameManager> GameManager::GetPointer()
 {
 	return shared_from_this();
@@ -142,6 +150,7 @@ void GameManager::ExecuteTurn()
 		_turnCommands[itr]->Execute();
 	}
 	_turnCommands.clear();
+	PassTurn();
 }
 
 void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
@@ -157,6 +166,11 @@ void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 void GameManager::DrawRequest(std::shared_ptr<Player> playerPtr)
 {
 	_turnCommands.emplace_back(std::make_shared<DrawCommand>(GetPointer(), playerPtr));
+}
+
+int GameManager::GetCurrentPlayer()
+{
+	return _currentPlayer;
 }
 
 void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)

@@ -15,45 +15,23 @@ public:
 		: _deck(deckPtr), _players((players)), _numberOfPlayers(static_cast<int>(_players.size()))
 	{}
 
-	// Distribute all cards from the current deck for all players
-	void DistributeCards();
-
 	// Fetch all commands for that turn. Returns a boolean if the turn fetched is valid or not.
 	bool FetchTurnCommands(std::shared_ptr<Player> player, const int cardPositionInHand, const std::string& aditionalCommand, const std::string& unoWordCheck);
-
-	// Execute the turn with all the actions pending for that turn
-	void ExecuteTurn();
-
-	// Tells the deck to be Shuffled
-	void ShuffleDeck();
-
-	// Discard the first card from the Deck
-	void DiscardFirst();
-
-	// Shuffles the deck, distribute cards and discards the first valid card
-	void StartGame();
-
-	// First action to be taken by the deck after distributing cards.
-	// Discard first and check if its not a WILD card. If it is, return it, shuffle and discard a new one.
-	void DiscardFirstValid();
 
 	// Prints the top card of the Discard Pile
 	void PrintLastDiscard();
 
-	// Returns if the game order is currently inverted
-	bool IsGameOrderInverted();
+	// Execute the turn with all the actions pending for that turn. And then passes the turn
+	void ExecuteTurn();
 
-	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the target card
-	bool ValidDiscardPile(const Card& card);
-
-	// Sets the player that has missed uno spell check
-	void SetMissedUno(int playerId);
-
-	// Returns a pointer to this Game Manager
-	std::shared_ptr<GameManager> GetPointer();
+	// Shuffles the deck, distribute cards and discards the first valid card
+	void StartGame();
 
 	// Makes a draw request for the manager. Player is going to draw the number of cards currently set for that turn to draw
 	void DrawRequest(std::shared_ptr<Player> playerPtr);
+
+	// Return the current player index for that turn
+	int GetCurrentPlayer();
 
 	// ################################# Overrides for IExecutor #################################
 
@@ -89,12 +67,31 @@ private:
 	// If this is at 0. The player is going to receive 1 by default
 	int _cardsToDrawNext = 0;
 
-	static std::shared_ptr<Command> ParseCardActionToCommand(CardAction action) {
-		auto it = _cardCommandMap.find(action);
-		if (it != _cardCommandMap.end()) {
-			return it->second;
-		}
-		return nullptr;
-	}
+	// Tells the deck to be Shuffled
+	void ShuffleDeck();
+
+	// Discard the first card from the Deck
+	void DiscardFirst();
+
+	// First action to be taken by the deck after distributing cards.
+	// Discard first and check if its not a WILD card. If it is, return it, shuffle and discard a new one.
+	void DiscardFirstValid();
+
+	// Returns if the game order is currently inverted
+	bool IsGameOrderInverted();
+
+	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the target card
+	bool ValidDiscardPile(const Card& card);
+
+	// Sets the player that has missed uno spell check
+	void SetMissedUno(int playerId);
+
+	// Returns a pointer to this Game Manager
+	std::shared_ptr<GameManager> GetPointer();
+
+	// Distribute all cards from the current deck for all players
+	void DistributeCards();
+
+	static std::shared_ptr<Command> ParseCardActionToCommand(CardAction action);
 	static const std::unordered_map<CardAction, std::shared_ptr<Command>> _cardCommandMap;
 };

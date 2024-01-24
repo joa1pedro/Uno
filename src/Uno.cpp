@@ -65,6 +65,10 @@ bool ParsePlayerInput(
 		gameManagerPtr->DrawRequest(playerPtr);
 		return true;
 	}
+	if (IOHelper::ToLowerCase(commandType) == "challenge") {
+		//gameManagerPtr->ChallengeRequest(playerPtr);
+		return true;
+	}
 	else {
 		IOHelper::AddWarning("Invalid Command. Use Play [cardIndex] or Draw");
 		return false;
@@ -147,9 +151,9 @@ int main(int argc, char** argv)
 		bool validTurn = ParsePlayerInput(gameManager, players[turnPlayer], input);
 		if (validTurn) {
 			gameManager->ExecuteTurn();
-			turnPlayer = gameManager->PassTurn();
 		}
 
+		turnPlayer = gameManager->GetCurrentPlayer();
 		haveWinner = CheckVictoryCondition(players);
 	}
 	
