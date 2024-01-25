@@ -37,6 +37,7 @@ std::shared_ptr<GameManager> GameManager::GetPointer()
 // 0 indexed turn players, first player is index 0 and last one is numberOfPlayers-1
 int GameManager::PassTurn()
 {
+	_players[_currentPlayer]->CurrentlyPlaying = false;
 	int lastPlayer = _numberOfPlayers - 1;
 	if (_invertedGameOrder) {
 		_currentPlayer = (_currentPlayer InvertedGameOrder == -1) ? lastPlayer : _currentPlayer InvertedGameOrder;
@@ -44,7 +45,7 @@ int GameManager::PassTurn()
 	else { // Normal Game order
 		_currentPlayer = (_currentPlayer == lastPlayer) ? 0 : _currentPlayer NormalGameOrder;
 	}
-
+	_players[_currentPlayer]->CurrentlyPlaying = true;
 	return _currentPlayer;
 }
 
@@ -246,6 +247,20 @@ void GameManager::PrintLastDiscard()
 {
 	std::cout << "Last Discard : " << std::endl;
 	_deck->LastDiscard().PrintFromFile();
+}
+
+void GameManager::PrintGameOrder()
+{
+	std::string gameFlowArrow = IsGameOrderInverted() ? " <- " : " -> ";
+	for (size_t i = 0; i < _players.size(); i++)
+	{
+		_players[i]->Print();
+
+		if (i < _players.size() - 1) {
+			std::cout << gameFlowArrow;
+		}
+	}
+	std::cout << std::endl;
 }
 
 void GameManager::InvertGameOrder() 

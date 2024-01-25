@@ -130,6 +130,7 @@ int main(int argc, char** argv)
 	// Game Loop
 	bool haveWinner = false;
 	int turnPlayer = 0;
+	players[turnPlayer]->CurrentlyPlaying = true;
 	while (!haveWinner) {
 		IOHelper::Clear();
 		IOHelper::ShowWarnings();
@@ -138,7 +139,10 @@ int main(int argc, char** argv)
 
 		IOHelper::SeparationLine();
 
-		Log("Player [" << players[turnPlayer]->Id << "] Turn:");
+		gameManager->PrintGameOrder();
+		players[turnPlayer]->Print();
+		Log(" Turn:");
+
 		players[turnPlayer]->PrintHand();
 
 		IOHelper::SeparationLine();

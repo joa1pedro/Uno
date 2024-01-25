@@ -18,4 +18,6 @@ public:
 
 	// Prints the current card in hand for this player
 	void PrintHand() const;
+
+	bool CurrentlyPlaying = false;
 };

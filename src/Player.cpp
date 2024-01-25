@@ -2,6 +2,8 @@
 #include <vector>
 #include "headers/Player.h"
 #include "headers/PlayableCard.h"
+#include "headers/IOHelper.h"
+#include "headers/color.hpp" // https://github.com/aafulei/color-console
 
 Player::Player(int id)
  : Id(id)
@@ -18,7 +20,15 @@ void Player::Discard(PlayableCard card)
 
 void Player::Print() const
 {
-	std::cout << "Player: " << Id << std::endl;
+	if (CurrentlyPlaying) {
+		std::cout << "[";
+		std::cout << dye::blue("Player: ");
+		std::cout << dye::blue(Id);
+		std::cout << "]";
+	}
+	else {
+		std::cout << "Player: " << Id;
+	}
 }
 
 void Player::PrintHand() const
