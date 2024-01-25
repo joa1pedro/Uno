@@ -14,6 +14,6 @@ public:
 
 	void Execute() const override {
 		std::cout << "[Command] Draw 4 cards." << std::endl;
-		this->_executor->ForceDrawNextPhase(4);
+		this->_executor->ForceDrawNextPhase(4, true);
 	}
 };

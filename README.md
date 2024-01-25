@@ -25,6 +25,7 @@ The deck file must be inside the GameData folder together with the others. Use [
 # Commands for playing
 - For Playing a card `play [cardIndex] optional[Color] optional[uno]`.
 - For Drawing a new card `draw`.
+- For Challenging a +2 or +4 `challenge [cardIndex] optional[Color] optional[uno]`.
 
 For playing a card in your hand you can just type play 
 Ex.:
@@ -45,4 +46,12 @@ play [3] uno
 or
 ```bash
 play [4] red uno
+```
+If a player plays a +2 or a +4 for you, you can challenge him using the challenge. Normal previous rules apply for choosing color or calling uno
+```bash
+challenge [3] uno
+```
+or
+```bash
+challenge [4] red uno
 ```

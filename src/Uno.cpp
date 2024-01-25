@@ -48,7 +48,9 @@ bool ParsePlayerInput(
 	std::string commandType;
 	iss >> commandType;
 
-	if (IOHelper::ToLowerCase(commandType) == "play") {
+	bool challenge = IOHelper::ToLowerCase(commandType) == "challenge";
+
+	if (IOHelper::ToLowerCase(commandType) == "play" || challenge) {
 		int cardPositionInHand;
 		iss >> cardPositionInHand;
 
@@ -59,14 +61,10 @@ bool ParsePlayerInput(
 		iss >> unoWordCheck;
 
 		return gameManagerPtr->FetchTurnCommands(playerPtr, cardPositionInHand,
-			IOHelper::ToLowerCase(additionalCommand), IOHelper::ToLowerCase(unoWordCheck));
+			IOHelper::ToLowerCase(additionalCommand), IOHelper::ToLowerCase(unoWordCheck), challenge);
 	}
 	if (IOHelper::ToLowerCase(commandType) == "draw") {
 		gameManagerPtr->DrawRequest(playerPtr);
-		return true;
-	}
-	if (IOHelper::ToLowerCase(commandType) == "challenge") {
-		//gameManagerPtr->ChallengeRequest(playerPtr);
 		return true;
 	}
 	else {

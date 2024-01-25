@@ -23,7 +23,7 @@ public:
 	void StartGame();
 
 	// Fetch all commands for that turn. Returns a boolean if the turn fetched is valid or not.
-	bool FetchTurnCommands(std::shared_ptr<Player> player, const int cardPositionInHand, const std::string& aditionalCommand, const std::string& unoWordCheck);
+	bool FetchTurnCommands(std::shared_ptr<Player> player, const int cardPositionInHand, const std::string& aditionalCommand, const std::string& unoWordCheck, bool challenge = false);
 
 	// Execute the turn with all the actions pending for that turn. And then passes the turn
 	void ExecuteTurn();
@@ -48,17 +48,19 @@ public:
 	// Pass the turn for the next player. Returns the index of the next player 
 	int PassTurn() override;
 
-	// Forces the draw for the next player.
-	void ForceDrawNextPhase	(int sumForNextDraw) override;
+	// Forces the draw for the next player. 
+	// Setting canBeChallenged to true will allow the player to challenge that card with another with the same value
+	// Also sumForNextDraw stacks the value to draw for the next player
+	void ForceDrawNextPhase	(int sumForNextDraw, bool canBeChallenged) override;
 
 	// Draws a card for the player
 	void DrawForPlayer(std::shared_ptr<Player> player) override;
-
 private:
 	std::vector<std::shared_ptr<Command>> _turnCommands;
 	std::vector<std::shared_ptr<Player>> _players;
 	std::shared_ptr<Deck> _deck;
 
+	bool _challengeState = false;
 	bool _invertedGameOrder = false;
 	bool _forcedDraw = false;
 	int _numberOfPlayers = -1;
@@ -86,6 +88,9 @@ private:
 
 	// Checks if the Discard Pile matches in Type, TypeOverride or Value with the target card
 	bool ValidDiscardPile(const Card& card);
+
+	// Validates the card from the discard pile for a challenge
+	bool ValidChallenge(const Card& card);
 
 	// Returns a pointer to this Game Manager
 	std::shared_ptr<GameManager> GetPointer();

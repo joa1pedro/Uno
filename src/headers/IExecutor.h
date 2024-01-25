@@ -9,6 +9,6 @@ public:
 
 	virtual int  PassTurn() = 0;
 	virtual void InvertGameOrder() = 0;
-	virtual void ForceDrawNextPhase(int numberOfCards) = 0;
+	virtual void ForceDrawNextPhase(int numberOfCards, bool canBeChallenged) = 0;
 };
 
