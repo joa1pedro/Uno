@@ -183,7 +183,7 @@ void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 }
 
 
-void GameManager::DrawRequest(std::shared_ptr<Player> playerPtr)
+void GameManager::RequestDraw(std::shared_ptr<Player> playerPtr)
 {
 	_turnCommands.emplace_back(std::make_shared<DrawCommand>(GetPointer(), playerPtr));
 }

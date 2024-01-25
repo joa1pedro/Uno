@@ -64,7 +64,7 @@ bool ParsePlayerInput(
 			IOHelper::ToLowerCase(additionalCommand), IOHelper::ToLowerCase(unoWordCheck), challenge);
 	}
 	if (IOHelper::ToLowerCase(commandType) == "draw") {
-		gameManagerPtr->DrawRequest(playerPtr);
+		gameManagerPtr->RequestDraw(playerPtr);
 		return true;
 	}
 	else {
