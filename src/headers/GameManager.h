@@ -34,7 +34,7 @@ public:
 	// Prints the top card of the Discard Pile
 	void PrintLastDiscard();
 
-	// Prints the top card of the Discard Pile
+	// Prints the players and the game flow Eg.: [Player 1] -> [Player 2] -> [Player 3]
 	void PrintGameOrder();
 
 	// Makes a draw request for the manager. Player is going to draw the number of cards currently set for that turn to draw
