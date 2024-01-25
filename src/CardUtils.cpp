@@ -72,7 +72,7 @@ bool const  CardUtils::HasMatchingValue(const Card& selectedCard, const Playable
 	return selectedCard._value == lastDiscard.GetValue();
 }
 
-bool const  CardUtils::IsValidCard(const Card& selectedCard, const PlayableCard& lastDiscard) 
+bool const  CardUtils::HasMatchingTypeOrValue(const Card& selectedCard, const PlayableCard& lastDiscard) 
 {
 	return HasMatchingType(selectedCard, lastDiscard) || HasMatchingValue(selectedCard, lastDiscard);
 }

@@ -59,11 +59,24 @@ void GameManager::DistributeCards()
 	}
 }
 
+bool GameManager::ValidChallenge(const Card& card) 
+{
+	const PlayableCard& lastDiscard = _deck->LastDiscard();
+
+	// Challenge cards must match in Value
+	if (_challengeState && !CardUtils::HasMatchingValue(card, lastDiscard))
+	{
+		IOHelper::AddWarning("Invalid Card Selected.");
+		return false;
+	}
+	return true;
+}
+
 bool GameManager::ValidDiscardPile(const Card& card)
 {
 	const PlayableCard& lastDiscard = _deck->LastDiscard();
 
-	if (!CardUtils::IsValidCard(card, lastDiscard))
+	if (!CardUtils::HasMatchingTypeOrValue(card, lastDiscard))
 	{
 		IOHelper::AddWarning("Invalid Card Selected.");
 		return false;
@@ -73,9 +86,10 @@ bool GameManager::ValidDiscardPile(const Card& card)
 }
 
 bool GameManager::FetchTurnCommands(
-	std::shared_ptr<Player> player, const int cardPositionInHand, 
+	std::shared_ptr<Player> player, const int cardPositionInHand,
 	const std::string& aditionalCommand,
-	const std::string& unoWordCheck)
+	const std::string& unoWordCheck,
+	bool playerChallenged)
 {
 	// Early exit if playing a card that you don't have in your hand.
 	if (cardPositionInHand >= player->Hand.size() || cardPositionInHand < 0) {
@@ -85,13 +99,14 @@ bool GameManager::FetchTurnCommands(
 
 	// Early exit if plays missed UNO! shout out
 	if (_missedUnoMap[player->Id]) {
-		IOHelper::AddWarning("You missed UNO! You are forced to draw");
+		IOHelper::AddWarning("You missed UNO! You are forced to draw.");
 		return false;
 	}
 
-	// Early exit if player is being forced to draw (+2 or +4 cards)
-	if (_forcedDraw) {
-		IOHelper::AddWarning("You are forced to draw!");
+	// Early exit if player is being forced to draw (+2 or +4 cards) and is not a challenge
+	// Also if player is trying to challenge a non challengeable card
+	if (_forcedDraw && !(_challengeState && playerChallenged)) {
+		IOHelper::AddWarning("You are forced to Draw or Challenge!");
 		return false;
 	}
 
@@ -100,14 +115,21 @@ bool GameManager::FetchTurnCommands(
 	// Early type override parse
 	CardColor typeOverride = CardUtils::ParseStrToCardType(aditionalCommand);
 
+	// Early exit if the card selected for a challenge isn't the same value (You can't challenge +4 with +2 or vice-versa
+	if (!ValidChallenge(card))
+	{
+		IOHelper::AddWarning("Invalid card selected for Challenge");
+		return false;
+	}
+
 	bool validTurn = true;
-	for (const auto& action : card.GetCardActions()) {
+	for (const auto& action : card.GetCardActions()) {		
 		if (action == CardAction::Wild && typeOverride == CardColor::Undefined) {
 			IOHelper::AddWarning("You are missing to call a new Color!");
 			validTurn = false;
 		}
 		if (action == CardAction::Default && !ValidDiscardPile(card)) {
-			IOHelper::AddWarning("That card doesn't match");
+			IOHelper::AddWarning("That card doesn't match!");
 			validTurn = false;
 		}
 
@@ -190,9 +212,8 @@ void GameManager::DrawForPlayer(std::shared_ptr<Player> playerPtr)
 
 	// Reseting flags
 	_cardsToDrawNext = 0;
-	if (_forcedDraw) {
-		_forcedDraw = false;
-	}
+	_forcedDraw = false;
+	_challengeState = false;
 }
 
 void GameManager::StartGame()
@@ -237,8 +258,9 @@ bool GameManager::IsGameOrderInverted()
 	return _invertedGameOrder;
 }
 
-void GameManager::ForceDrawNextPhase(int sumForNextDraw = 0)
+void GameManager::ForceDrawNextPhase(int sumForNextDraw = 0, bool canBeChallenged = false)
 {
 	_forcedDraw = true;
 	_cardsToDrawNext += sumForNextDraw;
+	_challengeState = canBeChallenged;
 }
