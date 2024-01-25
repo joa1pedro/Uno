@@ -7,18 +7,21 @@ Uno Game By João Pedro Campos. Software Engineer at Kokku Games
 Download the repository.
 
 # Running the Game
-Run Uno.exe in the Solution build folder. You can specify which deck you want to use passing it as arguments.
-Not specifying is going to use the StandardDeck.txt file as default.
-Deck files must be inside GameData Folder.
+Run Uno.exe in the Solution build folder. You can specify which deck you want to use passing it as argument.
+Not specifying a deck as argument is will use `StandardDeck.txt` file as default.
+Deck files must be inside the GameData Folder.
 
 ```bash
 ./Uno.exe MyCustomDeck.txt
 ```
 
 # Creating a Custom Deck
-You can create a fully custom deck with cards. Check [Game Data](https://github.com/joa1pedro/Uno/blob/main/GameData/GameData.txt)
-and create a full deck with the corresponding card IDs listed there. You can also modify that file to make cards works differently.
-The deck file must be inside the GameData folder together with the others. Use [Standard Deck](https://github.com/joa1pedro/Uno/blob/main/GameData/StandardDeck.txt) as example.
+You have the option to craft a completely personalized deck by referencing the card IDs listed in the [Game Data](https://github.com/joa1pedro/Uno/blob/main/GameData/GameData.txt)
+To create a full deck, include the corresponding card IDs as outlined in the file.
+Additionally, if you wish to customize the functionality of cards, feel free to modify the file accordingly.
+Ensure that the deck file is placed within the GameData folder alongside other necessary files.
+For guidance, you can refer to the [Standard Deck](https://github.com/joa1pedro/Uno/blob/main/GameData/StandardDeck.txt) as an example."
+
 ## Playing the Game
 ![Example](https://raw.githubusercontent.com/joa1pedro/Uno/main/images/example.png)
 
@@ -28,18 +31,18 @@ The deck file must be inside the GameData folder together with the others. Use [
 - For Challenging a +2 or +4 `challenge [cardIndex] optional[Color] optional[uno]`.
 
 For playing a card in your hand you can just type play 
-Ex.:
+For example:
 ```bash
 play [1]
 ```
-If your card is a Wild Card. You are going to need tell the next color also. just specify the color after the card
-Ex.:
+"If you have a Wild Card, you must also indicate the next color. 
+Simply specify the color immediately after playing the card. For example:
 ```bash
 play [2] yellow
 ```
-If you have just 2 card in your hand, playing the next card will make you stay with just 1 card in hand.
-In that case, if you don't want to be forced to draw 2 cards next turn, you need to say UNO! in the console too
-Ex.:
+If you currently hold only two cards, playing the next card will leave you with just one card in hand. 
+To avoid being compelled to draw two cards on the next turn, it is essential to announce 'UNO!' in the console as well. 
+For example:
 ```bash
 play [3] uno
 ```
@@ -47,7 +50,8 @@ or
 ```bash
 play [4] red uno
 ```
-If a player plays a +2 or a +4 for you, you can challenge him using the challenge. Normal previous rules apply for choosing color or calling uno
+If a player plays a +2 or a +4 card on you, you have the option to challenge them by using the challenge feature. 
+The standard rules still apply for selecting a color or calling 'UNO' as per the previous rules.
 ```bash
 challenge [3] uno
 ```
