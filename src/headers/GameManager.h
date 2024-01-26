@@ -11,8 +11,8 @@ static const int INITIAL_HAND_SIZE = 7;
 
 class GameManager : public IExecutor, public std::enable_shared_from_this<GameManager> {
 public:
-	GameManager(std::shared_ptr<Deck> deckPtr, std::vector<std::shared_ptr<Player>> players)
-		: _deck(deckPtr), _players((players)), _numberOfPlayers(static_cast<int>(_players.size()))
+	GameManager(Deck& deckPtr, std::vector<std::shared_ptr<Player>> players)
+		: _deck(std::make_unique<Deck>(deckPtr)), _players((players)), _numberOfPlayers(static_cast<int>(_players.size()))
 	{
 		for (const std::shared_ptr<Player>& player : _players) {
 			_missedUnoMap.emplace( player->Id, false );
@@ -61,7 +61,7 @@ public:
 private:
 	std::vector<std::shared_ptr<Command>> _turnCommands;
 	std::vector<std::shared_ptr<Player>> _players;
-	std::shared_ptr<Deck> _deck;
+	std::unique_ptr<Deck> _deck;
 
 	bool _challengeState = false;
 	bool _invertedGameOrder = false;

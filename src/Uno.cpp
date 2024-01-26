@@ -110,8 +110,8 @@ int main(int argc, char** argv)
 {
 	// Initialize Game Deck
 	const char* filename = (argc > 1) ? argv[1] : STANDARD_DECK;
-	std::shared_ptr<Deck> deckPtr = std::make_shared<Deck>( filename );
-	if (!deckPtr->IsValid()) {
+	Deck deck ( filename );
+	if (!deck.IsValid()) {
 		return EXIT_FAILURE;
 	}
 
@@ -120,7 +120,7 @@ int main(int argc, char** argv)
 	std::vector<std::shared_ptr<Player>> players { InitilizePlayers(numberOfPlayers) };
 
 	// Initialize GameManager
-	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deckPtr, players);
+	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deck, players);
 
 	// Game prep initialization
 	gameManager->StartGame();
