@@ -69,8 +69,8 @@ private:
 	int _numberOfPlayers = -1;
 	int _currentPlayer = 0;
 
-	// Represents the index of the player that has missed the UNO! yelling.
-	int _missedUno = -1;
+	// Mapping of all the players who has missed UNO! yelling
+	std::unordered_map<int, bool> _missedUnoMap;
 
 	// This represents how many cards the next player that is going to draw will receive.
 	// If this is at 0. The player is going to receive 1 by default
@@ -103,7 +103,4 @@ private:
 
 	static std::shared_ptr<Command> ParseCardActionToCommand(CardAction action);
 	static const std::unordered_map<CardAction, std::shared_ptr<Command>> _cardCommandMap;
-	
-	// Mapping of all the players who has missed UNO! yelling
-	std::unordered_map<int, bool> _missedUnoMap;
 };
