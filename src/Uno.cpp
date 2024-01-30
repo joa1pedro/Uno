@@ -117,8 +117,14 @@ int main(int argc, char** argv)
 
 	// Initialize Players
 	int numberOfPlayers = GetNumberOfPlayers(); 
-	std::vector<std::shared_ptr<Player>> players { InitilizePlayers(numberOfPlayers) };
-
+	std::vector<std::shared_ptr<Player>> players{ InitilizePlayers(numberOfPlayers) };
+	IOHelper::Clear();
+	for (int i = 0; i < numberOfPlayers; i++) {	
+		std::cout << "Player " << i << " Name: ";
+		std::string playerName;
+		std::cin >> playerName;
+		players[i]->Name = playerName;
+	}
 	// Initialize GameManager
 	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deck, players);
 
@@ -139,9 +145,10 @@ int main(int argc, char** argv)
 
 		IOHelper::SeparationLine();
 
+		std::cout << std::endl;
 		gameManager->PrintGameOrder();
-		players[turnPlayer]->Print();
-		Log(" Turn:");
+		std::cout << std::endl;
+		IOHelper::SeparationLine();
 
 		players[turnPlayer]->PrintHand();
 

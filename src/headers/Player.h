@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "PlayableCard.h"
 
 class Player : IPrintable {
 public:
 	int Id;	
+	std::string Name;
 
 	Player(int id);
 

@@ -21,13 +21,10 @@ void Player::Discard(PlayableCard card)
 void Player::Print() const
 {
 	if (CurrentlyPlaying) {
-		std::cout << "[";
-		std::cout << dye::blue("Player: ");
-		std::cout << dye::blue(Id);
-		std::cout << "]";
+		std::cout << "[" << dye::purple(Name) << ": (" << Hand.size() << ")" << "]";
 	}
 	else {
-		std::cout << "Player: " << Id;
+		std::cout << Name << " (" << Hand.size() << ")";
 	}
 }
 
