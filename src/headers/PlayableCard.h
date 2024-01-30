@@ -37,9 +37,10 @@ public:
 	// Pattern: [_id] CardColor(Colored) CardValue
 	void Print() const override;
 
-	//Prints this card using the ASCII file
+	// Prints this card using the ASCII file
 	void PrintFromFile() const override;
 
+	// Prints this card animation file using the ASCII for it. Defaults to 3 sec of animation time
 	void PrintAnimation() const;
 private:
 	// Prints this card Type using colors
