@@ -175,6 +175,7 @@ void GameManager::ExecuteTurn()
 
 void GameManager::PlayCard(std::shared_ptr<Player> playerPtr, PlayableCard card)
 {
+	card.PrintAnimation();
 	//Reseting the type override for the last card before the new one gets discarded
 	_deck->LastDiscard().SetTypeOverride(CardColor::Undefined);
 

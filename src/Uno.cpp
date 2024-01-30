@@ -35,6 +35,10 @@ std::vector<std::shared_ptr<Player>> InitilizePlayers(int numberOfPlayers)
 	std::vector<std::shared_ptr<Player>> players;
 	for (int i = 0; i < numberOfPlayers; i++) {
 		players.emplace_back(std::move(std::make_shared<Player>(i)));
+		std::cout << "Player " << i << " Name: ";
+		std::string playerName;
+		std::cin >> playerName;
+		players[i]->Name = playerName;
 	}
 	return players;
 }
@@ -119,12 +123,7 @@ int main(int argc, char** argv)
 	int numberOfPlayers = GetNumberOfPlayers(); 
 	std::vector<std::shared_ptr<Player>> players{ InitilizePlayers(numberOfPlayers) };
 	IOHelper::Clear();
-	for (int i = 0; i < numberOfPlayers; i++) {	
-		std::cout << "Player " << i << " Name: ";
-		std::string playerName;
-		std::cin >> playerName;
-		players[i]->Name = playerName;
-	}
+
 	// Initialize GameManager
 	std::shared_ptr<GameManager> gameManager = std::make_shared<GameManager>(deck, players);
 

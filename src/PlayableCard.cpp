@@ -5,6 +5,8 @@
 #include "headers/color.hpp" // https://github.com/aafulei/color-console
 #include "headers/CardUtils.h"
 #include "headers/IOHelper.h"
+#include <chrono>
+#include <thread>
 
 const std::string ASCII_ART_PATH = "./ascii/";
 
@@ -83,6 +85,36 @@ void PlayableCard::PrintFromFile() const {
 
 	file.close();
 }
+
+void PlayableCard::PrintAnimation() const 
+{
+	std::string value = CardUtils::ParseCardValueToStr(this->GetValue());
+	std::string asciiPath = ASCII_ART_PATH;
+	std::ifstream animFile(asciiPath.append(value).append("_anim.txt"));
+
+	if (!animFile.is_open()) {
+		return;
+	}
+
+	IOHelper::Clear();
+	std::string type;
+	if (this->GetColor() == CardColor::Wild) {
+		type = CardUtils::ParseCardTypeToStr(this->GetTypeOverride());
+	}
+	else {
+		type = CardUtils::ParseCardTypeToStr(this->GetColor());
+	}
+
+	std::string line;
+	while (std::getline(animFile, line)) {
+		std::cout << dye::colorize(line, IOHelper::ToLowerCase(type)) << std::endl;
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
+	animFile.close();
+	IOHelper::Clear();
+}
+
 
 int PlayableCard::PositionInHand() const
 {

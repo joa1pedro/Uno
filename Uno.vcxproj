@@ -140,6 +140,8 @@
     <ClCompile Include="src\Uno.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="ascii\+4_anim.txt" />
+    <Text Include="ascii\Reverse_anim.txt" />
     <Text Include="ascii\wild.txt" />
     <Text Include="GameData\GameData.txt" />
     <Text Include="GameData\Only_Plus4.txt" />

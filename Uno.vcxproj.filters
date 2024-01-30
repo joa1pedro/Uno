@@ -99,6 +99,8 @@
       <Filter>ASCII</Filter>
     </Text>
     <Text Include="ascii\wild.txt" />
+    <Text Include="ascii\Reverse_anim.txt" />
+    <Text Include="ascii\+4_anim.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\Card.h">
@@ -126,9 +128,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\headers\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\headers\Uno.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\headers\Command.h">

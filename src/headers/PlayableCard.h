@@ -19,9 +19,6 @@ public:
 	//Returns this card position in the hand
 	int PositionInHand() const;
 
-	// Pattern: [_id] CardColor(Colored) CardValue
-	void Print() const;
-
 	//Sets where this card is in the hand of the player
 	void SetPositionInHand(int position);
 
@@ -37,8 +34,13 @@ public:
 	//Returns this card value
 	CardValue GetValue() const;
 
+	// Pattern: [_id] CardColor(Colored) CardValue
+	void Print() const override;
+
 	//Prints this card using the ASCII file
-	void PrintFromFile() const;
+	void PrintFromFile() const override;
+
+	void PrintAnimation() const;
 private:
 	// Prints this card Type using colors
 	void PrintType(CardColor type) const;
