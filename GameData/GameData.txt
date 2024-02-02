@@ -24,6 +24,7 @@
 # R - Reverse
 # + - +2 
 # 4 - +4
+# W - Wild (Changes the Color Override)
 # Obs.: Missing Default Action implicitly says that you don't need to match color or value
 #------------
 
